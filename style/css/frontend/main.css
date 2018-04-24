@@ -1,0 +1,74 @@
+/*
+	
+	Educoded ~ "Learn something new."
+	Developed by Mathew Maione & Mark Ivanowich
+
+	CSS Layout
+
+		- Browser Defaults
+		- Page Defaults
+		- Header
+		- Content (pages)
+		- Footer
+
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900|Roboto:100,300,400,500,700|Open+Sans:300,400,600,700,800');
+
+/* Start ~ Browser Defaults */
+
+	* {
+	    font-family: 'Lato';
+	    -webkit-font-smoothing: antialiased;
+	    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+	}
+
+	body {
+	    padding: 0px;
+	    margin: 0px;
+	    -webkit-font-smoothing: antialiased;
+	    outline: none;
+	    position: relative;
+	    left: 0px;
+	}
+
+	a {
+	    text-decoration: none;
+	}
+
+	input[type="text"],
+	input[type="email"],
+	input[type="number"],
+	input[type="password"],
+	input[type="date"],
+	textarea{
+	    -moz-box-sizing: border-box;
+	    -webkit-box-sizing: border-box;
+	    box-sizing: border-box;
+	    -webkit-appearance: none;
+	    border-radius: 0px;
+
+	}
+
+	input:-webkit-autofill,
+	input:-webkit-autofill:hover,
+	input:-webkit-autofill:focus,
+	input:-webkit-autofill:active {
+	    transition: background-color 5000s ease-in-out 0s;
+	    background: #fff;
+	}
+
+	textarea {
+		resize: none;
+	}
+
+	button {
+		border: none;
+		outline: none;
+	}
+
+	button:focus, input:focus, textarea:focus {
+	    outline: none;
+	}
+
+/* End ~ Browser Defaults */
