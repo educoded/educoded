@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		
+
 		<title>educoded</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -36,9 +36,12 @@
 		<!-- End ~ Footer -->
 
 		<script>
-			requirejs(['main'],
-			function () {
-				console.log('test');
+			requirejs(['main','controller/app','controller/core/user','controller/pages/home'],
+			function (geocomplete, app, home) {
+				var app = new App(), user = new User(), home = new Home();
+				app.init();
+				user.init();
+		    	home.init();
 			});
 		</script>
 
