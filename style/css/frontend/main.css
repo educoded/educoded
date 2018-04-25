@@ -10,6 +10,7 @@
 		- Header
 		- Content (pages)
 		- Footer
+		- Responsive
 
 */
 
@@ -72,3 +73,131 @@
 	}
 
 /* End ~ Browser Defaults */
+
+/* Start ~ Page Defaults */
+
+	.edx-wrapper {
+		-webkit-flex-wrap: wrap;
+		flex-wrap: wrap;
+		-ms-box-orient: horizontal;
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -moz-flex;
+		display: -webkit-flex;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		-webkit-justify-content: center;
+		height: inherit;
+	}
+
+	.edx-container {
+		width: 1200px;
+		max-width: 90%;
+		margin: 0 auto;
+	}
+
+	.edx-15 {
+	    -webkit-transition: all 0.15s ease-in-out;
+	    -moz-transition: all 0.15s ease-in-out;
+	    -o-transition: all 0.15s ease-in-out;
+	    transition: all 0.15s ease-in-out;
+	}
+
+	.edx-25 {
+	    -webkit-transition: all 0.25s ease-in-out;
+	    -moz-transition: all 0.25s ease-in-out;
+	    -o-transition: all 0.25s ease-in-out;
+	    transition: all 0.25s ease-in-out;
+	}
+
+	.edx-logo {
+		position: relative;
+		width: 100%;
+		height: 55px;
+	}
+
+/* End ~ Page Defaults */
+
+/* Start ~ Header */
+	
+	.edx-header {
+		position: fixed;
+		width: 100%;
+		background: #fff;
+	}
+
+	.edx-header-top {
+		width: 100%;
+		height: 35px;
+		border-bottom: 1px solid rgba(20,20,20,0.1);
+	}
+
+	.edx-header-top-info {
+		width: 150px;
+	}
+
+	.edx-header-top-cta {
+		width: calc(100% - 300px);
+	}
+
+	.edx-header-top-social {
+		width: 150px;
+	}
+
+	.edx-header-top-social-item {
+		width: 22px;
+	    height: 22px;
+	    font-size: 12px;
+	    margin: 0px 2px;
+	    background: #232230;
+	    color: #fff;
+	    border-radius: 4px;
+	}
+
+	.edx-header-main {
+		width: 100%;
+		height: 55px;
+		border-bottom: 1px solid rgba(20,20,20,0.1);
+	}
+
+	.edx-header-logo {
+		width: 55px;
+	}
+
+	.edx-header-logo-container {
+		width: 54px;
+		height: 55px;
+		border-right: 1px solid rgba(20,20,20,0.1);
+	}
+
+	.edx-header-menu {
+		width: calc(100% - 110px);
+	}
+
+	.edx-header-menu-container {
+
+	}
+
+	.edx-header-menu-item {
+		font-size: 12px;
+		font-weight: 600;
+		color: #232230;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		padding: 0px 4px;
+		margin: 0px 8px;
+	}
+
+	.edx-header-sidebar {
+		width: 55px;
+	}
+
+	.edx-header-sidebar-container {
+		width: 54px;
+		height: 55px;
+		border-left: 1px solid rgba(20,20,20,0.1);
+	}
+
+/* End ~ Header */
