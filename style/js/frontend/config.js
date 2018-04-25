@@ -1,5 +1,5 @@
 requirejs.config({
-    baseUrl: 'frontend/',
+    baseUrl: '../style/js/frontend/',
     paths: {
         // libraries
         charts: 'libs/charts.min',
@@ -17,7 +17,7 @@ requirejs.config({
         storage: 'controller/core/storage',
         user: 'controller/core/user',
         // default
-        main: '../main',
+        main: 'main',
         // pages
         page: 'controller/pages/page',
         home: 'controller/pages/home',
