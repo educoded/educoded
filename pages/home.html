@@ -37,7 +37,7 @@
 
 		<script>
 			requirejs(['main','controller/app','controller/core/user','controller/pages/home'],
-			function (geocomplete, app, home) {
+			function () {
 				var app = new App(), user = new User(), home = new Home();
 				app.init();
 				user.init();
