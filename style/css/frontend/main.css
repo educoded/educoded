@@ -131,15 +131,19 @@
 	.edx-header-top {
 		width: 100%;
 		height: 35px;
-		border-bottom: 1px solid rgba(20,20,20,0.1);
+		/*border-bottom: 1px solid rgba(20,20,20,0.1);*/
 	}
 
 	.edx-header-top-info {
-		width: 150px;
+	    width: 150px;
+	    font-size: 12px;
+	    font-weight: 300;
 	}
 
 	.edx-header-top-cta {
 		width: calc(100% - 300px);
+		font-size: 12px;
+		font-weight: 300;
 	}
 
 	.edx-header-top-social {
@@ -159,17 +163,22 @@
 	.edx-header-main {
 		width: 100%;
 		height: 55px;
-		border-bottom: 1px solid rgba(20,20,20,0.1);
+		background: #000;
+		/*border-bottom: 1px solid rgba(20,20,20,0.1);*/
 	}
 
 	.edx-header-logo {
 		width: 55px;
 	}
 
+	.edx-header-logo img {
+		width: 32px;
+	}
+
 	.edx-header-logo-container {
 		width: 54px;
 		height: 55px;
-		border-right: 1px solid rgba(20,20,20,0.1);
+		border-right: 1px solid rgba(255,255,255,0.25);
 	}
 
 	.edx-header-menu {
@@ -183,7 +192,8 @@
 	.edx-header-menu-item {
 		font-size: 12px;
 		font-weight: 600;
-		color: #232230;
+		/*color: #232230;*/
+		color: #fff;
 		text-transform: uppercase;
 		letter-spacing: 2px;
 		padding: 0px 4px;
@@ -197,7 +207,7 @@
 	.edx-header-sidebar-container {
 		width: 54px;
 		height: 55px;
-		border-left: 1px solid rgba(20,20,20,0.1);
+		border-left: 1px solid rgba(255,255,255,0.25);
 	}
 
 /* End ~ Header */

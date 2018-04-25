@@ -16,8 +16,8 @@ class App {
 		content = 	`<!-- Start ~ Header -->
 					<div class="edx-header">
 						<div class="edx-header-top edx-wrapper">
-							<div class="edx-header-top-info edx-wrapper">info</div>
-							<div class="edx-header-top-cta edx-wrapper">cta</div>
+							<div class="edx-header-top-info edx-wrapper">info@educoded.com</div>
+							<div class="edx-header-top-cta edx-wrapper">Learn something new</div>
 							<div class="edx-header-top-social edx-wrapper">
 								<div class="edx-header-top-social-list edx-wrapper">
 									<div class="edx-header-top-social-item edx-wrapper">
@@ -42,7 +42,7 @@ class App {
 							<div class="edx-header-logo">
 								<div class="edx-header-logo-container edx-wrapper">
 									<div class="edx-logo edx-wrapper">
-										<img src="https://s3-us-west-2.amazonaws.com/weed-express/media/educoded-crop.png" width="36px">
+										<img src="https://s3-us-west-2.amazonaws.com/weed-express/media/educoded-crop.png">
 									</div>
 								</div>
 							</div>
