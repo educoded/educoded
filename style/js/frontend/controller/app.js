@@ -14,7 +14,7 @@ class App {
 		let container, content;
 		container = this.container;
 		content = 	`<!-- Start ~ Header -->
-					<div class="edx-header">
+					<div class="edx-header edx-content">
 						<div class="edx-header-top edx-wrapper">
 							<div class="edx-header-top-info edx-wrapper">info@educoded.com</div>
 							<div class="edx-header-top-cta edx-wrapper">Learn something new</div>
@@ -40,23 +40,37 @@ class App {
 						</div>
 						<div class="edx-header-main edx-wrapper">
 							<div class="edx-header-logo">
-								<div class="edx-header-logo-container edx-wrapper">
-									<div class="edx-logo edx-wrapper">
-										<img src="https://s3-us-west-2.amazonaws.com/weed-express/media/educoded-crop.png">
+								<a href="home.html">
+									<div class="edx-header-logo-container edx-wrapper">
+										<div class="edx-logo edx-wrapper">
+											<img src="https://s3-us-west-2.amazonaws.com/weed-express/media/educoded-crop.png">
+										</div>
 									</div>
-								</div>
+								</a>
 							</div>
 							<div class="edx-header-menu edx-wrapper">
 								<div class="edx-header-menu-container">
 									<div class="edx-header-menu-list edx-wrapper">
-										<div class="edx-header-menu-item">about</div>
-										<div class="edx-header-menu-item">courses</div>
-										<div class="edx-header-menu-item">blog</div>
+										<div class="edx-header-menu-item">
+											<a href="about.html">about</a>
+										</div>
+										<div class="edx-header-menu-item">
+											<a href="courses.html">courses</a>
+										</div>
+										<div class="edx-header-menu-item">
+											<a href="blog.html">blog</a>
+										</div>
 									</div>
 								</div>
 							</div>
 							<div class="edx-header-sidebar">
-								<div class="edx-header-sidebar-container edx-wrapper">=</div>
+								<div class="edx-header-sidebar-container edx-wrapper">
+									<div class="edx-header-sidebar-lines edx-wrapper">
+									    <div class="edx-header-sidebar-line"></div>
+									    <div class="edx-header-sidebar-line"></div>
+									    <div class="edx-header-sidebar-line"></div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -81,7 +95,7 @@ class App {
 		let container, content;
 		container = this.container;
 		content = 	`<!-- Start ~ Footer -->
-					<div class="edx-footer"></div>
+					<div class="edx-footer edx-content"></div>
 					<!-- End ~ Footer -->`;
 		container.append(content);
 

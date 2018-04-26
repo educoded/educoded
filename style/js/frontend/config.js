@@ -2,6 +2,7 @@ requirejs.config({
     baseUrl: '../style/js/frontend/',
     paths: {
         // libraries
+        ace: 'libs/ace/ace',
         charts: 'libs/charts.min',
         cropper: 'libs/cropper.min',
         moment: 'libs/moment.min',

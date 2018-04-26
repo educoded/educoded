@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<title>educoded</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Main CSS -->
+		<link rel="stylesheet" type="text/css" href="../style/css/frontend/main.css">
+
+		<!-- Font Awesome CDN -->
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+		<!-- jQuery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+		<!-- Angular -->
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script> -->
+
+		<!-- RequireJS -->
+		<script data-main="../style/js/frontend/config" src="../style/js/frontend/require.js"></script>
+
+	</head>
+	<body class="edx-app">
+
+		<script>
+			requirejs(['main','controller/app','controller/core/user','controller/pages/courses'],
+			function (app, courses) {
+				var app = new App(), user = new User(), courses = new Courses();
+				app.init();
+				user.init();
+		    	courses.init();
+			});
+		</script>
+
+	</body>
+</html>

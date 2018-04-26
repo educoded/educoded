@@ -5,6 +5,14 @@
 		<title>educoded</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
+		<link rel="apple-touch-icon" sizes="180x180" href="../media/favicon/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="../media/favicon/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="../media/favicon/favicon-16x16.png">
+		<link rel="manifest" href="../media/favicon/site.webmanifest">
+		<link rel="mask-icon" href="../media/favicon/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="theme-color" content="#ffffff">
+
 		<!-- Main CSS -->
 		<link rel="stylesheet" type="text/css" href="../style/css/frontend/main.css">
 
@@ -15,7 +23,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
 		<!-- Angular -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script> -->
 
 		<!-- RequireJS -->
 		<script data-main="../style/js/frontend/config" src="../style/js/frontend/require.js"></script>
@@ -23,8 +31,26 @@
 	</head>
 	<body class="edx-app">
 		
+		<style>
+			.edx-editor {
+			    width: 100%;
+			    height: 50vh;
+			    min-height: 350px;
+			    margin: 20px 0px;
+			    padding: 8px 0px;
+			    background: #272922;
+			    border-radius: 4px;
+			}
+			#editor {
+		        margin: 0;
+		        position: relative;
+		        width: inherit;
+		        height: inherit;
+		    }
+		</style>
+
 		<script>
-			requirejs(['main','controller/app','controller/core/user','controller/pages/home'],
+			requirejs(['main','libs/ace/ace','controller/app','controller/core/user','controller/pages/home'],
 			function (app, home) {
 				var app = new App(), user = new User(), home = new Home();
 				app.init();

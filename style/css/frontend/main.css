@@ -10,7 +10,7 @@
 		- Header
 		- Content (pages)
 		- Footer
-		- Responsive
+		- Responsive Design
 
 */
 
@@ -18,17 +18,20 @@
 
 /* Start ~ Browser Defaults */
 
-	* {
-	    font-family: 'Lato';
-	    -webkit-font-smoothing: antialiased;
-	    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
-	}
+	/*
+		* {
+		    font-family: 'Lato';
+		    -webkit-font-smoothing: antialiased;
+		    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+		}
+	*/
 
 	body {
 	    padding: 0px;
 	    margin: 0px;
-	    -webkit-font-smoothing: antialiased;
 	    outline: none;
+	    -webkit-font-smoothing: antialiased;
+	    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
 	    position: relative;
 	    left: 0px;
 	}
@@ -118,6 +121,16 @@
 		height: 55px;
 	}
 
+	.edx-content {
+	    font-family: 'Lato';
+	    -webkit-font-smoothing: antialiased;
+	    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+	}
+
+	.edx-page {
+		padding-top: 90px;
+	}
+
 /* End ~ Page Defaults */
 
 /* Start ~ Header */
@@ -129,9 +142,11 @@
 	}
 
 	.edx-header-top {
-		width: 100%;
-		height: 35px;
-		/*border-bottom: 1px solid rgba(20,20,20,0.1);*/
+	    width: 100%;
+	    height: 35px;
+	    background: #000;
+	    color: #fff;
+	    border-bottom: 1px solid rgba(255,255,255,0.25);
 	}
 
 	.edx-header-top-info {
@@ -155,7 +170,7 @@
 	    height: 22px;
 	    font-size: 12px;
 	    margin: 0px 2px;
-	    background: #232230;
+	    background: #232323;
 	    color: #fff;
 	    border-radius: 4px;
 	}
@@ -164,7 +179,6 @@
 		width: 100%;
 		height: 55px;
 		background: #000;
-		/*border-bottom: 1px solid rgba(20,20,20,0.1);*/
 	}
 
 	.edx-header-logo {
@@ -192,12 +206,15 @@
 	.edx-header-menu-item {
 		font-size: 12px;
 		font-weight: 600;
-		/*color: #232230;*/
-		color: #fff;
 		text-transform: uppercase;
 		letter-spacing: 2px;
 		padding: 0px 4px;
 		margin: 0px 8px;
+	}
+
+	.edx-header-menu-item a {
+		color: #fff;
+		/*color: #acacac;*/
 	}
 
 	.edx-header-sidebar {
@@ -210,4 +227,114 @@
 		border-left: 1px solid rgba(255,255,255,0.25);
 	}
 
+	.edx-header-sidebar-lines {
+	    width: 28px;
+	    height: 21px;
+	    padding: 0px 15px;
+	    justify-content: flex-end;
+	    cursor: pointer;
+	}
+
+	.edx-header-sidebar-line {
+	    width: 100%;
+	    height: 1px;
+	    background: rgba(255,255,255,1);
+	}
+
 /* End ~ Header */
+
+/* Start ~ Content */
+	
+	/* Start ~ Content - Homepage */
+
+
+
+	/* End ~ Content - Homepage */
+
+/* End ~ Content */
+
+/* Start ~ Responsive Design */
+	
+	/* Start ~ Responsive Design - Grid */
+
+		/* Extra Small */
+		.edx-xs-10,.edx-xs-20,.edx-xs-25,.edx-xs-30,.edx-xs-33,.edx-xs-40,.edx-xs-50,.edx-xs-60,.edx-xs-66,.edx-xs-70,.edx-xs-75,.edx-xs-80,.edx-xs-90,.edx-xs-100 {
+			width: 100%;
+		}
+
+		/* Small */
+		@media( min-width: 767px ) {
+			.edx-sm-10 {width: 10%}
+			.edx-sm-20 {width: 20%}
+			.edx-sm-25 {width: 25%;}
+			.edx-sm-30 {width: 30%;}
+			.edx-sm-33 {width: 33.33%;}
+			.edx-sm-40 {width: 40%;}
+			.edx-sm-50 {width: 50%;}
+			.edx-sm-60 {width: 60%;}
+			.edx-sm-66 {width: 66.6%;}
+			.edx-sm-70 {width: 70%;}
+			.edx-sm-75 {width: 75%;}
+			.edx-sm-80 {width: 80%;}
+			.edx-sm-90 {width: 90%;}
+			.edx-sm-100 {width: 100%;}
+		}
+
+		/* Medium */
+		@media( min-width: 991px ) {
+			.edx-md-10 {width: 10%}
+			.edx-md-20 {width: 20%}
+			.edx-md-25 {width: 25%;}
+			.edx-md-30 {width: 30%;}
+			.edx-md-33 {width: 33.33%;}
+			.edx-md-40 {width: 40%;}
+			.edx-md-50 {width: 50%;}
+			.edx-md-60 {width: 60%;}
+			.edx-md-66 {width: 66.6%;}
+			.edx-md-70 {width: 70%;}
+			.edx-md-75 {width: 75%;}
+			.edx-md-80 {width: 80%;}
+			.edx-md-90 {width: 90%;}
+			.edx-md-100 {width: 100%;}
+		}
+
+		/* Large */
+		@media( min-width: 1200px ) {
+			.edx-lg-10 {width: 10%}
+			.edx-lg-20 {width: 20%}
+			.edx-lg-25 {width: 25%;}
+			.edx-lg-30 {width: 30%;}
+			.edx-lg-33 {width: 33.33%;}
+			.edx-lg-40 {width: 40%;}
+			.edx-lg-50 {width: 50%;}
+			.edx-lg-60 {width: 60%;}
+			.edx-lg-66 {width: 66.6%;}
+			.edx-lg-70 {width: 70%;}
+			.edx-lg-75 {width: 75%;}
+			.edx-lg-80 {width: 80%;}
+			.edx-lg-90 {width: 90%;}
+			.edx-lg-100 {width: 100%;}
+		}
+
+	/* End ~ Responsive Design - Grid */
+
+	/* Start ~ Responsive Design - Default */
+
+		/* Small */
+		@media( min-width: 767px ) {
+			
+		}
+
+		/* Medium */
+		@media( min-width: 991px ) {
+
+		}
+
+		/* Large */
+		@media( min-width: 1200px ) {
+
+		}
+
+	/* End ~ Responsive Design - Default */
+
+/* End ~ Responsive Design */
