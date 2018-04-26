@@ -12,10 +12,9 @@ class Home {
 						<div class="edx-wrapper">
 							<div class="edx-xs-100 edx-sm-100 edx-md-75 edx-lg-75">
 								<div class="edx-editor">
-									<pre id="editor">// lets start coding :-)
-
-</pre>
+									<pre id="editor"></pre>
 								</div>
+								<button class="get-code">submit</button>
 							</div>
 						</div>
 					</div>`;
@@ -26,8 +25,17 @@ class Home {
 	    editor.session.setUseWrapMode(true);
 	    editor.setShowPrintMargin(false);
 	    document.getElementById('editor').style.fontSize='11px';
-	    editor.gotoLine(3);
 	    editor.focus();
+	    jQuery('.get-code').on('click', function() {
+	    	let data = editor.getValue();
+
+	    	if(data === "let x = 'test';") {
+	    		console.log('great job!');
+	    	}
+	    	else {
+	    		console.log('fail');
+	    	}
+	    });
 	    // editor.setReadOnly(true);
 	}
 

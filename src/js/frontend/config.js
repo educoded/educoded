@@ -1,5 +1,5 @@
 requirejs.config({
-    baseUrl: '../style/js/frontend/',
+    baseUrl: '../src/js/frontend/',
     paths: {
         // libraries
         ace: 'libs/ace/ace',
