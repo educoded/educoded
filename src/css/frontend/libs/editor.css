@@ -1,0 +1,104 @@
+.edx-editor-wrapper {
+	align-items: flex-start;
+}
+
+.edx-editor-holder:before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: #2f312a;
+    height: 8px;
+    width: 48px;
+    border-top-left-radius: 4px;
+}
+
+.edx-editor-holder {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    min-height: 350px;
+    margin: 20px 0px;
+    padding: 8px 0px;
+    background: #272922;
+    border-radius: 4px;
+}
+
+.edx-editor-holder:after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    background: #2f312a;
+    height: 8px;
+    width: 48px;
+    border-bottom-left-radius: 4px;
+}
+
+.edx-editor-holder.shadow {
+    box-shadow: 0px 0px 30px rgba(20,20,20,0.5);
+}
+
+.edx-editor-btn {
+	display: inline-flex;
+    height: 36px;
+    padding: 0px 20px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 4px;
+}
+
+.edx-purple-btn {
+	background: #8660d9;
+    border: 1px solid #8660d9;
+    border-bottom: 2px solid #6d3bda;
+    color: #fff;
+}
+
+.edx-editor {
+    margin: 0;
+    position: relative;
+    width: inherit;
+    height: inherit;
+}
+
+.edx-editor-sidebar-container {
+	margin: 20px;
+}
+
+.edx-editor-sidebar {
+    background: #f6f6f7;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.edx-editor-sidebar-content {
+	padding: 15px;
+}
+
+.edx-editor-sidebar-item {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(20,20,20,0.1);
+}
+
+.edx-editor-sidebar-instruction {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.edx-editor-sidebar-code {
+    font-size: 12px;
+    color: #636363;
+}
+
+.edx-editor-sidebar-code span {
+	font-weight: 800;
+}
+
+.edx-editor-sidebar-completion {
+    font-size: 14px;
+    font-weight: 600;
+}

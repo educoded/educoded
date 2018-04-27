@@ -11,10 +11,13 @@ requirejs.config({
         particle: 'libs/particles.min',
         geocomplete: 'libs/geocomplete',
         owlCarousel: 'libs/owl.carousel.min',
+        jQuery: 'libs/jquery.min',
         // controller
-        api: 'controller/api',
         app: 'controller/app',
+        // core
+        api: 'controller/core/api',
         cart: 'controller/core/cart',
+        editor: 'controller/core/editor',
         storage: 'controller/core/storage',
         user: 'controller/core/user',
         // default
