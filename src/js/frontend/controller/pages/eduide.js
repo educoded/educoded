@@ -10,7 +10,6 @@ class Eduide {
 	init() {
 		this.container = jQuery('.edx-page');
 		this.editor();
-		this.courses();
 	}
 
 	editor() {
