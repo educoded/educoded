@@ -45,22 +45,25 @@ class Home {
 <html lang="en">
 	<head>
 		<title>educoded</title>
-	</head>
-	<body class="edx-app">
-
+		
 		<!-- Main CSS -->
 		<link rel="stylesheet" type="text/css" href="../src/css/frontend/main.css">
 
 		<!-- RequireJS -->
-		<script data-main="../src/js/frontend/config" src="../src/js/frontend/require.js"></script>
+		<script src="../src/js/frontend/require.js"></script>
+
+	</head>
+	<body class="edx-app edx-25">
 
 		<script>
-			requirejs(['libs/jquery.min','libs/ace/ace','controller/app','controller/core/user','controller/core/editor','controller/pages/home'],
-			function (app, home) {
-				var app = new App(), user = new User(), home = new Home();
-				app.init();
-				user.init();
-		    	home.init();
+			requirejs(['../src/js/frontend/config'],function(){
+				requirejs(['jQuery','ace','editor','app','user','home'],
+				function (app, home) {
+					var app = new App(), user = new User(), home = new Home();
+					app.init();
+					user.init();
+					home.init();
+				})
 			});
 		</script>
 

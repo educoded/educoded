@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<title>educoded</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Main CSS -->
+		<link rel="stylesheet" type="text/css" href="../src/css/frontend/main.css">
+
+		<!-- RequireJS -->
+		<script src="../src/js/frontend/require.js"></script>
+
+	</head>
+	<body class="edx-app edx-25">
+		
+		<script>
+			requirejs(['../src/js/frontend/config'],function(){
+				requirejs(['jQuery','app','user','blog'],
+				function (app, blog) {
+					var app = new App(), user = new User(), blog = new Blog();
+					app.init();
+					user.init();
+					blog.init();
+				})
+			});
+		</script>
+
+	</body>
+</html>

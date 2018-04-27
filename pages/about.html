@@ -13,11 +13,11 @@
 		<script src="../src/js/frontend/require.js"></script>
 
 	</head>
-	<body class="edx-app">
+	<body class="edx-app edx-25">
 		
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
-				requirejs(['app','user','about'],
+				requirejs(['jQuery','app','user','about'],
 				function (app, about) {
 					var app = new App(), user = new User(), about = new About();
 					app.init();

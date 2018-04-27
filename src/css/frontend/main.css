@@ -6,6 +6,7 @@
 	CSS Layout
 
 		- Browser Defaults
+		- App Defaults
 		- Page Defaults
 		- Header
 		- Content (pages)
@@ -77,6 +78,19 @@
 	}
 
 /* End ~ Browser Defaults */
+
+/* Start ~ App Defaults */
+	
+	:root {
+		--edx-blue: #06a1e5;
+		--edx-cyan: #25ccc3;
+		--edx-green: #62aa20;
+		--edx-purple: #8660d9;
+		--edx-yellow: #f7ce23;
+		--edx-orange: #f98d2b;
+	}
+
+/* End ~ App Defaults */
 
 /* Start ~ Page Defaults */
 
@@ -293,6 +307,88 @@
 
 /* End ~ Header */
 
+/* Start ~ Sidebar */
+
+	.edx-sidebar-opened {
+	    overflow: hidden;
+	    left: -350px;
+	}
+		
+	.edx-sidebar.active {
+		right: 0px;
+	}
+
+	.edx-sidebar {
+		position: fixed;
+	    top: 0px;
+	    right: -351px;
+	    width: 350px;
+	    height: 100%;
+	    background: #fff;
+	    border-left: 1px solid rgba(20,20,20,0.1);
+	    z-index: 101;
+	    justify-content: flex-start;
+	    align-items: flex-start;
+	}
+
+	.edx-sidebar-menu {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: 35px;
+		border-bottom: 1px solid rgba(20,20,20,0.1);
+	}
+
+	.edx-sidebar-menu-item.active {
+	    font-weight: 800;
+	}
+
+	.edx-sidebar-menu-item {
+	    color: #333;
+	    font-size: 10px;
+	    letter-spacing: 2px;
+	    font-weight: 500;
+	    text-transform: uppercase;
+	    width: calc(25% - 1px);
+	    padding: 5px 0px;
+	    border-right: 1px solid rgba(20,20,20,0.1);
+	    text-align: center;
+	    cursor: pointer;
+	}
+
+	.edx-sidebar-content {
+	    width: 100%;
+	    margin-top: 36px;
+	}
+
+	.edx-sidebar-section.active {
+		display: block;
+	}
+
+	.edx-sidebar-section {
+		display: none;
+	    width: 100%;
+	    height: calc(100vh - 36px);
+	}
+
+	.edx-sidebar-section-content {
+		padding: 15px;
+	}
+
+	.edx-sidebar-overlay {
+	    display: none;
+	    position: fixed;
+	    top: 0px;
+	    left: 0px;
+	    width: 100%;
+	    height: 100%;
+	    background: rgba(20,20,20,0.5);
+	    z-index: 10;
+	}
+
+/* End ~ Sidebar */
+
 /* Start ~ Content */
 	
 	/* Start ~ Content - Homepage */
@@ -306,18 +402,24 @@
 		    width: 100%;
 		    height: 250px;
 		    color: #fff;
+			-moz-box-shadow: inset 0 0 250px rgba(20,20,20,0.15);
+			-webkit-box-shadow: inset 0 0 250px rgba(20,20,20,0.15);
+			box-shadow: inset 0 0 250px rgba(20,20,20,0.15);
 		}
 
 		.edx-course-card-html .edx-course-card-cover {
 			background: linear-gradient(35deg, rgb(255, 128, 8), rgb(255, 200, 55));
+			background: var(--edx-orange);
 		}
 
 		.edx-course-card-javascript .edx-course-card-cover {
 			background: linear-gradient(35deg, rgb(193, 175, 17), rgb(255, 210, 0));
+			background: var(--edx-yellow);
 		}
 
 		.edx-course-card-php .edx-course-card-cover {
 			background: linear-gradient(35deg, rgb(103, 58, 183), rgb(173, 83, 137));
+			background: var(--edx-purple);
 		}
 
 		.edx-course-card-cover-title {
