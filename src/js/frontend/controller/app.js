@@ -14,7 +14,7 @@ class App {
 		let container, content;
 		container = this.container;
 		content = 	`<!-- Start ~ Header -->
-					<div class="edx-header edx-content">
+					<div class="edx-header">
 						<div class="edx-header-top edx-wrapper">
 							<div class="edx-header-top-info edx-wrapper">info@educoded.com</div>
 							<div class="edx-header-top-cta edx-wrapper">Learn something new</div>
@@ -95,7 +95,7 @@ class App {
 		let container, content;
 		container = this.container;
 		content = 	`<!-- Start ~ Footer -->
-					<div class="edx-footer edx-content"></div>
+					<div class="edx-footer"></div>
 					<!-- End ~ Footer -->`;
 		container.append(content);
 

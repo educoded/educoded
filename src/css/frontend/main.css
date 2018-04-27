@@ -18,14 +18,6 @@
 
 /* Start ~ Browser Defaults */
 
-	/*
-		* {
-		    font-family: 'Lato';
-		    -webkit-font-smoothing: antialiased;
-		    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
-		}
-	*/
-
 	body {
 	    padding: 0px;
 	    margin: 0px;
@@ -34,6 +26,12 @@
 	    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
 	    position: relative;
 	    left: 0px;
+	}
+
+	/* this is used because changing the font for ace breaks the layout... */
+	body:not(#editor) > div,
+	body:not(#editor) > textarea {
+	    font-family: 'Lato';
 	}
 
 	a {
