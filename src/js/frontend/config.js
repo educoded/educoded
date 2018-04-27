@@ -28,6 +28,7 @@ requirejs.config({
         blog: 'controller/pages/blog',
         course: 'controller/pages/course',
         courses: 'controller/pages/courses',
+        eduide: 'controller/pages/eduide',
         home: 'controller/pages/home',
         signup: 'controller/pages/signup',
         // ajax
