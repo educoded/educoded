@@ -3,6 +3,7 @@
 	<head>
 
 		<title>educoded</title>
+		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<link rel="apple-touch-icon" sizes="180x180" href="../media/favicon/apple-touch-icon.png">
@@ -17,18 +18,20 @@
 		<link rel="stylesheet" type="text/css" href="../src/css/frontend/main.css">
 
 		<!-- RequireJS -->
-		<script data-main="../src/js/frontend/config" src="../src/js/frontend/require.js"></script>
+		<script src="../src/js/frontend/require.js"></script>
 
 	</head>
 	<body class="edx-app">
 
 		<script>
-			requirejs(['libs/jquery.min','libs/ace/ace','controller/app','controller/core/user','controller/core/editor','controller/pages/home'],
-			function (app, home) {
-				var app = new App(), user = new User(), home = new Home();
-				app.init();
-				user.init();
-		    	home.init();
+			requirejs(['../src/js/frontend/config'],function(){
+				requirejs(['jQuery','ace','app','user','editor','home'],
+				function (app, home) {
+					var app = new App(), user = new User(), home = new Home();
+					app.init();
+					user.init();
+					home.init();
+				})
 			});
 		</script>
 

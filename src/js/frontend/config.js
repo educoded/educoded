@@ -24,13 +24,11 @@ requirejs.config({
         main: 'main',
         // pages
         page: 'controller/pages/page',
+        about: 'controller/pages/about',
+        blog: 'controller/pages/blog',
+        course: 'controller/pages/course',
+        courses: 'controller/pages/courses',
         home: 'controller/pages/home',
-        shops: 'controller/pages/shops',
-        shop: 'controller/pages/shop',
-        configShop: 'controller/pages/shop/config',
-        products: 'controller/pages/shop/products',
-        strains: 'controller/pages/shop/strains',
-        strain: 'controller/pages/shop/strain',
         signup: 'controller/pages/signup',
         // ajax
         ajaxLogin: 'ajax/user/login',
