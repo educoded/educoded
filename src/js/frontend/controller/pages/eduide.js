@@ -53,7 +53,9 @@ class Eduide {
 
 		editor.init({
 			'id':'edx-course-editor',
-			'mode':'ace/mode/html'
+			'mode':'ace/mode/html',
+			'code': code,
+			'shadow': true
 		});
 	}
 
