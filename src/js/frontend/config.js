@@ -15,6 +15,7 @@ requirejs.config({
         // controller
         app: 'controller/app',
         // core
+        aceEditor: 'controller/core/aceEditor',
         api: 'controller/core/api',
         cart: 'controller/core/cart',
         editor: 'controller/core/editor',

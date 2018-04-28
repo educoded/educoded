@@ -26,7 +26,7 @@ class Home {
 	}
 
 	editor() {
-		let container, content, code, editor = new Editor();
+		let container, content, code, editor = new aceEditor();
 		container = jQuery('.edx-section-editor');
 		content = 	`<div class="edx-angled-section-wrapper edx-container">
 						<div class="edx-editor-container">
@@ -45,7 +45,7 @@ class Home {
 <html lang="en">
 	<head>
 		<title>educoded</title>
-		
+
 		<!-- Main CSS -->
 		<link rel="stylesheet" type="text/css" href="../src/css/frontend/main.css">
 
@@ -57,7 +57,7 @@ class Home {
 
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
-				requirejs(['jQuery','ace','editor','app','user','home'],
+				requirejs(['jQuery','ace','aceEditor','app','user','home'],
 				function (app, home) {
 					var app = new App(), user = new User(), home = new Home();
 					app.init();
@@ -79,7 +79,7 @@ class Home {
 			'wrap':true,
 			'margin':false,
 			'focus':true,
-			'read-only':false,
+			'readonly':false,
 			'shadow':true,
 			'style':{
 				'font-size':'11px'
