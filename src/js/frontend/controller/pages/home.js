@@ -32,8 +32,33 @@ class Home {
 						<div class="edx-editor-container">
 							<div class="edx-wrapper edx-editor-wrapper">
 								<div class="edx-xs-100 edx-sm-100 edx-md-75 edx-lg-75">
-									<div class="edx-editor-holder">
-										<pre class="edx-editor" id="edx-homepage-editor"></pre>
+									<div class="edx-editor-app">
+										<div class="edx-editor-toolbar edx-wrapper">
+											<div class="edx-editor-tab edx-wrapper" data-tab="edx-homepage-html">
+												<svg class="edx-editor-tab-holder" width="110" height="24">
+												    <polygon class="edx-editor-tab-svg" points="0 24,110 24,95 0,15 0"></polygon>
+												</svg>
+												<div class="edx-tab-title">tab</div>
+												<div class="edx-editor-tab-close edx-25">x</div>
+											</div>
+											<div class="edx-editor-tab edx-wrapper active" data-tab="edx-homepage-js">
+												<svg class="edx-editor-tab-holder" width="110" height="24">
+												    <polygon class="edx-editor-tab-svg" points="0 24,110 24,95 0,15 0"></polygon>
+												</svg>
+												<div class="edx-tab-title">tab</div>
+												<div class="edx-editor-tab-close edx-25">x</div>
+											</div>
+											<div class="edx-editor-tab edx-wrapper" data-tab="edx-homepage-css">
+												<svg class="edx-editor-tab-holder" width="110" height="24">
+												    <polygon class="edx-editor-tab-svg" points="0 24,110 24,95 0,15 0"></polygon>
+												</svg>
+												<div class="edx-tab-title">tab</div>
+												<div class="edx-editor-tab-close edx-25">x</div>
+											</div>
+										</div>
+										<div class="edx-editor-holder">
+											<pre class="edx-editor" id="edx-homepage-editor"></pre>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -79,8 +104,9 @@ class Home {
 			'wrap':true,
 			'margin':false,
 			'focus':true,
-			'read-only':false,
-			'shadow':true,
+			'readonly':false,
+			'template':'multiple',
+			'shadow':false,
 			'style':{
 				'font-size':'11px'
 			}

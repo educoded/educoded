@@ -1,5 +1,76 @@
+:root {
+    --edx-active-tab: #272823;
+    --edx-inactive-tab: #484848;
+}
+
 .edx-editor-wrapper {
 	align-items: flex-start;
+}
+
+.edx-editor-app.shadow {
+    box-shadow: 0px 0px 30px rgba(20,20,20,0.5);
+}
+
+.edx-editor-app {
+    margin: 20px 0px;
+}
+
+.edx-editor-toolbar {
+    padding-left: 58px;
+    height: 24px !important;
+    justify-content: flex-start !important;
+    position: relative;
+    top: 0px;
+    z-index: 0;
+}
+
+.edx-editor-tab.active {
+    z-index: 5;
+}
+
+.edx-editor-tab {
+    position: relative;
+    margin: 0px -8px;
+    justify-content: flex-start !important;
+    z-index: 1;
+}
+
+.edx-editor-tab-holder {
+    -webkit-filter: drop-shadow( 0px 0px 2px rgba(20,20,20,0.65)); 
+    filter: drop-shadow( 0px 0px 2px rgba(20,20,20,0.65));
+}
+
+.edx-editor-tab.active .edx-editor-tab-svg {
+    fill: var(--edx-active-tab);
+    z-index: 1;
+}
+
+.edx-editor-tab-svg {
+    fill: var(--edx-inactive-tab);
+}
+
+.edx-tab-title {
+    position: absolute;
+    left: 30px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+}
+
+.edx-editor-tab-close {
+    position: absolute;
+    right: 27px;
+    top: 3px;
+    font-size: 7px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.45);
+    cursor: pointer;
+}
+
+.edx-editor-tab-close:hover {
+    color: #fff;
 }
 
 .edx-editor-holder:before {
@@ -18,7 +89,6 @@
     width: 100%;
     height: 60vh;
     min-height: 350px;
-    margin: 20px 0px;
     padding: 8px 0px;
     background: #272922;
     border-radius: 4px;
@@ -33,10 +103,6 @@
     height: 8px;
     width: 48px;
     border-bottom-left-radius: 4px;
-}
-
-.edx-editor-holder.shadow {
-    box-shadow: 0px 0px 30px rgba(20,20,20,0.5);
 }
 
 .edx-editor-btn {
@@ -62,6 +128,11 @@
     position: relative;
     width: inherit;
     height: inherit;
+}
+
+.edx-editor-error {
+    font-size: 50px;
+    color: #fff;
 }
 
 .edx-editor-sidebar-container {
