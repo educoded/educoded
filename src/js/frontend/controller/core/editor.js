@@ -1,72 +1,106 @@
-var editorDebug;
-
 class Editor {
 	init(data) {
-		//set editorDebug, for testing from console
-		editorDebug = this;
-
-		//set editor defaults, if they don't exist.
-		//be explicit: don't use logical OR for defining defaults
-		this.defaultTheme = data.theme===undefined?'ace/theme/monokai':data.theme;
-		this.defaultMode = data.mode===undefined?'ace/mode/html':data.mode;
-		this.defaultWrap = data.wrap===undefined?true:data.wrap;
-		this.defaultMargin = data.margin===undefined?false:data.margin;
-		this.defaultReadOnly = data.readonly===undefined?false:data.readonly;
-		this.defaultCode = data.code===undefined?"<!-- Empty File -->":data.code;
-		this.firstCode = data.firstCode===undefined?"<!-- Empty File -->":data.firstCode;
-
-		this.container = jQuery("#"+data.id);
-
-		this.tabs = [];
-		this.lastTab=0;
-		this.newTab();
-		if(data.shadow) jQuery('.edx-editor-holder').addClass('shadow');
-	}
-	newTab(data={'id':'edx-editor-inst-'+this.tabs.length}){
-			let content, thisTabId = this.tabs.length;
-			data.id = 'edx-editor-inst-'+thisTabId;
-			content = `<pre id="`+(data.id)+`" class="edx-editor"></pre>`;
-			this.container.append(content);
-			this.tabs.push(this.buildInstance(data));
-			this.switchTabs(thisTabId);
-	}
-	killTab(id){
-		this.tabs[id].destroy();
-		jQuery("#edx-editor-inst-"+id).remove();
-	}
-	tabIsVisible(id){
-		return jQuery("#edx-editor-inst-"+id).is(':visible');
-	}
-	switchTabs(toTab){
-		for(var i=0;i<this.tabs.length;i++){
-			if(i===toTab){
-				jQuery("#edx-editor-inst-"+i).show();
-			}else if(this.tabIsVisible(i)){
-				jQuery("#edx-editor-inst-"+i).hide();
-				this.lastTab=i;
-			}
+		this.data = data;
+		if(data.id) {
+			this.buildEditor();
+		}
+		else {
+			jQuery('.edx-editor').addClass('edx-wrapper').html('<div class="edx-editor-error">ERROR</div>');
 		}
 	}
-	switchToLastTab(){
-		this.switchTabs(this.lastTab);
-	}
-	buildInstance(data) {
-		let editor,length;
+
+	buildEditor() {
+
+		let data, editor, defaults, theme, mode, wrap, margin, code, readonly, template, length;
+
+		// Editor Data
+		data = this.data;
+		
+		// Editor Defaults
+		defaults = {
+			'theme':'ace/theme/monokai',
+			'mode':'ace/mode/html',
+			'code': '',
+			'wrap':true,
+			'margin':false,
+			'focus':true,
+			'readonly':false,
+			'template':'single'
+		};
+
+		theme = data.theme.length > 0 ? defaults.theme : data.theme; // set theme
+		mode = data.mode.length > 0 ? defaults.mode : data.mode; // set mode
+		wrap = data.wrap.length > 0 ? defaults.wrap : data.wrap; // set wrap
+		margin = data.margin.length > 0 ? defaults.margin : data.margin; // set margin
+		code = data.code.length > 0 ? data.code : defaults.code; // set code
+		readonly = data.readonly.length > 0 ? defaults.readonly : data.readonly; // set readonly
+		template = data.template.length > 0 ? defaults.template : data.template; // set template
 
 		editor = ace.edit(data.id);
-		editor.setTheme(data.theme===undefined?this.defaultTheme:data.theme);
-		editor.session.setMode(data.mode===undefined?this.defaultMode:data.mode);
-		editor.session.setUseWrapMode(data.wrap===undefined?this.defaultWrap:data.wrap);
-		editor.setShowPrintMargin(data.margin===undefined?this.defaultMargin:data.margin);
-		editor.setValue(data.code===undefined?this.defaultCode:data.code);
-		editor.setReadOnly(data.readonly===undefined?this.defaultReadOnly:data.readonly);
-		if(data.focus) {
-			length = editor.session.getLength();
-			editor.gotoLine(length);
-			editor.focus();
-		}
+		editor.setTheme(theme);
+		editor.session.setMode(mode);
+		editor.session.setUseWrapMode(wrap);
+		editor.setShowPrintMargin(margin);
+		editor.setValue(code);
+		editor.setReadOnly(readonly);
 
-		return editor;
+		if(data.focus) { length = editor.session.getLength(); editor.gotoLine(length); editor.focus(); }
+		if(data.shadow) { jQuery('.edx-editor-app').addClass('shadow'); }
+		if(data.template === 'multiple') { this.multipleEditor(); }
+
+		this.loadEditor();
+		this.saveEditor();
+
 	}
 
+	multipleEditor() {
+
+
+
+		this.addEditor();
+		this.removeEditor();
+		this.switchEditor();
+
+	}
+
+	addEditor() {
+		console.log('add editor');
+	}
+
+	removeEditor() {
+		jQuery('.edx-editor-tab-close').on('click', function() {
+			let item, tab, length;
+			item = jQuery(this);
+			tab = item.closest('.edx-editor-tab');
+			length = jQuery('.edx-editor-tab').length;
+			if(length > 1) {
+				tab.remove();
+				if(tab.hasClass('active')) {
+					jQuery('.edx-editor-tab:nth-child(1)').addClass('active');
+				}
+			}
+			else {
+				console.log('at least one tab must be available');
+			}
+		});
+	}
+
+	loadEditor() {
+		console.log('load editor');
+	}
+
+	saveEditor() {
+		console.log('save editor');
+	}
+
+	switchEditor() {
+		jQuery('.edx-editor-tab').on('click', function() {
+			let item, tab;
+			item = jQuery(this);
+			tab = item.data('tab');
+			jQuery('.edx-editor-tab').removeClass('active');
+			item.addClass('active');
+			console.log(tab);
+		});
+	}
 }
