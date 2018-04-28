@@ -7,6 +7,7 @@ class App {
 		this.sidebar();
 		this.page();
 		this.footer();
+		this.checkApp();
 
 	}
 
@@ -221,6 +222,42 @@ class App {
 					<!-- End ~ Footer -->`;
 		container.append(content);
 		this.foot = jQuery('.edx-footer');
+	}
+
+	checkApp() {
+		let appObj;
+		appObj = localStorage.getItem('edx-cache-app-obj');
+
+		if(appObj != null) {
+			// app object exists
+			this.configApp(appObj);
+		}
+		else {
+			// app object does not exist
+			// start app object
+			this.startApp();
+		}
+	}
+
+	startApp() {
+		let appObj;
+		appObj = {
+			'theme':'dark'
+		};
+		localStorage.setItem('edx-cache-app-obj',JSON.stringify(appObj));
+		this.checkApp();
+	}
+
+	configApp(data) {
+		let obj = JSON.parse(data);
+		switch(obj.theme) {
+			case 'dark':
+				jQuery('body').addClass('edx-dark-theme');
+			break;
+			case 'light':
+				jQuery('body').addClass('edx-light-theme');
+			break;
+		}
 	}
 
 }
