@@ -23,7 +23,7 @@ class Editor {
 		if(data.shadow) jQuery('.edx-editor-holder').addClass('shadow');
 	}
 	newTab(data={'id':'edx-editor-inst-'+this.tabs.length}){
-			let thisTabId = this.tabs.length;
+			let content, thisTabId = this.tabs.length;
 			data.id = 'edx-editor-inst-'+thisTabId;
 			content = `<pre id="`+(data.id)+`" class="edx-editor"></pre>`;
 			this.container.append(content);
