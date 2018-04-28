@@ -9,10 +9,7 @@ class Eduide {
 
 	init() {
 		this.container = jQuery('.edx-page');
-		this.editor();
-	}
 
-	editor() {
 		let container, content, code, editor = new Editor();
 		container = this.container;
 		content = 	`<div class="edx-container">
@@ -20,7 +17,7 @@ class Eduide {
 							<div class="edx-wrapper edx-editor-wrapper">
 								<div class="edx-xs-100 edx-sm-100 edx-md-75 edx-lg-75">
 									<div class="edx-editor-holder">
-										<pre class="edx-editor" id="edx-homepage-editor"></pre>
+										<div class="edx-editor" id="edx-course-editor"></div>
 									</div>
 								</div>
 							</div>
@@ -35,39 +32,30 @@ class Eduide {
 	</head>
 	<body class="edx-app">
 
-		<!-- Main CSS -->
-		<link rel="stylesheet" type="text/css" href="../src/css/frontend/main.css">
-
-		<!-- RequireJS -->
-		<script data-main="../src/js/frontend/config" src="../src/js/frontend/require.js"></script>
-
-		<script>
-			requirejs(['libs/jquery.min','libs/ace/ace','controller/app','controller/core/user','controller/core/editor','controller/pages/home'],
-			function (app, home) {
-				var app = new App(), user = new User(), home = new Home();
-				app.init();
-				user.init();
-		    	home.init();
-			});
-		</script>
+		<!-- HTML SAMPLE CODE -->
 
 	</body>
 </html>`;
 
 		// initiate editor
+		// editor.init({
+		// 	'id':'edx-homepage-editor',
+		// 	'theme':'ace/theme/monokai',
+		// 	'mode':'ace/mode/html',
+		// 	'code':code,
+		// 	'wrap':true,
+		// 	'margin':false,
+		// 	'focus':true,
+		// 	'style':{
+		// 		'font-size':'11px'
+		// 	}
+		// });
+
 		editor.init({
-			'id':'edx-homepage-editor',
-			'theme':'ace/theme/monokai',
+			'id':'edx-course-editor',
 			'mode':'ace/mode/html',
-			'code':code,
-			'wrap':true,
-			'margin':false,
-			'focus':true,
-			'read-only':false,
-			'shadow':true,
-			'style':{
-				'font-size':'11px'
-			}
+			'code': code,
+			'shadow': true
 		});
 	}
 
