@@ -23,6 +23,7 @@ class Home {
 	    	content = `<div class="edx-section edx-angled-section edx-section-`+sections[i]+`"></div>`;
 	    	container.append(content);
 	    }
+	    jQuery('.edx-section').first().addClass('edx-gradient');
 	}
 
 	editor() {
