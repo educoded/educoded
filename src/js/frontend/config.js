@@ -2,6 +2,7 @@ requirejs.config({
     baseUrl: '../src/js/frontend/',
     paths: {
         // libraries
+        jQuery: 'libs/jquery.min',
         ace: 'libs/ace/ace',
         charts: 'libs/charts.min',
         cropper: 'libs/cropper.min',
@@ -10,8 +11,7 @@ requirejs.config({
         signature: 'libs/signature.min',
         particle: 'libs/particles.min',
         geocomplete: 'libs/geocomplete',
-        owlCarousel: 'libs/owl.carousel.min',
-        jQuery: 'libs/jquery.min',
+        owl: 'libs/owl',
         // controller
         app: 'controller/app',
         // core

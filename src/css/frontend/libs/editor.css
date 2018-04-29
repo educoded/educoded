@@ -1,6 +1,6 @@
 :root {
     --edx-active-tab: #272823;
-    --edx-inactive-tab: #484848;
+    --edx-inactive-tab: #424242;
 }
 
 .edx-editor-wrapper {
@@ -83,7 +83,7 @@
     right: 10px;
     width: 36px;
     height: 24px;
-    background: #484848;
+    background: var(--edx-inactive-tab);
     color: #fff;
     font-size: 12px;
     border-top-right-radius: 4px;

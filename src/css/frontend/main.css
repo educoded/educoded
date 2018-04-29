@@ -15,10 +15,10 @@
 
 */
 
+@import url('https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css');
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 @import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900');
 @import url('libs/editor.css');
-
 
 /* Start ~ Browser Defaults */
 
@@ -448,18 +448,27 @@
 		}
 
 		.edx-course-card-html .edx-course-card-cover {
-			background: linear-gradient(35deg, rgb(255, 128, 8), rgb(255, 200, 55));
 			background: var(--edx-orange);
 		}
 
+		.edx-course-card-css .edx-course-card-cover {
+			background: var(--edx-blue);
+		}
+
 		.edx-course-card-javascript .edx-course-card-cover {
-			background: linear-gradient(35deg, rgb(193, 175, 17), rgb(255, 210, 0));
 			background: var(--edx-yellow);
 		}
 
+		.edx-course-card-node .edx-course-card-cover {
+			background: var(--edx-green);
+		}
+
 		.edx-course-card-php .edx-course-card-cover {
-			background: linear-gradient(35deg, rgb(103, 58, 183), rgb(173, 83, 137));
 			background: var(--edx-purple);
+		}
+
+		.edx-course-card-mysql .edx-course-card-cover {
+			background: var(--edx-cyan);
 		}
 
 		.edx-course-card-cover-title {
