@@ -26,14 +26,30 @@ class Home {
 	}
 
 	editor() {
-		let container, content, code, editor = new Editor();
+		let container, content, code, editor = new Editorx();
 		container = jQuery('.edx-section-editor');
 		content = 	`<div class="edx-angled-section-wrapper edx-container">
 						<div class="edx-editor-container">
 							<div class="edx-wrapper edx-editor-wrapper">
 								<div class="edx-xs-100 edx-sm-100 edx-md-75 edx-lg-75">
-									<div class="edx-editor-holder">
-										<pre class="edx-editor" id="edx-homepage-editor"></pre>
+									<div class="edx-editor-app">
+										<div class="edx-editor-toolbar edx-wrapper">
+											<div class="edx-editor-tabs edx-wrapper">
+												<div class="edx-editor-tab edx-wrapper active" data-tab="edx-homepage-editor">
+													<svg class="edx-editor-tab-holder" width="110" height="24">
+													    <polygon class="edx-editor-tab-svg" points="0 24,110 24,95 0,15 0"></polygon>
+													</svg>
+													<div class="edx-tab-title">tab</div>
+													<div class="edx-editor-tab-close edx-25">x</div>
+												</div>
+											</div>
+											<div class="edx-editor-add edx-wrapper">
+												<div>+</div>
+											</div>
+										</div>
+										<div class="edx-editor-holder active">
+											<pre class="edx-editor" id="edx-homepage-editor"></pre>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -48,13 +64,10 @@ class Home {
 		
 		<!-- Main CSS -->
 		<link rel="stylesheet" type="text/css" href="../src/css/frontend/main.css">
-
 		<!-- RequireJS -->
 		<script src="../src/js/frontend/require.js"></script>
-
 	</head>
 	<body class="edx-app edx-25">
-
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
 				requirejs(['jQuery','ace','editor','app','user','home'],
@@ -63,10 +76,9 @@ class Home {
 					app.init();
 					user.init();
 					home.init();
-				})
+				});
 			});
 		</script>
-
 	</body>
 </html>`;
 
@@ -79,8 +91,9 @@ class Home {
 			'wrap':true,
 			'margin':false,
 			'focus':true,
-			'read-only':false,
-			'shadow':true,
+			'readonly':false,
+			'template':'multiple',
+			'shadow':false,
 			'style':{
 				'font-size':'11px'
 			}
