@@ -25,7 +25,13 @@ class User {
 	}
 
 	userOnline() {
-		console.log('user is online');
+		let container, content, data;
+		data = JSON.parse(this.userData);
+		container = jQuery('.edx-sidebar-profile-content');
+		content = 	`<div class="edx-sidebar-profile-online">
+						<div>Hello, `+data.first_name+`!</div>
+					</div>`;
+		container.html(content);
 	}
 
 	userOffline() {

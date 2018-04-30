@@ -129,7 +129,9 @@ class App {
 		for (var i = 0; i < sections.length; i++) {
 			title = `<div class="edx-sidebar-menu-item" data-name="`+sections[i]+`">`+sections[i]+`</div>`;
 			content = 	`<div class="edx-sidebar-section edx-sidebar-section-`+sections[i]+`">
-							<div class="edx-sidebar-section-title">`+sections[i]+`</div>
+							<div class="edx-sidebar-section-cover edx-wrapper">
+								<div class="edx-sidebar-section-title">`+sections[i]+`</div>
+							</div>
 							<div class="edx-sidebar-section-content edx-sidebar-`+sections[i]+`-content"></div>
 						</div>`;
 			menu.append(title);
