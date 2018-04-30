@@ -12,6 +12,9 @@ requirejs.config({
         particle: 'libs/particles.min',
         geocomplete: 'libs/geocomplete',
         owl: 'libs/owl',
+        // cryptoJS
+        AES: 'libs/cryptoJS/aes',
+        MD5: 'libs/cryptoJS/md5',
         // controller
         app: 'controller/app',
         // core
