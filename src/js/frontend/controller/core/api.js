@@ -90,4 +90,26 @@ class API {
         setInterval(updateGradient,10);
     }
 
+    config(key) {
+        let data;
+        data = {
+            'host':'https://s3-us-west-2.amazonaws.com/weed-express/',
+            'users':'https://s3-us-west-2.amazonaws.com/weed-express/data/users/user-data.json',
+            'user':'https://s3-us-west-2.amazonaws.com/weed-express/data/users/',
+            'salt':'lufrewop'
+        };
+        return data[key];
+    }
+
+    // getConfig(key, data) {
+    //     for (var i = 0; i < data.length; i++) {
+    //         if (data[i].email === key) {
+    //             return data[i];
+    //         }
+    //         else {
+    //             return false;
+    //         }
+    //     }
+    // }
+
 }

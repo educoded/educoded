@@ -91,21 +91,21 @@ class User {
 	}
 
 	getUser(data, obj) {
-		let user, path, uData, password, u = new User();
+		let user, path, uData, password, u = new User(), api = new API();
 		if(!data.email || !data.password) {
 			return 'Missing data';
 		}
 		else {
 			user = this.findUser(data.email, obj);
-			path = CryptoJS.AES.decrypt(user.path,'lufrewop').toString(CryptoJS.enc.Utf8);
+			path = CryptoJS.AES.decrypt(user.path,api.config('salt')).toString(CryptoJS.enc.Utf8);
 			jQuery.ajax({
 	            type: 'GET',
 	            crossDomain: true,
 	            dataType: 'json',
-	            url: 'https://s3-us-west-2.amazonaws.com/weed-express/data/users/'+path+'.json',
+	            url: api.config('user')+path+'.json',
 	            complete: function(jsondata) {
 	                uData = JSON.parse(jsondata.responseText)[0];
-	                password = CryptoJS.AES.decrypt(uData.password,'lufrewop').toString(CryptoJS.enc.Utf8);
+	                password = CryptoJS.AES.decrypt(uData.password,api.config('salt')).toString(CryptoJS.enc.Utf8);
 					if(uData) {
 						if(data.email == uData.email && data.password == password ) {
 							u.saveUser(uData);
@@ -123,12 +123,12 @@ class User {
 	}
 
 	s3Data() {
-		let user = new User();
+		let user = new User(), api = new API();
 		jQuery.ajax({
             type: 'GET',
             crossDomain: true,
             dataType: 'json',
-            url: 'https://s3-us-west-2.amazonaws.com/weed-express/data/users/user-data.json',
+            url: api.config('users'),
             complete: function(jsondata) {
                 sessionStorage.setItem('userData',jsondata.responseText);
                 user.userOffline();
