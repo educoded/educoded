@@ -193,6 +193,252 @@
 	    z-index: 2;
 	}
 
+	.edx-page-cover.active {
+		height: 40vh;
+		min-height: 250px;
+	}
+
+	.edx-page-cover {
+		height: 65vh;
+	    min-height: 500px;
+	    background: rgba(255,255,255,0.65);
+	}
+
+	.edx-page-cover-title {
+		text-align: center;
+	    font-size: 60px;
+	    font-weight: 800;
+	    text-transform: uppercase;
+	    letter-spacing: 2px;
+	}
+
+	.edx-page-cover-subtitle {
+	    text-align: center;
+	    font-size: 20px;
+	    font-weight: 300;
+	    text-transform: uppercase;
+	    letter-spacing: 2px;
+	}
+
+	.edx-page-sidebar-left.moved {
+	    left: -350px;
+	}
+
+	.edx-page-sidebar-right.moved {
+	    right: -350px;
+	}
+
+	.edx-page-sidebar.active {
+		position: fixed;
+		top: 91px;
+	}
+
+	.edx-page-sidebar-left {
+		left: 0px;
+		border-right: 1px solid rgba(20,20,20,0.1);
+	}
+
+	.edx-page-sidebar-right {
+		right: 0px;
+		border-left: 1px solid rgba(20,20,20,0.1);
+	}
+
+	.edx-page-sidebar.moved {
+		position: fixed;
+	}
+
+	.edx-page-sidebar {
+		position: absolute;
+		width: 350px;
+		height: calc(100vh - 91px);
+		background: #fff;
+		z-index: 9;
+		border-top: 1px solid rgba(20,20,20,0.1);
+	}
+
+	.edx-page-sidebar-container {
+	    width: 100%;
+	    overflow-y: auto;
+	    -webkit-overflow-scrolling: touch;
+	}
+
+	.edx-page-sidebar-content.active {
+		display: block;
+	}
+
+	.edx-page-sidebar-content {
+		display: none;
+	}
+
+	.edx-page-sidebar-title {
+	    position: relative;
+	    padding: 15px;
+	    font-size: 20px;
+	    font-weight: 600;
+	    text-transform: capitalize;
+	}
+
+	.edx-page-sidebar-content-item {
+		text-transform: capitalize;
+	    font-size: 14px;
+	    justify-content: flex-start;
+	    background: none;
+	    padding: 6px 30px;
+	    margin: 4px 0px;
+	    cursor: pointer;
+	}
+
+	.edx-page-sidebar-content-item:hover {
+		background: #f6f6f7;
+	}
+
+	.edx-page-sidebar-content-item.active {
+		background: #f6f6f7;
+	}
+
+	.edx-page-sidebar-clear-content {
+		color: #ff4617;
+		font-size: 12px;
+		font-weight: 400;
+		padding: 4px 30px;
+		cursor: pointer;
+	}
+
+	.edx-page-toolbar-left.moved {
+		left: 0px;
+		width: 100%;
+	}
+
+	.edx-page-toolbar-right.moved {
+		right: 0px;
+		width: 100%;
+	}
+
+	.edx-page-toolbar.active {
+		position: fixed;
+		top: 91px;
+	}
+
+	.edx-page-toolbar-left {
+		left: 350px;
+	}
+
+	.edx-page-toolbar-right {
+		right: 350px;
+	}
+
+	.edx-page-toolbar {
+		position: absolute;
+		background: #fff;
+		width: calc(100vw - 350px);
+		height: 50px;
+		border-top: 1px solid rgba(20,20,20,0.1);
+		border-bottom: 1px solid rgba(20,20,20,0.1);
+		z-index: 9;
+	}
+
+	.edx-page-toolbar-left .edx-page-toolbar-btn {
+		left: 0px;
+	}
+
+	.edx-page-toolbar-right .edx-page-toolbar-btn {
+		right: 0px;
+	}
+
+	.edx-page-toolbar-btn {
+	    position: absolute;
+	    top: 0px;
+	    width: 50px;
+	    height: 50px;
+	    border-right: 1px solid rgba(20,20,20,0.1);
+	    border-left: 1px solid rgba(20,20,20,0.1);
+	    cursor: pointer;
+	}
+
+	.edx-page-toolbar-line {
+		position: absolute;
+		top: 23px;
+		width: 30px;
+		height: 2px;
+		background: #d4d4d4;
+	}
+
+	.edx-page-toolbar.moved .edx-page-toolbar-line:nth-child(1) {
+		transform: rotate(0deg);
+		top: 16px;
+		left: 12px;
+		width: 22px;
+	}
+
+	.edx-page-toolbar.moved .edx-page-toolbar-line:nth-child(2) {
+		transform: rotate(0deg);
+		opacity: 1;
+		width: 16px;
+		left: 12px;
+	}
+
+	.edx-page-toolbar.moved .edx-page-toolbar-line:nth-child(3) {
+		transform: rotate(0deg);
+		top: 30px;
+		width: 10px;
+		left: 12px;
+	}
+
+	.edx-page-toolbar-line:nth-child(1) {
+	    transform: rotate(45deg);
+	    top: 24px;
+	    width: 20px;
+	    left: 15px;
+	}
+
+	.edx-page-toolbar-line:nth-child(2) {
+	    opacity: 0;
+	}
+
+	.edx-page-toolbar-line:nth-child(3) {
+	    transform: rotate(-45deg);
+	    top: 24px;
+	    width: 20px;
+	    left: 15px;
+	}
+
+	.edx-page-grid-left.moved {
+		left: 0px;
+	    width: 100%;
+	}
+
+	.edx-page-grid-right.moved {
+		right: 0px;
+		width: 100%;
+	}
+
+	.edx-page-grid-left {
+		left: 350px;
+	}
+
+	.edx-page-grid-right {
+		right: 0px;
+	}
+
+	.edx-page-grid {
+		width: 100%;
+	    position: relative;
+	    min-height: 200vh;
+	    background: #f6f6f7;
+	}
+
+	.edx-page-grid-content {
+	    margin: 50px 0px;
+	    padding: 15px;
+	}
+
+	@media (min-width: 1200px) {
+		.edx-page-grid {
+			width: calc(100vw - 350px);
+		    position: relative;
+		}
+	}
+
 /* End ~ Page Defaults */
 
 /* Start ~ Header */

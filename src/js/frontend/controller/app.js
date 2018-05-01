@@ -8,6 +8,7 @@ class App {
 		this.page();
 		this.footer();
 		this.checkApp();
+		this.onScreen();
 
 	}
 
@@ -264,6 +265,29 @@ class App {
 				jQuery('body').addClass('edx-light-theme');
 			break;
 		}
+	}
+
+	onScreen() {
+		// is on screen
+        jQuery.fn.isOnScreen = function(){
+
+            var win = jQuery(window);
+            
+            var viewport = {
+                top : win.scrollTop(),
+                left : win.scrollLeft()
+            };
+            viewport.right = viewport.left + win.width();
+            viewport.bottom = viewport.top + win.height();
+            
+            var bounds = this.offset();
+            bounds.right = bounds.left + this.outerWidth();
+            bounds.bottom = bounds.top + this.outerHeight();
+            
+            return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
+            
+        };
+
 	}
 
 }

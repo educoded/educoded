@@ -27,7 +27,7 @@ class Home {
 	}
 
 	editor() {
-		let container, content, code, editor = new Editorx();
+		let container, content, code, editor = new Editor();
 		container = jQuery('.edx-section-editor');
 		content = 	`<div class="edx-angled-section-wrapper edx-container">
 						<div class="edx-editor-container">
