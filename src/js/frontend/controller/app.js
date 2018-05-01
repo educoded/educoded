@@ -201,9 +201,13 @@ class App {
 	}
 
 	sidebarClose() {
-		jQuery('.edx-sidebar, .edx-sidebar-menu-item, .edx-sidebar-section').removeClass('active');
+		jQuery('.edx-sidebar').removeClass('active');
 		jQuery('body').removeClass('edx-sidebar-opened');
 		jQuery('.edx-sidebar-overlay').fadeOut();
+		// deactivates the current sidebar section after the sidebar has closed
+		setTimeout(function() {
+			jQuery('.edx-sidebar-menu-item, .edx-sidebar-section').removeClass('active');
+		}, 250);
 	}
 
 	page() {
