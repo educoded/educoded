@@ -21,7 +21,6 @@ requirejs.config({
         api: 'controller/core/api',
         cart: 'controller/core/cart',
         editor: 'controller/core/editor',
-        editorx: 'controller/core/editorx',
         storage: 'controller/core/storage',
         user: 'controller/core/user',
         // default
