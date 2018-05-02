@@ -1,8 +1,49 @@
 class Course {
 
 	init() {
-		this.data = this.courseData();
-		this.template();
+		this.checkCourse();
+	}
+
+	checkCourse() {
+		let courseObj, url, id;
+		url = window.location.search;
+		if(url.includes('?id=')) {
+			id = url.replace('?id=','');
+			this.id = id;
+
+			// check to see if course has been either loaded or cached
+			courseObj = localStorage.getItem('edx-cache-course-obj-'+id);
+
+			if(courseObj != null) {
+				// cached
+				// Sets the course data as a global value
+				this.courseData = JSON.parse(courseObj);
+				console.log('cached');
+				this.template();
+			}
+			else {
+				// not cached
+				this.s3Data();
+			}
+
+		}
+		else {
+			this.courseError(0);
+		}
+	}
+
+	saveCourse(data,id) {
+		sessionStorage.removeItem('edx-temp-course-obj');
+		localStorage.setItem('edx-cache-course-obj-'+id,JSON.stringify(data));
+		this.checkCourse();
+	}
+
+	courseError(id) {
+		switch(id) {
+			case 0:
+				console.log('URL is missing the id');
+			break;
+		}
 	}
 
 	template() {
@@ -10,12 +51,13 @@ class Course {
 	}
 
 	cover() {
-		let container, content;
+		let container, content, data;
+		data = this.courseData;
 		container = jQuery('.edx-page-cover');
 		content = 	`<div class="edx-wrapper">
 						<div class="edx-page-cover-titles">
-							<div class="edx-page-cover-title">`+this.data.info.language+`</div>
-							<div class="edx-page-cover-subtitle">`+this.data.info.title+`</div>
+							<div class="edx-page-cover-title">`+data.info.language+`</div>
+							<div class="edx-page-cover-subtitle">`+data.info.title+`</div>
 						</div>
 					</div>`;
 		container.html(content);
@@ -25,47 +67,25 @@ class Course {
 
 	}
 
-	courseData() {
-
-		let data = {
-			'info':{
-				'id':'y86fr0wb',
-				'title':'headings and paragraphs',
-				'track':'introduction to html',
-				'language':'html',
-				'keywords':['html','headings','paragraphs'],
-				'description':'',
-				'content':'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-				'difficulty':'easy',
-				'video':{
-					'id':'',
-					'steps':[
-						{
-							'time':'',
-							'id':''
-						},
-						{
-							'time':'',
-							'id':''
-						},
-						{
-							'time':'',
-							'id':''
-						}
-					],
-				},
-			},
-			'date':{
-				'created':'',
-				'updated':''
-			},
-			'author':{
-				'name':'mathew maione',
-				'image':''
-			}
-		};
-		return data;
-
+	s3Data() {
+		let id, courseData, course = new Course(), api = new API();
+		id = this.id;
+		jQuery.ajax({
+            type: 'GET',
+            crossDomain: true,
+            dataType: 'json',
+            url: api.config('courses')+id+'/course.json',
+            complete: function(jsondata) {
+            	courseData = JSON.parse(jsondata.responseText)[0];
+				if(courseData) {
+					sessionStorage.setItem('edx-temp-course-obj',jsondata.responseText);
+                	course.saveCourse(courseData,id);	
+				}
+				else {
+					course.courseError(1);
+				}
+            }
+        });
 	}
 
 }

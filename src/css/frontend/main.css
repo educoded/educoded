@@ -252,7 +252,7 @@
 		width: 350px;
 		height: calc(100vh - 91px);
 		background: #fff;
-		z-index: 9;
+		z-index: 10;
 		border-top: 1px solid rgba(20,20,20,0.1);
 	}
 
@@ -339,19 +339,19 @@
 
 	.edx-page-toolbar-left .edx-page-toolbar-btn {
 		left: 0px;
+		border-right: 1px solid rgba(20,20,20,0.1);
 	}
 
 	.edx-page-toolbar-right .edx-page-toolbar-btn {
 		right: 0px;
+		border-left: 1px solid rgba(20,20,20,0.1);
 	}
 
 	.edx-page-toolbar-btn {
 	    position: absolute;
 	    top: 0px;
-	    width: 50px;
+	    width: 54px;
 	    height: 50px;
-	    border-right: 1px solid rgba(20,20,20,0.1);
-	    border-left: 1px solid rgba(20,20,20,0.1);
 	    cursor: pointer;
 	}
 

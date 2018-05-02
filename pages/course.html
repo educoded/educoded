@@ -25,9 +25,9 @@
 
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
-				requirejs(['jQuery','app','user','page','course'],
+				requirejs(['jQuery','api','app','user','page','course'],
 				function () {
-					var app = new App(), user = new User(), page = new Page(), course = new Course();
+					var api = new API(), app = new App(), user = new User(), page = new Page(), course = new Course();
 					app.init();
 					user.init();
 					page.init({'name':'course','side':'right','layout':['cover','sidebar','toolbar','grid']});

@@ -59,11 +59,12 @@ class Page {
 	buildObservers() {
 		jQuery(document).scroll(function() {
 
-			var pos, cover, sidebar, toolbar;
+			var pos, cover, sidebar, toolbar, grid;
     		pos = jQuery(this).scrollTop();
     		cover = jQuery('.edx-page-cover');
     		sidebar = jQuery('.edx-page-sidebar');
     		toolbar = jQuery('.edx-page-toolbar');
+    		grid = jQuery('.edx-page-grid');
 
     		if(pos > cover.height()) {
     			sidebar.addClass('active');
