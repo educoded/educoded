@@ -48,6 +48,7 @@ class Course {
 
 	template() {
 		this.cover();
+		this.grid();
 	}
 
 	cover() {
@@ -65,6 +66,15 @@ class Course {
 
 	sidebar() {
 
+	}
+
+	grid() {
+		let container, content, data;
+		data = this.courseData;
+		container = jQuery('.edx-page-grid-content');
+		content = 	`<div class="edx-xs-100 edx-sm-100 edx-md-50 edx-lg-50">50</div>
+					<div class="edx-xs-100 edx-sm-100 edx-md-50 edx-lg-50">50</div>`;
+		container.html(content);
 	}
 
 	s3Data() {
