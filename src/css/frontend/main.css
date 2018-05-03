@@ -230,7 +230,7 @@
 
 	.edx-page-sidebar.active {
 		position: fixed;
-		top: 91px;
+		top: 54px;
 	}
 
 	.edx-page-sidebar-left {
@@ -250,7 +250,7 @@
 	.edx-page-sidebar {
 		position: absolute;
 		width: 350px;
-		height: calc(100vh - 91px);
+		height: calc(100vh - 54px);
 		background: #fff;
 		z-index: 10;
 		border-top: 1px solid rgba(20,20,20,0.1);
@@ -316,7 +316,7 @@
 
 	.edx-page-toolbar.active {
 		position: fixed;
-		top: 91px;
+		top: 54px;
 	}
 
 	.edx-page-toolbar-left {
@@ -451,6 +451,10 @@
 		z-index: 100;
 	}
 
+	.edx-header.active {
+		top: -36px;
+	}
+
 	.edx-header-top {
 	    width: 100%;
 	    height: 35px;
@@ -471,7 +475,6 @@
 	.edx-header-top-info {
 	    width: 150px;
 	    font-size: 12px;
-	    font-weight: 300;
 	}
 
 	.edx-header-top-cta {

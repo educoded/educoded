@@ -80,6 +80,12 @@ class API {
         return data[key];
     }
 
+    popularLanguages() {
+        let data;
+        data = [{'name':'C and C++','value':'c_cpp','ext':'cpp','path':'ace/mode/c_cpp'},{'name':'C#','value':'csharp','ext':'cs','path':'ace/mode/csharp'},{'name':'CSS','value':'css','ext':'css','path':'ace/mode/css'},{'name':'Go','value':'golang','ext':'go','path':'ace/mode/golang'},{'name':'HTML','value':'html','ext':'html','path':'ace/mode/html'},{'name':'Java','value':'java','ext':'java','path':'ace/mode/java'},{'name':'JavaScript','value':'javascript','ext':'js','path':'ace/mode/javascript'},{'name':'MySQL','value':'mysql','ext':'myd','path':'ace/mode/mysql'},{'name':'Objective-C','value':'objectivec','ext':'mm','path':'ace/mode/objectivec'},{'name':'PHP','value':'php','ext':'php','path':'ace/mode/php'},{'name':'Python','value':'python','ext':'py','path':'ace/mode/python'},{'name':'Ruby','value':'ruby','ext':'rb','path':'ace/mode/ruby'},{'name':'Scala','value':'scala','ext':'sc','path':'ace/mode/scala'},{'name':'SQL','value':'sql','ext':'sql','path':'ace/mode/sql'},{'name':'Swift','value':'swift','ext':'swift','path':'ace/mode/swift'},{'name':'Typescript','value':'typescript','ext':'ts','path':'ace/mode/typescript'}];
+        return data;
+    }
+
     // getConfig(key, data) {
     //     for (var i = 0; i < data.length; i++) {
     //         if (data[i].email === key) {

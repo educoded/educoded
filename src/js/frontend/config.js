@@ -20,6 +20,7 @@ requirejs.config({
         // core
         api: 'controller/core/api',
         cart: 'controller/core/cart',
+        db: 'controller/core/db',
         editor: 'controller/core/editor',
         storage: 'controller/core/storage',
         user: 'controller/core/user',

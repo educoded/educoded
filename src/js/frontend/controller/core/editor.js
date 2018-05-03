@@ -4,7 +4,17 @@ class Editor {
 		if(data.id) {
 			this.data = data;
 			this.buildEditor(data);
-			if(data.template === 'multiple') { this.multipleEditor(); }
+			switch(data.template) {
+				case 'multiple':
+					this.multipleEditor();
+				break;
+				case 'multiple-read-only':
+					this.multipleReadEditor();
+				break;
+				default: 
+					// add default stuff
+				break;
+			}
 		}
 		else {
 			jQuery('.edx-editor').addClass('edx-wrapper').html('<div class="edx-editor-error">ERROR</div>');
@@ -61,6 +71,12 @@ class Editor {
 		this.switchEditor();
 	}
 
+	multipleReadEditor() {
+		this.addToolbar();
+		this.buildMultiRead();
+		this.switchEditor();
+	}
+
 	addToolbar() {
 		let container, content, data;
 		data = this.data;
@@ -75,14 +91,17 @@ class Editor {
 								<div class="edx-editor-tab-close edx-25">x</div>
 							</div>
 						</div>
-						<div class="edx-editor-add edx-wrapper"><div>+</div></div>
 					</div>`;
 		container.prepend(content);
+		if(data.template === 'multiple') {
+			jQuery('.edx-editor-toolbar').append('<div class="edx-editor-add edx-wrapper"><div>+</div></div>');
+		}
 	}
 
 	addOptions() {
-		let container, content;
+		let container, content, languages, api = new API();
 		container = jQuery('.edx-editor-app');
+		languages = api.popularLanguages();
 		content = 	`<div class="edx-editor-options">
 						<div class="edx-editor-options-close edx-wrapper">close</div>
 						<div class="edx-editor-options-container edx-wrapper">
@@ -94,24 +113,7 @@ class Editor {
 							<div class="edx-xs-100 edx-sm-50 edx-md-50 edx-lg-50">
 								<div class="edx-editor-options-content edx-wrapper">
 									<div>
-										<select class="edx-editor-option-lang">
-											<option data-value="c_cpp" data-ext="cpp" value="ace/mode/c_cpp">C and C++</option>
-											<option data-value="csharp" data-ext="cs" value="ace/mode/csharp">C#</option>
-											<option data-value="css" data-ext="css" value="ace/mode/css">CSS</option>
-											<option data-value="golang" data-ext="go" value="ace/mode/golang">Go</option>
-											<option data-value="html" data-ext="html" value="ace/mode/html">HTML</option>
-											<option data-value="java" data-ext="java" value="ace/mode/java">Java</option>
-											<option data-value="javascript" data-ext="js" value="ace/mode/javascript">JavaScript</option>
-											<option data-value="mysql" data-ext="myd" value="ace/mode/mysql">MySQL</option>
-											<option data-value="objectivec" data-ext="mm" value="ace/mode/objectivec">Objective-C</option>
-											<option data-value="php" data-ext="php" value="ace/mode/php">PHP</option>
-											<option data-value="python" data-ext="py" value="ace/mode/python">Python</option>
-											<option data-value="ruby" data-ext="rb" value="ace/mode/ruby">Ruby</option>
-											<option data-value="scala" data-ext="sc" value="ace/mode/scala">Scala</option>
-											<option data-value="sql" data-ext="sql" value="ace/mode/sql">SQL</option>
-											<option data-value="swift" data-ext="swift" value="ace/mode/swift">Swift</option>
-											<option data-value="typescript" data-ext="ts" value="ace/mode/typescript">Typescript</option>
-										</select>
+										<select class="edx-editor-option-lang"></select>
 										<button class="edx-editor-add-options">add</button>
 									</div>
 								</div>
@@ -119,6 +121,12 @@ class Editor {
 						</div>
 					</div>`;
 		container.prepend(content);
+		for (var i = 0; i < languages.length; i++) {
+			let option, data;
+			data = languages[i];
+			option = '<option data-value="'+data.value+'" data-ext="'+data.ext+'" value="'+data.path+'">'+data.name+'</option>';
+			jQuery('.edx-editor-option-lang').append(option);
+		}
 	}
 
 	addEditor() {
@@ -134,7 +142,6 @@ class Editor {
 			selected = jQuery('.edx-editor-option-lang :selected');
 			lang = selected.val();
 			ext = selected.data('ext');
-			console.log(lang);
 			if(length < 5) {
 				id = editor.randomString(8, '0123456789abcdefghijklmnopqrstuvwxyz');
 				container = jQuery('.edx-editor-tabs');
@@ -169,6 +176,10 @@ class Editor {
 				jQuery('.edx-editor-options').fadeOut();
 			}
 		});
+	}
+
+	buildMultiRead() {
+
 	}
 
 	removeEditor() {

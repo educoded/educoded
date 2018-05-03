@@ -69,12 +69,44 @@ class Course {
 	}
 
 	grid() {
-		let container, content, data;
+		let container, content, data, editor = new Editor();
 		data = this.courseData;
 		container = jQuery('.edx-page-grid-content');
-		content = 	`<div class="edx-xs-100 edx-sm-100 edx-md-50 edx-lg-50">50</div>
-					<div class="edx-xs-100 edx-sm-100 edx-md-50 edx-lg-50">50</div>`;
+		content = 	`<div class="edx-xs-100 edx-sm-100 edx-md-100 edx-lg-100">
+						<div class="edx-editor-container">
+							<div class="edx-wrapper edx-editor-wrapper">
+								<div class="edx-xs-100 edx-sm-100 edx-md-90 edx-lg-90">
+									<div class="edx-editor-app">
+										<div class="edx-editor-holder active">
+											<pre class="edx-editor" id="edx-course-editor"></pre>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="edx-xs-100 edx-sm-100 edx-md-75 edx-lg-75">
+						<p>`+data.info.content+`</p>
+					</div>`;
 		container.html(content);
+
+		// initiate editor
+		editor.init({
+			'id':'edx-course-editor',
+			'theme':'ace/theme/monokai',
+			'mode':'ace/mode/'+data.info.language,
+			'code':'',
+			'wrap':true,
+			'margin':false,
+			'focus':true,
+			'readonly':false,
+			'template':'multiple-read-only',
+			'shadow':false,
+			'style':{
+				'font-size':'11px'
+			}
+		});
+
 	}
 
 	s3Data() {

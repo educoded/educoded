@@ -66,7 +66,7 @@ class Page {
     		toolbar = jQuery('.edx-page-toolbar');
     		grid = jQuery('.edx-page-grid');
 
-    		if(pos > cover.height()) {
+    		if(pos > cover.height() + 36) {
     			sidebar.addClass('active');
     			toolbar.addClass('active');
     		}

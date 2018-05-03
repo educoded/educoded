@@ -3,12 +3,33 @@ class App {
 	init() {
 
 		this.app = jQuery('.edx-app');
+		this.meta();
 		this.header();
 		this.sidebar();
 		this.page();
 		this.footer();
+		this.events();
 		this.checkApp();
 		this.onScreen();
+
+	}
+
+	meta() {
+
+		let container, content;
+		container = jQuery('head');
+		content = 	`<title>educoded</title>
+					<meta charset="UTF-8">
+					<meta name="viewport" content="width=device-width, initial-scale=1">
+
+					<link rel="apple-touch-icon" sizes="180x180" href="../media/favicon/apple-touch-icon.png">
+					<link rel="icon" type="image/png" sizes="32x32" href="../media/favicon/favicon-32x32.png">
+					<link rel="icon" type="image/png" sizes="16x16" href="../media/favicon/favicon-16x16.png">
+					<link rel="manifest" href="../media/favicon/site.webmanifest">
+					<link rel="mask-icon" href="../media/favicon/safari-pinned-tab.svg" color="#5bbad5">
+					<meta name="msapplication-TileColor" content="#da532c">
+					<meta name="theme-color" content="#ffffff">`;
+		container.prepend(content);
 
 	}
 
@@ -17,7 +38,7 @@ class App {
 		let container, content;
 		container = this.app;
 		content = 	`<!-- Start ~ Header -->
-					<div class="edx-header"></div>
+					<div class="edx-header edx-15"></div>
 					<!-- End ~ Header -->`;
 		container.append(content);
 		this.head = jQuery('.edx-header');
@@ -265,6 +286,21 @@ class App {
 				jQuery('body').addClass('edx-light-theme');
 			break;
 		}
+	}
+
+	events() {
+
+		jQuery(document).scroll(function() {
+			let pos;
+			pos = jQuery(document).scrollTop();
+			if(pos > 150) {
+				jQuery('.edx-header').addClass('active');
+			}
+			else {
+				jQuery('.edx-header').removeClass('active');
+			}
+		});
+
 	}
 
 	onScreen() {
