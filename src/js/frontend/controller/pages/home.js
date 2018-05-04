@@ -4,7 +4,7 @@ class Home {
 		this.container = jQuery('.edx-page');
 		this.template();
 		this.editor();
-		this.courses();
+		this.recentCourses();
 	}
 
 	template() {
@@ -87,83 +87,61 @@ class Home {
 		});
 	}
 
+	recentCourses() {
+		let coursesObj;
+
+		// check to see if recent courses have been either loaded or cached
+		coursesObj = localStorage.getItem('edx-cache-recent-courses-obj');
+
+		if(coursesObj != null) {
+			// cached
+			// Sets the course data as a global value
+			this.coursesData = JSON.parse(coursesObj);
+			console.log('cached');
+			this.courses();
+		}
+		else {
+			// not cached
+			this.s3Data();
+		}
+	}
+
 	courses() {
-		let container, content;
+		let container, content, courses, course, data;
 		container = jQuery('.edx-section-courses');
+		courses = jQuery('.edx-course-carousel');
+		data = this.coursesData;
+
 		content = 	`<div class="edx-angled-section-wrapper edx-container">
 						<div class="edx-wrapper">
 							<div class="edx-xs-100 edx-sm-100 edx-md-100 edx-lg-100">
 								<div class="edx-section-title">Most recent courses</div>
-								<div class="edx-course-carousel owl-carousel owl-theme">
-									<div class="item">
-										<div class="edx-course-card edx-course-card-javascript">
-											<div class="edx-course-card-cover edx-wrapper">
-												<div class="edx-course-card-cover-titles">
-													<div class="edx-course-card-cover-title">javascript</div>
-													<div class="edx-course-card-cover-subtitle">console logging</div>
-												</div>
-											</div>
-											<div class="edx-course-card-content">
-												<div class="edx-course-card-description">Lorem ipsum dolor sit amet, no sit sonet corpora indoctum, quo ad fierent insolens. Duo aeterno ancillae ei.</div>
-												<a href="course.html?id=w776reit">
-													<div class="edx-course-card-link">view course</div>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="item">
-										<div class="edx-course-card edx-course-card-html">
-											<div class="edx-course-card-cover edx-wrapper">
-												<div class="edx-course-card-cover-titles">
-													<div class="edx-course-card-cover-title">html</div>
-													<div class="edx-course-card-cover-subtitle">headings and paragraphs</div>
-												</div>
-											</div>
-											<div class="edx-course-card-content">
-												<div class="edx-course-card-description">Lorem ipsum dolor sit amet, no sit sonet corpora indoctum, quo ad fierent insolens. Duo aeterno ancillae ei.</div>
-												<a href="course.html?id=y86fr0wb">
-													<div class="edx-course-card-link">view course</div>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="item">
-										<div class="edx-course-card edx-course-card-php">
-											<div class="edx-course-card-cover edx-wrapper">
-												<div class="edx-course-card-cover-titles">
-													<div class="edx-course-card-cover-title">php</div>
-													<div class="edx-course-card-cover-subtitle">comparing strings</div>
-												</div>
-											</div>
-											<div class="edx-course-card-content">
-												<div class="edx-course-card-description">Lorem ipsum dolor sit amet, no sit sonet corpora indoctum, quo ad fierent insolens. Duo aeterno ancillae ei.</div>
-												<a href="course.html?id=n2zw4h90">
-													<div class="edx-course-card-link">view course</div>
-												</a>
-											</div>
-										</div>
-									</div>
-									<div class="item">
-										<div class="edx-course-card edx-course-card-css">
-											<div class="edx-course-card-cover edx-wrapper">
-												<div class="edx-course-card-cover-titles">
-													<div class="edx-course-card-cover-title">css</div>
-													<div class="edx-course-card-cover-subtitle">styling a page</div>
-												</div>
-											</div>
-											<div class="edx-course-card-content">
-												<div class="edx-course-card-description">Lorem ipsum dolor sit amet, no sit sonet corpora indoctum, quo ad fierent insolens. Duo aeterno ancillae ei.</div>
-												<a href="course.html?id=d35k7fav">
-													<div class="edx-course-card-link">view course</div>
-												</a>
-											</div>
-										</div>
-									</div>
-								</div>
+								<div class="edx-course-carousel owl-carousel owl-theme"></div>
 							</div>
 						</div>
 					</div>`;
 		container.html(content);
+
+		for (var i = 0; i < data.length; i++) {
+			course = 	`<div class="item">
+							<div class="edx-course-card edx-course-card-`+data[i].language+`">
+								<div class="edx-course-card-cover edx-wrapper">
+									<div class="edx-course-card-cover-titles">
+										<div class="edx-course-card-cover-title">`+data[i].language+`</div>
+										<div class="edx-course-card-cover-subtitle">`+data[i].title+`</div>
+									</div>
+								</div>
+								<div class="edx-course-card-content">
+									<div class="edx-course-card-description">Lorem ipsum dolor sit amet, no sit sonet corpora indoctum, quo ad fierent insolens. Duo aeterno ancillae ei.</div>
+									<a href="course.html?id=`+data[i].id+`">
+										<div class="edx-course-card-link">view course</div>
+									</a>
+								</div>
+							</div>
+						</div>`;
+			courses.append(course);
+		}
+
 		jQuery('.edx-course-carousel').owlCarousel({
 		    loop: true,
 		    margin: 5,
@@ -177,6 +155,22 @@ class Home {
 		        1000:{ items:3 }
 		    }
 		});
+	}
+
+	s3Data() {
+		let id, coursesData, home = new Home(), api = new API();
+		id = this.id;
+		jQuery.ajax({
+            type: 'GET',
+            crossDomain: true,
+            dataType: 'json',
+            url: 'https://s3-us-west-2.amazonaws.com/educoded/data/courses/list.json',
+            complete: function(jsondata) {
+            	coursesData = JSON.parse(jsondata.responseText);
+            	console.log(coursesData);
+				// home.recentCourses();
+            }
+        });
 	}
 
 }
