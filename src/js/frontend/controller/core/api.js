@@ -74,7 +74,7 @@ class API {
             'host':'https://s3-us-west-2.amazonaws.com/weed-express/',
             'users':'https://s3-us-west-2.amazonaws.com/weed-express/data/users/user-data.json',
             'user':'https://s3-us-west-2.amazonaws.com/weed-express/data/users/',
-            'courses':'https://s3-us-west-2.amazonaws.com/weed-express/data/courses/',
+            'courses':'https://s3-us-west-2.amazonaws.com/educoded/data/courses/',
             'salt':'lufrewop'
         };
         return data[key];

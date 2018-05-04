@@ -105,6 +105,9 @@ class Home {
 											</div>
 											<div class="edx-course-card-content">
 												<div class="edx-course-card-description">Lorem ipsum dolor sit amet, no sit sonet corpora indoctum, quo ad fierent insolens. Duo aeterno ancillae ei.</div>
+												<a href="course.html?id=w776reit">
+													<div class="edx-course-card-link">view course</div>
+												</a>
 											</div>
 										</div>
 									</div>
@@ -118,6 +121,9 @@ class Home {
 											</div>
 											<div class="edx-course-card-content">
 												<div class="edx-course-card-description">Lorem ipsum dolor sit amet, no sit sonet corpora indoctum, quo ad fierent insolens. Duo aeterno ancillae ei.</div>
+												<a href="course.html?id=y86fr0wb">
+													<div class="edx-course-card-link">view course</div>
+												</a>
 											</div>
 										</div>
 									</div>
@@ -131,6 +137,9 @@ class Home {
 											</div>
 											<div class="edx-course-card-content">
 												<div class="edx-course-card-description">Lorem ipsum dolor sit amet, no sit sonet corpora indoctum, quo ad fierent insolens. Duo aeterno ancillae ei.</div>
+												<a href="course.html?id=n2zw4h90">
+													<div class="edx-course-card-link">view course</div>
+												</a>
 											</div>
 										</div>
 									</div>
@@ -144,6 +153,9 @@ class Home {
 											</div>
 											<div class="edx-course-card-content">
 												<div class="edx-course-card-description">Lorem ipsum dolor sit amet, no sit sonet corpora indoctum, quo ad fierent insolens. Duo aeterno ancillae ei.</div>
+												<a href="course.html?id=d35k7fav">
+													<div class="edx-course-card-link">view course</div>
+												</a>
 											</div>
 										</div>
 									</div>
