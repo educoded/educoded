@@ -88,7 +88,7 @@ class Home {
 	}
 
 	recentCourses() {
-		let coursesObj;
+		let coursesObj, db = new DB();
 
 		// check to see if recent courses have been either loaded or cached
 		coursesObj = localStorage.getItem('edx-cache-recent-courses-obj');
@@ -97,12 +97,11 @@ class Home {
 			// cached
 			// Sets the course data as a global value
 			this.coursesData = JSON.parse(coursesObj);
-			console.log('cached');
 			this.courses();
 		}
 		else {
 			// not cached
-			this.s3Data();
+			db.get({'columns':[],'table':'courses/list','column':'','operator':'','value':'','function':'let home = new Home(); home.recentCourses();','storage':{'type':'local','name':'edx-cache-recent-courses-obj'}});
 		}
 	}
 
@@ -178,7 +177,7 @@ class Home {
 		// 	console.log(JSON.parse(getUserObj));
 		// }
 		// else {
-		// 	db.get({'columns':[],'table':'courses/list','column':'first_name','value':'Mathew','storage':{'type':'local','name':'edx-cache-recent-courses-obj'}});
+		// 	db.get({'columns':[],'table':'courses/list','column':'newest','value':3,'storage':{'type':'local','name':'edx-cache-recent-courses-obj'}});
 		// }
 
 	}

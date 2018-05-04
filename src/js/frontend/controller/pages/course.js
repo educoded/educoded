@@ -32,12 +32,6 @@ class Course {
 		}
 	}
 
-	saveCourse(data,id) {
-		sessionStorage.removeItem('edx-temp-course-obj');
-		localStorage.setItem('edx-cache-course-obj-'+id,JSON.stringify(data));
-		this.checkCourse();
-	}
-
 	courseError(id) {
 		switch(id) {
 			case 0:
@@ -122,8 +116,8 @@ class Course {
             complete: function(jsondata) {
             	courseData = JSON.parse(jsondata.responseText)[0];
 				if(courseData) {
-					sessionStorage.setItem('edx-temp-course-obj',jsondata.responseText);
-                	course.saveCourse(courseData,id);	
+					localStorage.setItem('edx-cache-course-obj-'+id,JSON.stringify(courseData));
+					course.checkCourse();
 				}
 				else {
 					course.courseError(1);

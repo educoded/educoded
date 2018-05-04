@@ -69,7 +69,7 @@ class Page {
 	buildFull() {
 		let container, content;
 		container = jQuery('.edx-page-full');
-		content = `<div class="edx-page-full-content edx-page-container edx-wrapper"></div>`;
+		content = `<div class="edx-page-full-content edx-container edx-wrapper"></div>`;
 		container.html(content);
 	}
 
