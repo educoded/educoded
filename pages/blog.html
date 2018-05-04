@@ -10,14 +10,66 @@
 
 	</head>
 	<body class="edx-app edx-25">
+
+		<style>
+
+			.edx-blog-post {
+			    padding: 15px;
+			}
+
+			.edx-blog-post-cover {
+			    width: 100%;
+			    height: 40vh;
+			    background: url(https://images.pexels.com/photos/633198/pexels-photo-633198.jpeg);
+			    background-size: cover;
+			    background-position: center center;
+			    position: relative;
+			    overflow: hidden;
+			}
+
+			.edx-blog-post-cover:hover .edx-blog-post-title {
+				left: initial;
+				top: initial;
+				font-size: 30px;
+			}
+
+			.edx-blog-post-title {
+			    transform: skewY(-10deg);
+			    font-size: 18px;
+			    font-weight: 800;
+			    text-transform: uppercase;
+			    letter-spacing: 2px;
+			    color: #fff;
+			    position: absolute;
+			    left: 25px;
+			    top: 75px;
+			    z-index: 1;
+			}
+
+			.edx-blog-post-cover:hover .edx-blog-post-overlay {
+			    bottom: -25%;
+			    background: rgba(0,0,0,0.25);
+			}
+
+			.edx-blog-post-overlay {
+			    position: absolute;
+			    bottom: -135%;
+			    width: 100%;
+			    height: 150%;
+			    transform: skewY(10deg);
+			    background: rgba(0,0,0,0.75);
+			}
+
+		</style>
 		
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
-				requirejs(['jQuery','app','user','blog'],
-				function (app, blog) {
-					var app = new App(), user = new User(), blog = new Blog();
+				requirejs(['jQuery','app','user','page','blog'],
+				function () {
+					var app = new App(), user = new User(), page = new Page(), blog = new Blog();
 					app.init();
 					user.init();
+					page.init({'name':'blog','side':'left','layout':['cover','sidebar','toolbar','grid']});
 					blog.init();
 				})
 			});

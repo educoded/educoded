@@ -86,7 +86,9 @@ class Course {
 						</div>
 					</div>
 					<div class="edx-xs-100 edx-sm-100 edx-md-75 edx-lg-75">
-						<p>`+data.info.content+`</p>
+						<div class="edx-page-content">
+							<div class="edx-page-text">`+data.info.content+`</div>
+						</div>
 					</div>`;
 		container.html(content);
 

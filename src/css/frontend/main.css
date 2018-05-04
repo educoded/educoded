@@ -40,6 +40,7 @@
 
 	a {
 	    text-decoration: none;
+	    outline: none;
 	}
 
 	input[type="text"],
@@ -73,7 +74,7 @@
 		outline: none;
 	}
 
-	button:focus, input:focus, textarea:focus {
+	button:focus, input:focus, textarea:focus, a:focus {
 	    outline: none;
 	}
 
@@ -432,11 +433,15 @@
 	    padding: 15px;
 	}
 
-	@media (min-width: 1200px) {
-		.edx-page-grid {
-			width: calc(100vw - 350px);
-		    position: relative;
-		}
+	.edx-page-content {
+		padding: 50px 0px;
+	}
+
+	.edx-page-text {
+		font-weight: 300;
+	    font-size: 18px;
+	    line-height: 32px;
+	    margin-bottom: 25px;
 	}
 
 /* End ~ Page Defaults */
@@ -810,6 +815,17 @@
 			font-weight: 300;
 		}
 
+		.edx-course-card-link {
+		    text-align: center;
+		    margin-top: 20px;
+		    padding: 15px 0px;
+		    color: #000;
+		    font-size: 12px;
+		    font-weight: 600;
+		    text-transform: uppercase;
+		    letter-spacing: 2px;
+		}
+
 	/* End ~ Content - Homepage */
 
 /* End ~ Content */
@@ -893,7 +909,10 @@
 
 		/* Large */
 		@media( min-width: 1200px ) {
-
+			.edx-page-grid {
+				width: calc(100vw - 350px);
+			    position: relative;
+			}
 		}
 
 	/* End ~ Responsive Design - Default */

@@ -107,9 +107,8 @@ class Home {
 	}
 
 	courses() {
-		let container, content, courses, course, data;
+		let container, content,data, courses, course;
 		container = jQuery('.edx-section-courses');
-		courses = jQuery('.edx-course-carousel');
 		data = this.coursesData;
 
 		content = 	`<div class="edx-angled-section-wrapper edx-container">
@@ -122,6 +121,7 @@ class Home {
 					</div>`;
 		container.html(content);
 
+		courses = jQuery('.edx-course-carousel');
 		for (var i = 0; i < data.length; i++) {
 			course = 	`<div class="item">
 							<div class="edx-course-card edx-course-card-`+data[i].language+`">
@@ -158,19 +158,29 @@ class Home {
 	}
 
 	s3Data() {
-		let id, coursesData, home = new Home(), api = new API();
-		id = this.id;
+		let coursesObj, home = new Home();
 		jQuery.ajax({
             type: 'GET',
             crossDomain: true,
             dataType: 'json',
             url: 'https://s3-us-west-2.amazonaws.com/educoded/data/courses/list.json',
             complete: function(jsondata) {
-            	coursesData = JSON.parse(jsondata.responseText);
-            	console.log(coursesData);
-				// home.recentCourses();
+            	coursesObj = JSON.parse(jsondata.responseText);
+            	localStorage.setItem('edx-cache-recent-courses-obj',JSON.stringify(coursesObj));
+				home.recentCourses();
             }
         });
+
+		// let getUserObj, db = new DB();
+		// getUserObj = sessionStorage.getItem('edx-query-get-user');
+		// if(getUserObj != null) {
+		// 	console.log('cached from DB');
+		// 	console.log(JSON.parse(getUserObj));
+		// }
+		// else {
+		// 	db.get({'columns':[],'table':'courses/list','column':'first_name','value':'Mathew','storage':{'type':'local','name':'edx-cache-recent-courses-obj'}});
+		// }
+
 	}
 
 }

@@ -1,26 +1,36 @@
 class Page {
 
 	init(data) {
-		this.buildTemplate(data);
+		this.data = data;
+		this.buildTemplate();
 	}
 
-	buildTemplate(page) {
-		let template, container, content;
+	buildTemplate() {
+		let data, container, content;
+		data = this.data;
 		container = jQuery('.edx-page');
-		content = 	`<!-- Start ~ `+page.name+` page -->
-					<div class="edx-`+page.name+`"></div>
-					<!-- End ~ `+page.name+` page -->`;
+		content = 	`<!-- Start ~ `+data.name+` page -->
+					<div class="edx-`+data.name+`"></div>
+					<!-- End ~ `+data.name+` page -->`;
 		container.html(content);
-		template = jQuery('.edx-'+page.name);
-		for (var i = 0; i < page.layout.length; i++) {
-			let layout;
-			layout = 	`<!-- Start ~ `+page.name+` page `+page.layout[i]+` -->
-						<div class="edx-page-`+page.layout[i]+` edx-page-`+page.layout[i]+`-`+page.side+` edx-`+page.name+`-`+page.layout[i]+` edx-25"></div>
-						<!-- End ~ `+page.name+` page `+page.layout[i]+` -->`;
-			template.append(layout);
-			eval('this.build'+page.layout[i].charAt(0).toUpperCase()+page.layout[i].slice(1)+'();');
-		}
+		this.buildLayout();
 		this.buildObservers();
+	}
+
+	buildLayout() {
+		let data, template;
+		data = this.data;
+		template = jQuery('.edx-'+data.name);
+		for (var i = 0; i < data.layout.length; i++) {
+			let layout, side = '';
+			if(data.side) { side = 'edx-page-'+data.layout[i]+'-'+data.side; }
+			layout = 	`<!-- Start ~ `+data.name+` page `+data.layout[i]+` -->
+						<div class="edx-page-`+data.layout[i]+` `+side+` edx-`+data.name+`-`+data.layout[i]+` edx-25"></div>
+						<!-- End ~ `+data.name+` page `+data.layout[i]+` -->`;
+			template.append(layout);
+			eval('this.build'+data.layout[i].charAt(0).toUpperCase()+data.layout[i].slice(1)+'();');
+		}
+
 	}
 
 	buildCover() {
@@ -53,6 +63,13 @@ class Page {
 		let container, content;
 		container = jQuery('.edx-page-grid');
 		content = `<div class="edx-page-grid-content edx-wrapper"></div>`;
+		container.html(content);
+	}
+
+	buildFull() {
+		let container, content;
+		container = jQuery('.edx-page-full');
+		content = `<div class="edx-page-full-content edx-page-container edx-wrapper"></div>`;
 		container.html(content);
 	}
 
