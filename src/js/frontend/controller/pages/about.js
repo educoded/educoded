@@ -42,26 +42,18 @@ class About {
 		content = 	`<div class="edx-xs-100 edx-sm-100 edx-md-50 edx-lg-50">
 						<div class="edx-page-content">
 							<div class="edx-page-text">
-								Educoded started back in 2013 when I came up with the idea of documenting
-								my progress through my journey as a programmer.
+								Educoded, meaning <b>educated + code</b> is the brain child of many not just one. Our goal with this project is to make coding fun and accessible to all walks of life. As many can probably relate... When I was younger, I would spend countless hours creating things out of legos and get lost in my creations. Programming is similar in that sense, it gives you the ability to create whatever you want from nothing. 
 							</div>
 							<div class="edx-page-text">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-								consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-								proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+								Whether you are coming here with no knowledge or you're a L33T programmer, I guarantee you will enjoy your time on our application. We are very passionate about giving back to the community and helping people change their lives within this industry. This is one of the few professional industries that cares more about your experience than an expensive piece of paper. Much love and respect to those that go to university ;-)
 							</div>
 							<div class="edx-page-text">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-								consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-								proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+								With all the jobs in tech and almost everything being connected to some form of technology, why would you not want to be a programmer!?! With that being said, what are you waiting for? <b>Learn something new.</b>
 							</div>
 						</div>
+					</div>
+					<div class="edx-xs-100 edx-sm-100 edx-md-100 edx-lg-100">
+						team
 					</div>`;
 		container.append(content);
 	}

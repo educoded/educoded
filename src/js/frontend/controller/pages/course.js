@@ -35,13 +35,14 @@ class Course {
 	courseError(id) {
 		switch(id) {
 			case 0:
-				console.log('URL is missing the id');
+				window.location.replace('courses.html');
 			break;
 		}
 	}
 
 	template() {
 		this.cover();
+		this.toolbar();
 		this.grid();
 	}
 
@@ -58,30 +59,65 @@ class Course {
 		container.html(content);
 	}
 
+	toolbar() {
+		let container, content, data;
+		data = this.courseData;
+		container = jQuery('.edx-page-toolbar');
+		content = 	`<div class="edx-page-toolbar-menu">
+						<div class="edx-wrapper">
+							<div class="edx-page-toolbar-menu-item active" data-name="overview">overview</div>
+							<div class="edx-page-toolbar-menu-item" data-name="editor">editor</div>
+						</div>
+					</div>`;
+		container.append(content);
+
+		jQuery('.edx-page-toolbar-menu-item').on('click', function() {
+			let item, name;
+			item = jQuery(this);
+			name = item.data('name');
+			jQuery('.edx-course-section').removeClass('active');
+			jQuery('.edx-course-section-'+name).addClass('active');
+		});
+
+	}
+
 	sidebar() {
 
 	}
 
 	grid() {
-		let container, content, data, editor = new Editor();
+		let container, content, data, editor = new Editor(), app = new App();
 		data = this.courseData;
 		container = jQuery('.edx-page-grid-content');
 		content = 	`<div class="edx-xs-100 edx-sm-100 edx-md-100 edx-lg-100">
-						<div class="edx-editor-container">
-							<div class="edx-wrapper edx-editor-wrapper">
-								<div class="edx-xs-100 edx-sm-100 edx-md-90 edx-lg-90">
-									<div class="edx-editor-app">
-										<div class="edx-editor-holder active">
-											<pre class="edx-editor" id="edx-course-editor"></pre>
+						<div class="edx-course-section edx-course-section-overview active">
+							<div class="edx-container">
+								<div class="edx-page-video-container">
+									<div class="edx-course-video">
+										<div class="edx-page-video-overlay"></div>
+										<div class="edx-page-video edx-15" id="edx-course-video"></div>
+									</div>
+								</div>
+								<div class="edx-page-content">
+									<div class="edx-page-text">`+data.info.content+`</div>
+									<div class="edx-page-text">`+data.info.content+`</div>
+									<div class="edx-page-text">`+data.info.content+`</div>
+									<div class="edx-page-text">`+data.info.content+`</div>
+								</div>
+							</div>
+						</div>
+						<div class="edx-course-section edx-course-section-editor">
+							<div class="edx-editor-container">
+								<div class="edx-wrapper edx-editor-wrapper">
+									<div class="edx-xs-100 edx-sm-100 edx-md-90 edx-lg-90">
+										<div class="edx-editor-app">
+											<div class="edx-editor-holder active">
+												<pre class="edx-editor" id="edx-course-editor"></pre>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					<div class="edx-xs-100 edx-sm-100 edx-md-75 edx-lg-75">
-						<div class="edx-page-content">
-							<div class="edx-page-text">`+data.info.content+`</div>
 						</div>
 					</div>`;
 		container.html(content);
@@ -102,6 +138,62 @@ class Course {
 				'font-size':'11px'
 			}
 		});
+
+		app.videoResize();
+
+        jQuery('.edx-page-toolbar-btn').on('click', function() {
+        	setTimeout(function() {
+        		app.videoResize();
+        	}, 250);
+        });
+
+        jQuery(window).resize(function() {
+        	app.videoResize();
+        });
+
+		var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('edx-course-video', {
+                width: 1280,
+                height: 720,
+                playerVars: {
+                    // autoplay: 1,
+                    controls: 0,
+                    rel: 0,
+                    fs: 0
+                },
+                videoId: 's0zORQpXGBo',
+                events: {
+                    onReady: initialize
+                }
+            });
+        }
+
+        function initialize(event){
+            // player.mute();
+            var timer, state;
+            timer = setInterval(function(){ 
+                state = player.getPlayerState();
+                switch(state) {
+                    case 1:
+                        // video playing
+                    break;
+                    case 0:
+                        player.seekTo(0);
+                    break;
+                }
+            }, 150);
+        }
+        
+        setTimeout(function() {
+            onYouTubeIframeAPIReady();
+        }, 500);
+
+        setTimeout(function() {
+        	let video = jQuery('.edx-course-video').detach();
+        	jQuery('.edx-page-sidebar-container').html(video);
+        	app.videoResize();
+        }, 1500);
 
 	}
 

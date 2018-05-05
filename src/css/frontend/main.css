@@ -403,6 +403,20 @@
 	    left: 15px;
 	}
 
+	.edx-page-toolbar-menu {
+	    width: 100%;
+	    height: inherit;
+	}
+
+	.edx-page-toolbar-menu-item {
+		font-size: 12px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		padding: 0px 4px;
+		margin: 0px 4px;
+	}
+
 	.edx-page-grid-left.moved {
 		left: 0px;
 	    width: 100%;
@@ -442,6 +456,26 @@
 	    font-size: 18px;
 	    line-height: 32px;
 	    margin-bottom: 25px;
+	}
+
+	.edx-page-video-container {
+		width: 100%;
+		background: #333;
+		position: relative;
+	}
+
+	.edx-page-video {
+		width: 100%;
+		background: #333;
+	}
+
+	.edx-page-video-overlay {
+	    position: absolute;
+	    top: 0px;
+	    left: 0px;
+	    width: 100%;
+	    height: 100%;
+	    background: rgba(0,0,0,0);
 	}
 
 /* End ~ Page Defaults */
@@ -829,6 +863,18 @@
 	/* End ~ Content - Homepage */
 
 /* End ~ Content */
+
+/* Start ~ Footer */
+	
+	.edx-footer-copyright {
+	    width: 100%;
+	    height: 36px;
+	    background: #000;
+	    color: #fff;
+	    font-size: 12px;
+	}
+
+/* End ~ Footer */
 
 /* Start ~ Responsive Design */
 	

@@ -11,6 +11,7 @@ requirejs.config({
         signature: 'libs/signature.min',
         particle: 'libs/particles.min',
         geocomplete: 'libs/geocomplete',
+        youtube: 'libs/youtube',
         owl: 'libs/owl',
         // cryptoJS
         AES: 'libs/cryptoJS/aes',

@@ -11,9 +11,18 @@
 	</head>
 	<body class="edx-app edx-25">
 
+		<style>
+			.edx-course-section.active {
+				display: block;
+			}
+			.edx-course-section {
+				display: none;
+			}
+		</style>
+
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
-				requirejs(['jQuery','ace','editor','api','app','user','page','course'],
+				requirejs(['jQuery','ace','editor','api','app','youtube','user','page','course'],
 				function () {
 					var api = new API(), app = new App(), user = new User(), page = new Page(), course = new Course();
 					app.init();

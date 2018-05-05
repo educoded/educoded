@@ -246,7 +246,12 @@ class App {
 		let container, content;
 		container = this.app;
 		content = 	`<!-- Start ~ Footer -->
-					<div class="edx-footer"></div>
+					<div class="edx-footer">
+						<div class="edx-footer-main"></div>
+						<div class="edx-footer-copyright">
+							<div class="edx-wrapper">educoded</div>
+						</div>
+					</div>
 					<!-- End ~ Footer -->`;
 		container.append(content);
 		this.foot = jQuery('.edx-footer');
@@ -302,6 +307,25 @@ class App {
 		});
 
 	}
+
+	videoResize() {
+    	let video, container, videoWidth, containerWidth, videoHeight, containerHeight;
+		video = jQuery('.edx-page-video');
+		container = jQuery('.edx-page-video-container');
+		if(video) {
+
+			// video
+			videoWidth = video.width();
+			videoHeight = videoWidth * (9/16);
+			video.css({'height':videoHeight+'px'});
+
+			// video container
+			containerWidth = container.width();
+			containerHeight = containerWidth * (9/16);
+			container.css({'height':containerHeight+'px'});
+
+		}
+    }
 
 	onScreen() {
 		// is on screen
