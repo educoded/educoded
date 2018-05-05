@@ -151,50 +151,76 @@ class Course {
         	app.videoResize();
         });
 
-		var player;
+		let player, url;
+		url = window.location.pathname;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('edx-course-video', {
                 width: 1280,
                 height: 720,
                 playerVars: {
-                    // autoplay: 1,
+                	autoplay: 1,
                     controls: 0,
-                    rel: 0,
-                    fs: 0
+                    showinfo: 0,
+                    rel: 0
                 },
-                videoId: 's0zORQpXGBo',
+                videoId: 'L9r-aOQb3XM',
                 events: {
-                    onReady: initialize
+                    'onReady': function() {
+                    	console.log('I am ready');
+                    	player.mute();
+                    }
                 }
             });
         }
 
         function initialize(event){
+        	console.log(event);
+        	player.playVideo();
             // player.mute();
-            var timer, state;
-            timer = setInterval(function(){ 
-                state = player.getPlayerState();
-                switch(state) {
-                    case 1:
-                        // video playing
-                    break;
-                    case 0:
-                        player.seekTo(0);
-                    break;
-                }
-            }, 150);
+            // var timer, state;
+            // timer = setInterval(function(){ 
+            //     state = player.getPlayerState();
+            //     switch(state) {
+            //         case 1:
+            //             // video playing
+            //         break;
+            //         case 0:
+            //             player.seekTo(0);
+            //         break;
+            //     }
+            // }, 150);
+        }
+
+        function onPlayerStateChange(event) {
+        	console.log(event);
+        	// player.playVideo();
+        	player.playVideo();
+        	console.log(event);
         }
         
         setTimeout(function() {
             onYouTubeIframeAPIReady();
-        }, 500);
+        }, 250);
 
-        setTimeout(function() {
-        	let video = jQuery('.edx-course-video').detach();
-        	jQuery('.edx-page-sidebar-container').html(video);
-        	app.videoResize();
-        }, 1500);
+  //       jQuery(document).scroll(function() {
 
+		// 	var pos, cover, sidebar, toolbar, grid;
+  //   		pos = jQuery(this).scrollTop();
+		// 	let video = jQuery('.edx-course-video');
+
+  //   		if( jQuery('.edx-page-video-container').isOnScreen() ) {
+  //               player.playVideo();
+  //           }
+  //           else {
+  //               player.pauseVideo();
+  //               video = video.detach();
+  //               jQuery('.edx-page-sidebar-container').html(video);
+		// 		app.videoResize();
+		// 		player.playVideo();
+  //           }
+
+
+		// });
 	}
 
 	s3Data() {
