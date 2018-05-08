@@ -94,7 +94,11 @@ class Course {
 							<div class="edx-container">
 								<div class="edx-page-video-container">
 									<div class="edx-course-video">
-										<div class="edx-page-video-overlay"></div>
+										<div class="edx-page-video-overlay edx-wrapper">
+											<div class="edx-course-video-info">
+												<div class="edx-course-video-btn">continue</div>
+											</div>
+										</div>
 										<div class="edx-page-video edx-15" id="edx-course-video"></div>
 									</div>
 								</div>
@@ -163,32 +167,112 @@ class Course {
                     showinfo: 0,
                     rel: 0
                 },
-                videoId: 'L9r-aOQb3XM',
+                videoId: 'GRe3GUaw1iU',
                 events: {
-                    'onReady': function() {
-                    	console.log('I am ready');
-                    	player.mute();
-                    }
+                    // 'onReady': function() {
+                    // 	console.log('I am ready');
+                    // 	player.mute();
+                    // }
+                    onReady: initialize
                 }
             });
         }
 
         function initialize(event){
-        	console.log(event);
+        	player.seekTo(0.001);
         	player.playVideo();
             // player.mute();
-            // var timer, state;
-            // timer = setInterval(function(){ 
-            //     state = player.getPlayerState();
-            //     switch(state) {
-            //         case 1:
-            //             // video playing
-            //         break;
-            //         case 0:
-            //             player.seekTo(0);
-            //         break;
-            //     }
-            // }, 150);
+            let timer, state, elapsed, duration, points, lastPoint, btn, sections, section;
+            points = [];
+            btn = jQuery('.edx-course-video-btn');
+            duration = player.getDuration();
+
+            sections = [
+            	{
+            		'title':'first section',
+            		'time':5,
+            		'question':'this is a test',
+            		'code':'test1',
+            		'status':0
+            	},
+            	{
+            		'title':'second section',
+            		'time':8,
+            		'question':'this is a test',
+            		'code':'test2',
+            		'status':0
+            	},
+            	{
+            		'title':'third section',
+            		'time':14,
+            		'question':'this is a test',
+            		'code':'test3',
+            		'status':0
+            	},
+            	{
+            		'title':'fourth section',
+            		'time':22,
+            		'question':'this is a test',
+            		'code':'test4',
+            		'status':0
+            	}
+            ];
+
+            for (var i = sections.length - 1; i >= 0; i--) {
+            	points.push(sections[i].time);
+            }
+
+            console.log(duration/60);
+
+            function videoLoop() {
+            	timer = setInterval(function(){ 
+
+	                state = player.getPlayerState();
+	                elapsed = player.getCurrentTime();
+	                lastPoint = points.length - 1;
+	                section = sections.length - points.length;
+	            	if((elapsed + 0.25) > points[lastPoint] && (elapsed - 0.25) < points[lastPoint]) {
+	            		player.pauseVideo();
+	            		clearInterval(timer);
+	            		btn.fadeIn();
+	            	}
+	            	else {
+	            		console.log(state + ' : ' + elapsed);
+	            	}
+	                // console.log(state + ' : ' + elapsed);
+	                // switch(state) {
+	                //     case 1:
+	                //         // video playing
+	                //     break;
+	                //     case 0:
+	                //         player.seekTo(0);
+	                //     break;
+	                // }
+	            }, 250);
+            }
+
+            videoLoop();
+
+            btn.on('click', function() {
+            	let code, editor;
+            	editor = jQuery('#edx-course-editor');
+            	code = editor.getValue();
+            	if(code == sections[section]['code']) {
+            		btn.fadeOut();
+	    			points.pop();
+	    			if(points.length < 1) {
+	    				console.log('all done');
+	    			}
+	    			else {
+	    				videoLoop();
+	    			}
+	    			player.playVideo();
+            	}
+            	else {
+            		console.log('invalid answer');
+            	}
+            });
+
         }
 
         function onPlayerStateChange(event) {

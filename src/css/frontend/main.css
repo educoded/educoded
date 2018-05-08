@@ -420,7 +420,7 @@
 	}
 
 	.edx-page-toolbar-menu-item {
-		font-size: 12px;
+		font-size: 11px;
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 2px;
@@ -463,10 +463,9 @@
 	}
 
 	.edx-page-text {
-		font-weight: 300;
-	    font-size: 18px;
-	    line-height: 32px;
-	    margin-bottom: 25px;
+	    font-weight: 300;
+	    line-height: 26px;
+	    margin-bottom: 15px;
 	}
 
 	.edx-page-video-container {
