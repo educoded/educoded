@@ -155,156 +155,120 @@ class Course {
         	app.videoResize();
         });
 
-		let player, url;
-		url = window.location.pathname;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('edx-course-video', {
-                width: 1280,
-                height: 720,
-                playerVars: {
-                	autoplay: 1,
-                    controls: 0,
-                    showinfo: 0,
-                    rel: 0
-                },
-                videoId: 'GRe3GUaw1iU',
-                events: {
-                    // 'onReady': function() {
-                    // 	console.log('I am ready');
-                    // 	player.mute();
-                    // }
-                    onReady: initialize
-                }
-            });
-        }
+        this.video();
 
-        function initialize(event){
-        	player.seekTo(0.001);
-        	player.playVideo();
-            // player.mute();
-            let timer, state, elapsed, duration, points, lastPoint, btn, sections, section;
-            points = [];
-            btn = jQuery('.edx-course-video-btn');
-            duration = player.getDuration();
+	}
 
-            sections = [
-            	{
-            		'title':'first section',
-            		'time':5,
-            		'question':'this is a test',
-            		'code':'test1',
-            		'status':0
-            	},
-            	{
-            		'title':'second section',
-            		'time':8,
-            		'question':'this is a test',
-            		'code':'test2',
-            		'status':0
-            	},
-            	{
-            		'title':'third section',
-            		'time':14,
-            		'question':'this is a test',
-            		'code':'test3',
-            		'status':0
-            	},
-            	{
-            		'title':'fourth section',
-            		'time':22,
-            		'question':'this is a test',
-            		'code':'test4',
-            		'status':0
-            	}
-            ];
+	video() {
+		let player;
+        player = new YT.Player('edx-course-video', {
+            width: 1280,
+            height: 720,
+            playerVars: {
+            	autoplay: 1,
+                controls: 0,
+                showinfo: 0,
+                rel: 0
+            },
+            videoId: 'GRe3GUaw1iU',
+            events: {
+                onReady: function(event){
+		        	player.seekTo(0.001);
+		        	player.playVideo();
+		            let timer, state, elapsed, duration, points, lastPoint, btn, sections, section;
+		            points = [];
+		            btn = jQuery('.edx-course-video-btn');
+		            duration = player.getDuration();
 
-            for (var i = sections.length - 1; i >= 0; i--) {
-            	points.push(sections[i].time);
+		            sections = [
+		            	{
+		            		'title':'first section',
+		            		'time':5,
+		            		'question':'this is a test',
+		            		'code':'test1',
+		            		'status':0
+		            	},
+		            	{
+		            		'title':'second section',
+		            		'time':8,
+		            		'question':'this is a test',
+		            		'code':'test2',
+		            		'status':0
+		            	},
+		            	{
+		            		'title':'third section',
+		            		'time':14,
+		            		'question':'this is a test',
+		            		'code':'test3',
+		            		'status':0
+		            	},
+		            	{
+		            		'title':'fourth section',
+		            		'time':22,
+		            		'question':'this is a test',
+		            		'code':'test4',
+		            		'status':0
+		            	}
+		            ];
+
+		            for (var i = sections.length - 1; i >= 0; i--) {
+		            	points.push(sections[i].time);
+		            }
+
+		            console.log(duration/60);
+
+		            function videoLoop() {
+		            	timer = setInterval(function(){ 
+
+			                state = player.getPlayerState();
+			                elapsed = player.getCurrentTime();
+			                lastPoint = points.length - 1;
+			                section = sections.length - points.length;
+			            	if((elapsed + 0.25) > points[lastPoint] && (elapsed - 0.25) < points[lastPoint]) {
+			            		player.pauseVideo();
+			            		clearInterval(timer);
+			            		btn.fadeIn();
+			            	}
+			            	else {
+			            		console.log(state + ' : ' + elapsed);
+			            	}
+			                // console.log(state + ' : ' + elapsed);
+			                // switch(state) {
+			                //     case 1:
+			                //         // video playing
+			                //     break;
+			                //     case 0:
+			                //         player.seekTo(0);
+			                //     break;
+			                // }
+			            }, 250);
+		            }
+
+		            videoLoop();
+
+		            btn.on('click', function() {
+		            	let editor, code;
+		            	editor = ace.edit('edx-course-editor');
+		            	code = editor.getValue();
+		            	if(code == sections[section]['code']) {
+		            		btn.fadeOut();
+			    			points.pop();
+			    			if(points.length < 1) {
+			    				console.log('all done');
+			    			}
+			    			else {
+			    				videoLoop();
+			    			}
+			    			player.playVideo();
+		            	}
+		            	else {
+		            		console.log('invalid answer');
+		            	}
+		            });
+
+		        }
             }
-
-            console.log(duration/60);
-
-            function videoLoop() {
-            	timer = setInterval(function(){ 
-
-	                state = player.getPlayerState();
-	                elapsed = player.getCurrentTime();
-	                lastPoint = points.length - 1;
-	                section = sections.length - points.length;
-	            	if((elapsed + 0.25) > points[lastPoint] && (elapsed - 0.25) < points[lastPoint]) {
-	            		player.pauseVideo();
-	            		clearInterval(timer);
-	            		btn.fadeIn();
-	            	}
-	            	else {
-	            		console.log(state + ' : ' + elapsed);
-	            	}
-	                // console.log(state + ' : ' + elapsed);
-	                // switch(state) {
-	                //     case 1:
-	                //         // video playing
-	                //     break;
-	                //     case 0:
-	                //         player.seekTo(0);
-	                //     break;
-	                // }
-	            }, 250);
-            }
-
-            videoLoop();
-
-            btn.on('click', function() {
-            	let code, editor;
-            	editor = jQuery('#edx-course-editor');
-            	code = editor.getValue();
-            	if(code == sections[section]['code']) {
-            		btn.fadeOut();
-	    			points.pop();
-	    			if(points.length < 1) {
-	    				console.log('all done');
-	    			}
-	    			else {
-	    				videoLoop();
-	    			}
-	    			player.playVideo();
-            	}
-            	else {
-            		console.log('invalid answer');
-            	}
-            });
-
-        }
-
-        function onPlayerStateChange(event) {
-        	console.log(event);
-        	// player.playVideo();
-        	player.playVideo();
-        	console.log(event);
-        }
-        
-        setTimeout(function() {
-            onYouTubeIframeAPIReady();
-        }, 250);
-
-  //       jQuery(document).scroll(function() {
-
-		// 	var pos, cover, sidebar, toolbar, grid;
-  //   		pos = jQuery(this).scrollTop();
-		// 	let video = jQuery('.edx-course-video');
-
-  //   		if( jQuery('.edx-page-video-container').isOnScreen() ) {
-  //               player.playVideo();
-  //           }
-  //           else {
-  //               player.pauseVideo();
-  //               video = video.detach();
-  //               jQuery('.edx-page-sidebar-container').html(video);
-		// 		app.videoResize();
-		// 		player.playVideo();
-  //           }
-
-
-		// });
+        });
 	}
 
 	s3Data() {
