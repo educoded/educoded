@@ -43,6 +43,7 @@ class Course {
 	template() {
 		this.cover();
 		this.toolbar();
+		this.sidebar();
 		this.grid();
 	}
 
@@ -82,6 +83,28 @@ class Course {
 	}
 
 	sidebar() {
+		let container, content, data, steps, sections;
+		data = this.courseData;
+		steps = data.info.video.steps;
+		container = jQuery('.edx-page-sidebar-container');
+		content = 	`<div class="edx-course-sidebar-content">
+						<div>Sections</div>
+						<div class="edx-course-sidebar-sections"></div>
+					</div>`;
+		container.html(content);
+		sections = jQuery('.edx-course-sidebar-sections');
+		for (var i = 0; i < steps.length; i++) {
+			let step, section;
+			step = steps[i];
+			section = 	`<div class="edx-course-sidebar-section">
+							<div class="edx-course-sidebar-section-title">`+step.title+`</div>
+							<div class="edx-course-sidebar-section-info">
+								<div class="edx-course-sidebar-section-question">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+								<div class="edx-course-sidebar-section-status"></div>
+							</div>
+						</div>`;
+			sections.append(section);
+		}
 
 	}
 
@@ -160,7 +183,7 @@ class Course {
 	}
 
 	video() {
-		let player;
+		let player, data = this.courseData;
         player = new YT.Player('edx-course-video', {
             width: 1280,
             height: 720,
@@ -179,38 +202,7 @@ class Course {
 		            points = [];
 		            btn = jQuery('.edx-course-video-btn');
 		            duration = player.getDuration();
-
-		            sections = [
-		            	{
-		            		'title':'first section',
-		            		'time':5,
-		            		'question':'this is a test',
-		            		'code':'test1',
-		            		'status':0
-		            	},
-		            	{
-		            		'title':'second section',
-		            		'time':8,
-		            		'question':'this is a test',
-		            		'code':'test2',
-		            		'status':0
-		            	},
-		            	{
-		            		'title':'third section',
-		            		'time':14,
-		            		'question':'this is a test',
-		            		'code':'test3',
-		            		'status':0
-		            	},
-		            	{
-		            		'title':'fourth section',
-		            		'time':22,
-		            		'question':'this is a test',
-		            		'code':'test4',
-		            		'status':0
-		            	}
-		            ];
-
+		            sections = data.info.video.steps;
 		            for (var i = sections.length - 1; i >= 0; i--) {
 		            	points.push(sections[i].time);
 		            }
@@ -228,6 +220,10 @@ class Course {
 			            		player.pauseVideo();
 			            		clearInterval(timer);
 			            		btn.fadeIn();
+			            		jQuery('.edx-course-sidebar-section-info').slideUp();
+			            		jQuery('.edx-course-sidebar-section:nth-child('+(section+1)+') .edx-course-sidebar-section-info').slideDown();
+			            		jQuery('.edx-course-section').removeClass('active');
+			            		jQuery('.edx-course-section-editor').addClass('active');
 			            	}
 			            	else {
 			            		console.log(state + ' : ' + elapsed);
@@ -250,7 +246,7 @@ class Course {
 		            	let editor, code;
 		            	editor = ace.edit('edx-course-editor');
 		            	code = editor.getValue();
-		            	if(code == sections[section]['code']) {
+		            	if(code.replace(/\s/g,'') == sections[section]['code'].replace(/\s/g,'')) {
 		            		btn.fadeOut();
 			    			points.pop();
 			    			if(points.length < 1) {
