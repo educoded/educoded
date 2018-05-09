@@ -109,7 +109,7 @@ class Course {
 	}
 
 	grid() {
-		let container, content, data, editor = new Editor(), app = new App();
+		let container, content, data, player, editor = new Editor(), app = new App();
 		data = this.courseData;
 		container = jQuery('.edx-page-grid-content');
 		content = 	`<div class="edx-xs-100 edx-sm-100 edx-md-100 edx-lg-100">
@@ -178,12 +178,6 @@ class Course {
         	app.videoResize();
         });
 
-        this.video();
-
-	}
-
-	video() {
-		let player, data = this.courseData;
         player = new YT.Player('edx-course-video', {
             width: 1280,
             height: 720,
@@ -196,6 +190,7 @@ class Course {
             videoId: 'GRe3GUaw1iU',
             events: {
                 onReady: function(event){
+                	player.mute();
 		        	player.seekTo(0.001);
 		        	player.playVideo();
 		            let timer, state, elapsed, duration, points, lastPoint, btn, sections, section;
@@ -265,6 +260,7 @@ class Course {
 		        }
             }
         });
+
 	}
 
 	s3Data() {

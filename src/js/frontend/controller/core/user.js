@@ -15,11 +15,20 @@ class User {
 			// Sets the user data as a global value
 			this.userData = userObj;
 			this.userOnline();
-			// this.buildTemplate();
+			console.log('logged in');
 		}
 		else {
 			// not logged in
-			this.s3Data();
+			let user = new User(), api = new API();
+			jQuery.ajax({
+	            type: 'GET',
+	            crossDomain: true,
+	            dataType: 'json',
+	            url: api.config('users'),
+	            complete: function(jsondata) {
+	                user.userOffline(jsondata.responseText);
+	            }
+	        });
 		}
 
 	}
@@ -34,7 +43,7 @@ class User {
 		container.html(content);
 	}
 
-	userOffline() {
+	userOffline(data) {
 		let container, content;
 		container = jQuery('.edx-sidebar-profile-content');
 		content = 	`<div class="edx-sidebar-profile-offline">
@@ -61,13 +70,12 @@ class User {
 						</div>
 					</div>`;
 		container.html(content);
-		this.userLogin();
+		this.userLogin(data);
 	}
 
-	userLogin() {
-		let data, userObj, userData, user = new User();
+	userLogin(userObj) {
+		let data, userData, user = new User();
 		data = {'email':'','password':''};
-		userObj = this.userData();
 		jQuery('.edx-sidebar-profile-login-btn').on('click', function() {
 			jQuery('.edx-sidebar-profile-login-input-value').each(function() {
 				let item, type;
@@ -75,7 +83,7 @@ class User {
 				type = item.data('type');
 				data[type] = item.val();
 			});
-			userData = user.getUser(data, userObj);
+			userData = user.getUser(data, JSON.parse(userObj));
 		});
 	}
 
@@ -122,29 +130,9 @@ class User {
 		}
 	}
 
-	s3Data() {
-		let user = new User(), api = new API();
-		jQuery.ajax({
-            type: 'GET',
-            crossDomain: true,
-            dataType: 'json',
-            url: api.config('users'),
-            complete: function(jsondata) {
-                sessionStorage.setItem('userData',jsondata.responseText);
-                user.userOffline();
-            }
-        });
-	}
-
 	saveUser(data) {
-		sessionStorage.removeItem('uData');
-		sessionStorage.removeItem('userData');
 		localStorage.setItem('edx-cache-user-obj',JSON.stringify(data));
 		this.checkUser();
-	}
-
-	userData() {
-		return JSON.parse(sessionStorage.getItem('userData'));
 	}
 
 }
