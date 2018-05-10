@@ -2,6 +2,7 @@ class Course {
 
 	init() {
 		this.checkCourse();
+		this.loadCourse();
 	}
 
 	checkCourse() {
@@ -30,6 +31,10 @@ class Course {
 		else {
 			this.courseError(0);
 		}
+	}
+
+	loadCourse() {
+		console.log('load course');
 	}
 
 	courseError(id) {

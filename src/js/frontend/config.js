@@ -6,6 +6,7 @@ requirejs.config({
         ace: 'libs/ace/ace',
         charts: 'libs/charts.min',
         cropper: 'libs/cropper.min',
+        localforage: 'libs/localforage',
         moment: 'libs/moment.min',
         progress: 'libs/progressbar.min',
         signature: 'libs/signature.min',

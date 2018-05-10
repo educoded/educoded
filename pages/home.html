@@ -13,14 +13,15 @@
 
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
-				requirejs(['jQuery','db','storage','AES','MD5','ace','editor','owl','api','app','user','home'],
-				function (app, home) {
+				requirejs(['localforage','jQuery','db','storage','AES','MD5','ace','editor','owl','api','app','user','home'],
+				function (localforage) {
 					var api = new API(), app = new App(), user = new User(), home = new Home();
+					window.localforage = localforage
 					app.init();
 					user.init();
 					home.init();
 					// api.gradient();
-				})
+				});
 			});
 		</script>
 

@@ -88,7 +88,7 @@ class Home {
 	}
 
 	recentCourses() {
-		let coursesObj, db = new DB();
+		let coursesObj, db = new DB(), home = new Home();
 
 		// check to see if recent courses have been either loaded or cached
 		coursesObj = localStorage.getItem('edx-cache-recent-courses-obj');
@@ -96,8 +96,24 @@ class Home {
 		if(coursesObj != null) {
 			// cached
 			// Sets the course data as a global value
-			this.coursesData = JSON.parse(coursesObj);
-			this.courses();
+			localforage.ready(function() {
+		        var key = 'edx-cache-recent-courses-obj';
+		        var value = coursesObj;
+
+		        localforage.setItem(key, value, function() {
+		            console.log('SAVING');
+		        });
+
+		    });
+
+		    localforage.ready().then(function() {
+		        console.log("You can use ready from Promises too");
+
+		        localforage.getItem('edx-cache-recent-courses-obj').then(function(readValue) {
+	                home.coursesData = JSON.parse(readValue);
+					home.courses();
+	            });
+		    });
 		}
 		else {
 			// not cached
