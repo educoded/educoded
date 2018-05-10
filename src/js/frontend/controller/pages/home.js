@@ -89,36 +89,39 @@ class Home {
 
 	recentCourses() {
 		let coursesObj, db = new DB(), home = new Home();
-
 		// check to see if recent courses have been either loaded or cached
-		coursesObj = localStorage.getItem('edx-cache-recent-courses-obj');
-
-		if(coursesObj != null) {
-			// cached
-			// Sets the course data as a global value
-			localforage.ready(function() {
-		        var key = 'edx-cache-recent-courses-obj';
-		        var value = coursesObj;
-
-		        localforage.setItem(key, value, function() {
-		            console.log('SAVING');
-		        });
-
-		    });
-
-		    localforage.ready().then(function() {
-		        console.log("You can use ready from Promises too");
-
-		        localforage.getItem('edx-cache-recent-courses-obj').then(function(readValue) {
-	                home.coursesData = JSON.parse(readValue);
+		localforage.ready(function() {
+			let key;
+	        key = 'edx-cache-recent-courses-obj';
+	        localforage.getItem(key).then(function(value) {
+			    if(value != null) {
+			    	// cached
+					// Sets the course data as a global value
+			    	home.coursesData = JSON.parse(value);
 					home.courses();
-	            });
-		    });
-		}
-		else {
-			// not cached
-			db.get({'columns':[],'table':'courses/list','column':'','operator':'','value':'','function':'let home = new Home(); home.recentCourses();','storage':{'type':'local','name':'edx-cache-recent-courses-obj'}});
-		}
+			    }
+			    else {
+			    	// not cached
+					jQuery.ajax({
+			            type: 'GET',
+			            crossDomain: true,
+			            dataType: 'json',
+			            url: 'https://s3-us-west-2.amazonaws.com/educoded/data/courses/list.json',
+			            complete: function(jsondata) {
+			            	coursesObj = jsondata.responseText;
+							localforage.setItem('edx-cache-recent-courses-obj', coursesObj, function() {
+					            localforage.getItem('edx-cache-recent-courses-obj').then(function(readValue) {
+					                home.coursesData = JSON.parse(readValue);
+									home.courses();
+					            });
+					        });
+
+			            }
+			        });
+			    }
+			});
+	    });
+		// db.get({'columns':[],'table':'courses/list','column':'','operator':'','value':'','function':'let home = new Home(); home.recentCourses();','storage':{'type':'local','name':'edx-cache-recent-courses-obj'}});
 	}
 
 	courses() {
@@ -173,19 +176,6 @@ class Home {
 	}
 
 	s3Data() {
-		let coursesObj, home = new Home();
-		jQuery.ajax({
-            type: 'GET',
-            crossDomain: true,
-            dataType: 'json',
-            url: 'https://s3-us-west-2.amazonaws.com/educoded/data/courses/list.json',
-            complete: function(jsondata) {
-            	coursesObj = JSON.parse(jsondata.responseText);
-            	localStorage.setItem('edx-cache-recent-courses-obj',JSON.stringify(coursesObj));
-				home.recentCourses();
-            }
-        });
-
 		// let getUserObj, db = new DB();
 		// getUserObj = sessionStorage.getItem('edx-query-get-user');
 		// if(getUserObj != null) {
@@ -195,7 +185,6 @@ class Home {
 		// else {
 		// 	db.get({'columns':[],'table':'courses/list','column':'newest','value':3,'storage':{'type':'local','name':'edx-cache-recent-courses-obj'}});
 		// }
-
 	}
 
 }

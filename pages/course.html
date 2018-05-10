@@ -53,9 +53,10 @@
 
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
-				requirejs(['jQuery','ace','editor','api','app','youtube','user','page','course'],
-				function () {
+				requirejs(['localforage','jQuery','youtube','ace','editor','api','app','user','page','course'],
+				function (localforage) {
 					var api = new API(), app = new App(), user = new User(), page = new Page(), course = new Course();
+					window.localforage = localforage;
 					app.init();
 					user.init();
 					page.init({'name':'course','side':'right','layout':['cover','sidebar','toolbar','grid']});

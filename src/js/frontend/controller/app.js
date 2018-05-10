@@ -1,31 +1,18 @@
 class App {
 
 	init() {
-
-		// if (typeof localStorage === 'object') {
-		//     try {
-		//         localStorage.setItem('localStorage', 1);
-		//         localStorage.removeItem('localStorage');
-		//     } catch (e) {
-		//         alert('Your web browser does not support storing settings locally. In Safari, the most common cause of this is using "Private Browsing Mode". Some settings may not save or some features may not work properly for you.');
-		//         return false;
-		//     }
-		// }
-
 		this.app = jQuery('.edx-app');
 		this.meta();
 		this.header();
 		this.sidebar();
 		this.page();
 		this.footer();
+		this.startApp();
 		this.events();
-		this.checkApp();
 		this.onScreen();
-
 	}
 
 	meta() {
-
 		let container, content;
 		container = jQuery('head');
 		content = 	`<title>educoded</title>
@@ -40,11 +27,9 @@ class App {
 					<meta name="msapplication-TileColor" content="#da532c">
 					<meta name="theme-color" content="#ffffff">`;
 		container.prepend(content);
-
 	}
 
 	header() {
-
 		let container, content;
 		container = this.app;
 		content = 	`<!-- Start ~ Header -->
@@ -54,7 +39,6 @@ class App {
 		this.head = jQuery('.edx-header');
 		this.headerTop();
 		this.headerMain();
-
 	}
 
 	headerTop() {
@@ -213,17 +197,14 @@ class App {
 
 	sidebarControls() {
 		let app = new App();
-		
 		// open sidebar
 		jQuery('.edx-header-sidebar').on('click', function() {
 			app.sidebarOpen();
 		});
-
 		// close sidebar
 		jQuery('.edx-sidebar-overlay, .edx-sidebar-close').on('click', function() {
 			app.sidebarClose();
 		});
-
 	}
 
 	sidebarOpen() {
@@ -267,44 +248,39 @@ class App {
 		this.foot = jQuery('.edx-footer');
 	}
 
-	checkApp() {
-		let appObj;
-		appObj = localStorage.getItem('edx-cache-app-obj');
-
-		if(appObj != null) {
-			// app object exists
-			this.configApp(appObj);
-		}
-		else {
-			// app object does not exist
-			// start app object
-			this.startApp();
-		}
-	}
-
 	startApp() {
-		let appObj;
-		appObj = {
-			'theme':'dark'
-		};
-		localStorage.setItem('edx-cache-app-obj',JSON.stringify(appObj));
-		this.checkApp();
-	}
-
-	configApp(data) {
-		let obj = JSON.parse(data);
-		switch(obj.theme) {
-			case 'dark':
-				jQuery('body').addClass('edx-dark-theme');
-			break;
-			case 'light':
-				jQuery('body').addClass('edx-light-theme');
-			break;
-		}
+		let app = new App();
+		// check to see if recent courses have been either loaded or cached
+		localforage.ready(function() {
+			let key, theme;
+	        key = 'edx-cache-app-obj';
+	        theme = {'theme':'dark'};
+	        localforage.getItem(key).then(function(value) {
+			    if(value != null) {
+			    	console.log('cached');
+			    	// cached
+					// Sets the course data as a global value
+					switch(value.theme) {
+						case 'dark':
+							jQuery('body').addClass('edx-dark-theme');
+						break;
+						case 'light':
+							jQuery('body').addClass('edx-light-theme');
+						break;
+					}
+			    }
+			    else {
+			    	console.log('not cached');
+			    	// not cached
+					localforage.setItem(key, theme, function() {
+						app.startApp();
+			        });
+			    }
+			});
+	    });
 	}
 
 	events() {
-
 		jQuery(document).scroll(function() {
 			let pos;
 			pos = jQuery(document).scrollTop();
@@ -315,7 +291,6 @@ class App {
 				jQuery('.edx-header').removeClass('active');
 			}
 		});
-
 	}
 
 	videoResize() {
@@ -323,41 +298,31 @@ class App {
 		video = jQuery('.edx-page-video');
 		container = jQuery('.edx-page-video-container');
 		if(video) {
-
 			// video
 			videoWidth = video.width();
 			videoHeight = videoWidth * (9/16);
 			video.css({'height':videoHeight+'px'});
-
 			// video container
 			containerWidth = container.width();
 			containerHeight = containerWidth * (9/16);
 			container.css({'height':containerHeight+'px'});
-
 		}
     }
 
 	onScreen() {
-		// is on screen
         jQuery.fn.isOnScreen = function(){
-
             var win = jQuery(window);
-            
             var viewport = {
                 top : win.scrollTop(),
                 left : win.scrollLeft()
             };
             viewport.right = viewport.left + win.width();
             viewport.bottom = viewport.top + win.height();
-            
             var bounds = this.offset();
             bounds.right = bounds.left + this.outerWidth();
             bounds.bottom = bounds.top + this.outerHeight();
-            
             return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
-            
         };
-
 	}
 
 }

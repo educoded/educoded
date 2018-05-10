@@ -15,7 +15,7 @@
  * @todo Test Zepto
  * @todo stagePadding calculate wrong active classes
  */
-;(function($, window, document, undefined) {
+;(function(jQuery, window, document, undefined) {
 
 	/**
 	 * Creates a carousel.
@@ -36,13 +36,13 @@
 		 * Current options set by the caller including defaults.
 		 * @public
 		 */
-		this.options = $.extend({}, Owl.Defaults, options);
+		this.options = jQuery.extend({}, Owl.Defaults, options);
 
 		/**
 		 * Plugin element.
 		 * @public
 		 */
-		this.$element = $(element);
+		this.$element = jQuery(element);
 
 		/**
 		 * Proxied event handlers.
@@ -159,19 +159,19 @@
 			}
 		};
 
-		$.each([ 'onResize', 'onThrottledResize' ], $.proxy(function(i, handler) {
-			this._handlers[handler] = $.proxy(this[handler], this);
+		jQuery.each([ 'onResize', 'onThrottledResize' ], jQuery.proxy(function(i, handler) {
+			this._handlers[handler] = jQuery.proxy(this[handler], this);
 		}, this));
 
-		$.each(Owl.Plugins, $.proxy(function(key, plugin) {
+		jQuery.each(Owl.Plugins, jQuery.proxy(function(key, plugin) {
 			this._plugins[key.charAt(0).toLowerCase() + key.slice(1)]
 				= new plugin(this);
 		}, this));
 
-		$.each(Owl.Workers, $.proxy(function(priority, worker) {
+		jQuery.each(Owl.Workers, jQuery.proxy(function(priority, worker) {
 			this._pipe.push({
 				'filter': worker.filter,
-				'run': $.proxy(worker.run, this)
+				'run': jQuery.proxy(worker.run, this)
 			});
 		}, this));
 
@@ -348,8 +348,8 @@
 
 			this._clones = clones;
 
-			$(append).addClass('cloned').appendTo(this.$stage);
-			$(prepend).addClass('cloned').prependTo(this.$stage);
+			jQuery(append).addClass('cloned').appendTo(this.$stage);
+			jQuery(prepend).addClass('cloned').prependTo(this.$stage);
 		}
 	}, {
 		filter: [ 'width', 'items', 'settings' ],
@@ -459,9 +459,9 @@
 		this.$element.addClass(this.options.loadingClass);
 
 		// create stage
-		this.$stage = $('<' + this.settings.stageElement + '>', {
+		this.$stage = jQuery('<' + this.settings.stageElement + '>', {
 			"class": this.settings.stageClass
-		}).wrap( $( '<div/>', {
+		}).wrap( jQuery( '<div/>', {
 			"class": this.settings.stageOuterClass
 		}));
 
@@ -478,7 +478,7 @@
 		// if the items are already in the DOM, grab them and skip item initialization
 		if ($items.length) {
 			this._items = $items.get().map(function(item) {
-				return $(item);
+				return jQuery(item);
 			});
 
 			this._mergers = this._items.map(function() {
@@ -562,15 +562,15 @@
 			settings = null;
 
 		if (!overwrites) {
-			settings = $.extend({}, this.options);
+			settings = jQuery.extend({}, this.options);
 		} else {
-			$.each(overwrites, function(breakpoint) {
+			jQuery.each(overwrites, function(breakpoint) {
 				if (breakpoint <= viewport && breakpoint > match) {
 					match = Number(breakpoint);
 				}
 			});
 
-			settings = $.extend({}, this.options, overwrites[match]);
+			settings = jQuery.extend({}, this.options, overwrites[match]);
 			if (typeof settings.stagePadding === 'function') {
 				settings.stagePadding = settings.stagePadding();
 			}
@@ -612,7 +612,7 @@
 		var event = this.trigger('prepare', { content: item });
 
 		if (!event.data) {
-			event.data = $('<' + this.settings.itemElement + '/>')
+			event.data = jQuery('<' + this.settings.itemElement + '/>')
 				.addClass(this.options.itemClass).append(item)
 		}
 
@@ -628,11 +628,11 @@
 	Owl.prototype.update = function() {
 		var i = 0,
 			n = this._pipe.length,
-			filter = $.proxy(function(p) { return this[p] }, this._invalidated),
+			filter = jQuery.proxy(function(p) { return this[p] }, this._invalidated),
 			cache = {};
 
 		while (i < n) {
-			if (this._invalidated.all || $.grep(this._pipe[i].filter, filter).length > 0) {
+			if (this._invalidated.all || jQuery.grep(this._pipe[i].filter, filter).length > 0) {
 				this._pipe[i].run(cache);
 			}
 			i++;
@@ -730,8 +730,8 @@
 	 * @protected
 	 */
 	Owl.prototype.registerEventHandlers = function() {
-		if ($.support.transition) {
-			this.$stage.on($.support.transition.end + '.owl.core', $.proxy(this.onTransitionEnd, this));
+		if (jQuery.support.transition) {
+			this.$stage.on(jQuery.support.transition.end + '.owl.core', jQuery.proxy(this.onTransitionEnd, this));
 		}
 
 		if (this.settings.responsive !== false) {
@@ -740,13 +740,13 @@
 
 		if (this.settings.mouseDrag) {
 			this.$element.addClass(this.options.dragClass);
-			this.$stage.on('mousedown.owl.core', $.proxy(this.onDragStart, this));
+			this.$stage.on('mousedown.owl.core', jQuery.proxy(this.onDragStart, this));
 			this.$stage.on('dragstart.owl.core selectstart.owl.core', function() { return false });
 		}
 
 		if (this.settings.touchDrag){
-			this.$stage.on('touchstart.owl.core', $.proxy(this.onDragStart, this));
-			this.$stage.on('touchcancel.owl.core', $.proxy(this.onDragEnd, this));
+			this.$stage.on('touchstart.owl.core', jQuery.proxy(this.onDragStart, this));
+			this.$stage.on('touchcancel.owl.core', jQuery.proxy(this.onDragEnd, this));
 		}
 	};
 
@@ -764,7 +764,7 @@
 			return;
 		}
 
-		if ($.support.transform) {
+		if (jQuery.support.transform) {
 			stage = this.$stage.css('transform').replace(/.*\(|\)| /g, '').split(',');
 			stage = {
 				x: stage[stage.length === 16 ? 12 : 4],
@@ -781,7 +781,7 @@
 		}
 
 		if (this.is('animating')) {
-			$.support.transform ? this.animate(stage.x) : this.$stage.stop()
+			jQuery.support.transform ? this.animate(stage.x) : this.$stage.stop()
 			this.invalidate('position');
 		}
 
@@ -790,17 +790,17 @@
 		this.speed(0);
 
 		this._drag.time = new Date().getTime();
-		this._drag.target = $(event.target);
+		this._drag.target = jQuery(event.target);
 		this._drag.stage.start = stage;
 		this._drag.stage.current = stage;
 		this._drag.pointer = this.pointer(event);
 
-		$(document).on('mouseup.owl.core touchend.owl.core', $.proxy(this.onDragEnd, this));
+		jQuery(document).on('mouseup.owl.core touchend.owl.core', jQuery.proxy(this.onDragEnd, this));
 
-		$(document).one('mousemove.owl.core touchmove.owl.core', $.proxy(function(event) {
+		jQuery(document).one('mousemove.owl.core touchmove.owl.core', jQuery.proxy(function(event) {
 			var delta = this.difference(this._drag.pointer, this.pointer(event));
 
-			$(document).on('mousemove.owl.core touchmove.owl.core', $.proxy(this.onDragMove, this));
+			jQuery(document).on('mousemove.owl.core touchmove.owl.core', jQuery.proxy(this.onDragMove, this));
 
 			if (Math.abs(delta.x) < Math.abs(delta.y) && this.is('valid')) {
 				return;
@@ -860,7 +860,7 @@
 			stage = this._drag.stage.current,
 			direction = delta.x > 0 ^ this.settings.rtl ? 'left' : 'right';
 
-		$(document).off('.owl.core');
+		jQuery(document).off('.owl.core');
 
 		this.$element.removeClass(this.options.grabClass);
 
@@ -901,7 +901,7 @@
 
 		if (!this.settings.freeDrag) {
 			// check closest item
-			$.each(coordinates, $.proxy(function(index, value) {
+			jQuery.each(coordinates, jQuery.proxy(function(index, value) {
 				// on a left pull, check on current index
 				if (direction === 'left' && coordinate > value - pull && coordinate < value + pull) {
 					position = index;
@@ -945,7 +945,7 @@
 			this.trigger('translate');
 		}
 
-		if ($.support.transform3d && $.support.transition) {
+		if (jQuery.support.transform3d && jQuery.support.transition) {
 			this.$stage.css({
 				transform: 'translate3d(' + coordinate + 'px,0px,0px)',
 				transition: (this.speed() / 1000) + 's' + (
@@ -955,7 +955,7 @@
 		} else if (animate) {
 			this.$stage.animate({
 				left: coordinate + 'px'
-			}, this.speed(), this.settings.fallbackEasing, $.proxy(this.onTransitionEnd, this));
+			}, this.speed(), this.settings.fallbackEasing, jQuery.proxy(this.onTransitionEnd, this));
 		} else {
 			this.$stage.css({
 				left: coordinate + 'px'
@@ -1012,11 +1012,11 @@
 	 * @returns {Array.<String>} - The invalidated parts.
 	 */
 	Owl.prototype.invalidate = function(part) {
-		if ($.type(part) === 'string') {
+		if (jQuery.type(part) === 'string') {
 			this._invalidated[part] = true;
 			this.is('valid') && this.leave('valid');
 		}
-		return $.map(this._invalidated, function(v, i) { return i });
+		return jQuery.map(this._invalidated, function(v, i) { return i });
 	};
 
 	/**
@@ -1165,10 +1165,10 @@
 			map = function(index) { return index % 2 === 0 ? even + index / 2 : odd - (index + 1) / 2 };
 
 		if (position === undefined) {
-			return $.map(this._clones, function(v, i) { return map(i) });
+			return jQuery.map(this._clones, function(v, i) { return map(i) });
 		}
 
-		return $.map(this._clones, function(v, i) { return v === position ? map(i) : null });
+		return jQuery.map(this._clones, function(v, i) { return v === position ? map(i) : null });
 	};
 
 	/**
@@ -1198,7 +1198,7 @@
 			coordinate;
 
 		if (position === undefined) {
-			return $.map(this._coordinates, $.proxy(function(coordinate, index) {
+			return jQuery.map(this._coordinates, jQuery.proxy(function(coordinate, index) {
 				return this.coordinates(index);
 			}, this));
 		}
@@ -1328,7 +1328,7 @@
 	Owl.prototype.viewport = function() {
 		var width;
 		if (this.options.responsiveBaseElement !== window) {
-			width = $(this.options.responsiveBaseElement).width();
+			width = jQuery(this.options.responsiveBaseElement).width();
 		} else if (window.innerWidth) {
 			width = window.innerWidth;
 		} else if (document.documentElement && document.documentElement.clientWidth) {
@@ -1349,7 +1349,7 @@
 		this._items = [];
 
 		if (content) {
-			content = (content instanceof jQuery) ? content : $(content);
+			content = (content instanceof jQuery) ? content : jQuery(content);
 		}
 
 		if (this.settings.nestedItemSelector) {
@@ -1358,7 +1358,7 @@
 
 		content.filter(function() {
 			return this.nodeType === 1;
-		}).each($.proxy(function(index, item) {
+		}).each(jQuery.proxy(function(index, item) {
 			item = this.prepare(item);
 			this.$stage.append(item);
 			this._items.push(item);
@@ -1381,7 +1381,7 @@
 		var current = this.relative(this._current);
 
 		position = position === undefined ? this._items.length : this.normalize(position, true);
-		content = content instanceof jQuery ? content : $(content);
+		content = content instanceof jQuery ? content : jQuery(content);
 
 		this.trigger('add', { content: content, position: position });
 
@@ -1435,10 +1435,10 @@
 	 * @protected
 	 */
 	Owl.prototype.preloadAutoWidthImages = function(images) {
-		images.each($.proxy(function(i, element) {
+		images.each(jQuery.proxy(function(i, element) {
 			this.enter('pre-loading');
-			element = $(element);
-			$(new Image()).one('load', $.proxy(function(e) {
+			element = jQuery(element);
+			jQuery(new Image()).one('load', jQuery.proxy(function(e) {
 				element.attr('src', e.target.src);
 				element.css('opacity', 1);
 				this.leave('pre-loading');
@@ -1455,7 +1455,7 @@
 
 		this.$element.off('.owl.core');
 		this.$stage.off('.owl.core');
-		$(document).off('.owl.core');
+		jQuery(document).off('.owl.core');
 
 		if (this.settings.responsive !== false) {
 			window.clearTimeout(this.resizeTimer);
@@ -1552,16 +1552,16 @@
 	Owl.prototype.trigger = function(name, data, namespace, state, enter) {
 		var status = {
 			item: { count: this._items.length, index: this.current() }
-		}, handler = $.camelCase(
-			$.grep([ 'on', name, namespace ], function(v) { return v })
+		}, handler = jQuery.camelCase(
+			jQuery.grep([ 'on', name, namespace ], function(v) { return v })
 				.join('-').toLowerCase()
-		), event = $.Event(
+		), event = jQuery.Event(
 			[ name, 'owl', namespace || 'carousel' ].join('.').toLowerCase(),
-			$.extend({ relatedTarget: this }, status, data)
+			jQuery.extend({ relatedTarget: this }, status, data)
 		);
 
 		if (!this._supress[name]) {
-			$.each(this._plugins, function(name, plugin) {
+			jQuery.each(this._plugins, function(name, plugin) {
 				if (plugin.onTrigger) {
 					plugin.onTrigger(event);
 				}
@@ -1583,7 +1583,7 @@
 	 * @param name - The state name.
 	 */
 	Owl.prototype.enter = function(name) {
-		$.each([ name ].concat(this._states.tags[name] || []), $.proxy(function(i, name) {
+		jQuery.each([ name ].concat(this._states.tags[name] || []), jQuery.proxy(function(i, name) {
 			if (this._states.current[name] === undefined) {
 				this._states.current[name] = 0;
 			}
@@ -1597,7 +1597,7 @@
 	 * @param name - The state name.
 	 */
 	Owl.prototype.leave = function(name) {
-		$.each([ name ].concat(this._states.tags[name] || []), $.proxy(function(i, name) {
+		jQuery.each([ name ].concat(this._states.tags[name] || []), jQuery.proxy(function(i, name) {
 			this._states.current[name]--;
 		}, this));
 	};
@@ -1609,19 +1609,19 @@
 	 */
 	Owl.prototype.register = function(object) {
 		if (object.type === Owl.Type.Event) {
-			if (!$.event.special[object.name]) {
-				$.event.special[object.name] = {};
+			if (!jQuery.event.special[object.name]) {
+				jQuery.event.special[object.name] = {};
 			}
 
-			if (!$.event.special[object.name].owl) {
-				var _default = $.event.special[object.name]._default;
-				$.event.special[object.name]._default = function(e) {
+			if (!jQuery.event.special[object.name].owl) {
+				var _default = jQuery.event.special[object.name]._default;
+				jQuery.event.special[object.name]._default = function(e) {
 					if (_default && _default.apply && (!e.namespace || e.namespace.indexOf('owl') === -1)) {
 						return _default.apply(this, arguments);
 					}
 					return e.namespace && e.namespace.indexOf('owl') > -1;
 				};
-				$.event.special[object.name].owl = true;
+				jQuery.event.special[object.name].owl = true;
 			}
 		} else if (object.type === Owl.Type.State) {
 			if (!this._states.tags[object.name]) {
@@ -1630,8 +1630,8 @@
 				this._states.tags[object.name] = this._states.tags[object.name].concat(object.tags);
 			}
 
-			this._states.tags[object.name] = $.grep(this._states.tags[object.name], $.proxy(function(tag, i) {
-				return $.inArray(tag, this._states.tags[object.name]) === i;
+			this._states.tags[object.name] = jQuery.grep(this._states.tags[object.name], jQuery.proxy(function(tag, i) {
+				return jQuery.inArray(tag, this._states.tags[object.name]) === i;
 			}, this));
 		}
 	};
@@ -1642,7 +1642,7 @@
 	 * @param {Array.<String>} events - The events to suppress.
 	 */
 	Owl.prototype.suppress = function(events) {
-		$.each(events, $.proxy(function(index, event) {
+		jQuery.each(events, jQuery.proxy(function(index, event) {
 			this._supress[event] = true;
 		}, this));
 	};
@@ -1653,7 +1653,7 @@
 	 * @param {Array.<String>} events - The events to release.
 	 */
 	Owl.prototype.release = function(events) {
-		$.each(events, $.proxy(function(index, event) {
+		jQuery.each(events, jQuery.proxy(function(index, event) {
 			delete this._supress[event];
 		}, this));
 	};
@@ -1715,22 +1715,22 @@
 	 * @todo Navigation plugin `next` and `prev`
 	 * @public
 	 */
-	$.fn.owlCarousel = function(option) {
+	jQuery.fn.owlCarousel = function(option) {
 		var args = Array.prototype.slice.call(arguments, 1);
 
 		return this.each(function() {
-			var $this = $(this),
+			var $this = jQuery(this),
 				data = $this.data('owl.carousel');
 
 			if (!data) {
 				data = new Owl(this, typeof option == 'object' && option);
 				$this.data('owl.carousel', data);
 
-				$.each([
+				jQuery.each([
 					'next', 'prev', 'to', 'destroy', 'refresh', 'replace', 'add', 'remove'
 				], function(i, event) {
 					data.register({ type: Owl.Type.Event, name: event });
-					data.$element.on(event + '.owl.carousel.core', $.proxy(function(e) {
+					data.$element.on(event + '.owl.carousel.core', jQuery.proxy(function(e) {
 						if (e.namespace && e.relatedTarget !== this) {
 							this.suppress([ event ]);
 							data[event].apply(this, [].slice.call(arguments, 1));
@@ -1750,7 +1750,7 @@
 	 * The constructor for the jQuery Plugin
 	 * @public
 	 */
-	$.fn.owlCarousel.Constructor = Owl;
+	jQuery.fn.owlCarousel.Constructor = Owl;
 
 })(window.Zepto || window.jQuery, window, document);
 
@@ -1796,7 +1796,7 @@
 		 * @type {Object}
 		 */
 		this._handlers = {
-			'initialized.owl.carousel': $.proxy(function(e) {
+			'initialized.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && this._core.settings.autoRefresh) {
 					this.watch();
 				}
@@ -1804,7 +1804,7 @@
 		};
 
 		// set default options
-		this._core.options = $.extend({}, AutoRefresh.Defaults, this._core.options);
+		this._core.options = jQuery.extend({}, AutoRefresh.Defaults, this._core.options);
 
 		// register event handlers
 		this._core.$element.on(this._handlers);
@@ -1828,7 +1828,7 @@
 		}
 
 		this._visible = this._core.isVisible();
-		this._interval = window.setInterval($.proxy(this.refresh, this), this._core.settings.autoRefreshInterval);
+		this._interval = window.setInterval(jQuery.proxy(this.refresh, this), this._core.settings.autoRefreshInterval);
 	};
 
 	/**
@@ -1862,7 +1862,7 @@
 		}
 	};
 
-	$.fn.owlCarousel.Constructor.Plugins.AutoRefresh = AutoRefresh;
+	jQuery.fn.owlCarousel.Constructor.Plugins.AutoRefresh = AutoRefresh;
 
 })(window.Zepto || window.jQuery, window, document);
 
@@ -1902,7 +1902,7 @@
 		 * @type {Object}
 		 */
 		this._handlers = {
-			'initialized.owl.carousel change.owl.carousel resized.owl.carousel': $.proxy(function(e) {
+			'initialized.owl.carousel change.owl.carousel resized.owl.carousel': jQuery.proxy(function(e) {
 				if (!e.namespace) {
 					return;
 				}
@@ -1917,7 +1917,7 @@
 						i = ((settings.center && n * -1) || 0),
 						position = (e.property && e.property.value !== undefined ? e.property.value : this._core.current()) + i,
 						clones = this._core.clones().length,
-						load = $.proxy(function(i, v) { this.load(v) }, this);
+						load = jQuery.proxy(function(i, v) { this.load(v) }, this);
 					//TODO: Need documentation for this new option
 					if (settings.lazyLoadEager > 0) {
 						n += settings.lazyLoadEager;
@@ -1930,7 +1930,7 @@
 
 					while (i++ < n) {
 						this.load(clones / 2 + this._core.relative(position));
-						clones && $.each(this._core.clones(this._core.relative(position)), load);
+						clones && jQuery.each(this._core.clones(this._core.relative(position)), load);
 						position++;
 					}
 				}
@@ -1938,7 +1938,7 @@
 		};
 
 		// set the default options
-		this._core.options = $.extend({}, Lazy.Defaults, this._core.options);
+		this._core.options = jQuery.extend({}, Lazy.Defaults, this._core.options);
 
 		// register event handler
 		this._core.$element.on(this._handlers);
@@ -1962,28 +1962,28 @@
 		var $item = this._core.$stage.children().eq(position),
 			$elements = $item && $item.find('.owl-lazy');
 
-		if (!$elements || $.inArray($item.get(0), this._loaded) > -1) {
+		if (!$elements || jQuery.inArray($item.get(0), this._loaded) > -1) {
 			return;
 		}
 
-		$elements.each($.proxy(function(index, element) {
-			var $element = $(element), image,
+		$elements.each(jQuery.proxy(function(index, element) {
+			var $element = jQuery(element), image,
                 url = (window.devicePixelRatio > 1 && $element.attr('data-src-retina')) || $element.attr('data-src') || $element.attr('data-srcset');
 
 			this._core.trigger('load', { element: $element, url: url }, 'lazy');
 
 			if ($element.is('img')) {
-				$element.one('load.owl.lazy', $.proxy(function() {
+				$element.one('load.owl.lazy', jQuery.proxy(function() {
 					$element.css('opacity', 1);
 					this._core.trigger('loaded', { element: $element, url: url }, 'lazy');
 				}, this)).attr('src', url);
             } else if ($element.is('source')) {
-                $element.one('load.owl.lazy', $.proxy(function() {
+                $element.one('load.owl.lazy', jQuery.proxy(function() {
                     this._core.trigger('loaded', { element: $element, url: url }, 'lazy');
                 }, this)).attr('srcset', url);
 			} else {
 				image = new Image();
-				image.onload = $.proxy(function() {
+				image.onload = jQuery.proxy(function() {
 					$element.css({
 						'background-image': 'url("' + url + '")',
 						'opacity': '1'
@@ -2012,7 +2012,7 @@
 		}
 	};
 
-	$.fn.owlCarousel.Constructor.Plugins.Lazy = Lazy;
+	jQuery.fn.owlCarousel.Constructor.Plugins.Lazy = Lazy;
 
 })(window.Zepto || window.jQuery, window, document);
 
@@ -2046,17 +2046,17 @@
 		 * @type {Object}
 		 */
 		this._handlers = {
-			'initialized.owl.carousel refreshed.owl.carousel': $.proxy(function(e) {
+			'initialized.owl.carousel refreshed.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && this._core.settings.autoHeight) {
 					this.update();
 				}
 			}, this),
-			'changed.owl.carousel': $.proxy(function(e) {
+			'changed.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && this._core.settings.autoHeight && e.property.name === 'position'){
 					this.update();
 				}
 			}, this),
-			'loaded.owl.lazy': $.proxy(function(e) {
+			'loaded.owl.lazy': jQuery.proxy(function(e) {
 				if (e.namespace && this._core.settings.autoHeight
 					&& e.element.closest('.' + this._core.settings.itemClass).index() === this._core.current()) {
 					this.update();
@@ -2065,7 +2065,7 @@
 		};
 
 		// set default options
-		this._core.options = $.extend({}, AutoHeight.Defaults, this._core.options);
+		this._core.options = jQuery.extend({}, AutoHeight.Defaults, this._core.options);
 
 		// register event handlers
 		this._core.$element.on(this._handlers);
@@ -2074,7 +2074,7 @@
 
 		// These changes have been taken from a PR by gavrochelegnou proposed in #1575
 		// and have been made compatible with the latest jQuery version
-		$(window).on('load', function() {
+		jQuery(window).on('load', function() {
 			if (refThis._core.settings.autoHeight) {
 				refThis.update();
 			}
@@ -2083,7 +2083,7 @@
 		// Autoresize the height of the carousel when window is resized
 		// When carousel has images, the height is dependent on the width
 		// and should also change on resize
-		$(window).resize(function() {
+		jQuery(window).resize(function() {
 			if (refThis._core.settings.autoHeight) {
 				if (refThis._intervalId != null) {
 					clearTimeout(refThis._intervalId);
@@ -2117,8 +2117,8 @@
 			heights = [],
 			maxheight = 0;
 
-		$.each(visible, function(index, item) {
-			heights.push($(item).height());
+		jQuery.each(visible, function(index, item) {
+			heights.push(jQuery(item).height());
 		});
 
 		maxheight = Math.max.apply(null, heights);
@@ -2145,7 +2145,7 @@
 		}
 	};
 
-	$.fn.owlCarousel.Constructor.Plugins.AutoHeight = AutoHeight;
+	jQuery.fn.owlCarousel.Constructor.Plugins.AutoHeight = AutoHeight;
 
 })(window.Zepto || window.jQuery, window, document);
 
@@ -2192,47 +2192,47 @@
 		 * @type {Object}
 		 */
 		this._handlers = {
-			'initialized.owl.carousel': $.proxy(function(e) {
+			'initialized.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace) {
 					this._core.register({ type: 'state', name: 'playing', tags: [ 'interacting' ] });
 				}
 			}, this),
-			'resize.owl.carousel': $.proxy(function(e) {
+			'resize.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && this._core.settings.video && this.isInFullScreen()) {
 					e.preventDefault();
 				}
 			}, this),
-			'refreshed.owl.carousel': $.proxy(function(e) {
+			'refreshed.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && this._core.is('resizing')) {
 					this._core.$stage.find('.cloned .owl-video-frame').remove();
 				}
 			}, this),
-			'changed.owl.carousel': $.proxy(function(e) {
+			'changed.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && e.property.name === 'position' && this._playing) {
 					this.stop();
 				}
 			}, this),
-			'prepared.owl.carousel': $.proxy(function(e) {
+			'prepared.owl.carousel': jQuery.proxy(function(e) {
 				if (!e.namespace) {
 					return;
 				}
 
-				var $element = $(e.content).find('.owl-video');
+				var $element = jQuery(e.content).find('.owl-video');
 
 				if ($element.length) {
 					$element.css('display', 'none');
-					this.fetch($element, $(e.content));
+					this.fetch($element, jQuery(e.content));
 				}
 			}, this)
 		};
 
 		// set default options
-		this._core.options = $.extend({}, Video.Defaults, this._core.options);
+		this._core.options = jQuery.extend({}, Video.Defaults, this._core.options);
 
 		// register event handlers
 		this._core.$element.on(this._handlers);
 
-		this._core.$element.on('click.owl.video', '.owl-video-play-icon', $.proxy(function(e) {
+		this._core.$element.on('click.owl.video', '.owl-video-play-icon', jQuery.proxy(function(e) {
 			this.play(e);
 		}, this));
 	};
@@ -2330,12 +2330,12 @@
 				icon = '<div class="owl-video-play-icon"></div>';
 
 				if (settings.lazyLoad) {
-					tnLink = $('<div/>',{
+					tnLink = jQuery('<div/>',{
 						"class": 'owl-video-tn ' + lazyClass,
 						"srcType": path
 					});
 				} else {
-					tnLink = $( '<div/>', {
+					tnLink = jQuery( '<div/>', {
 						"class": "owl-video-tn",
 						"style": 'opacity:1;background-image:url(' + path + ')'
 					});
@@ -2345,7 +2345,7 @@
 			};
 
 		// wrap video content into owl-video-wrapper div
-		target.wrap( $( '<div/>', {
+		target.wrap( jQuery( '<div/>', {
 			"class": "owl-video-wrapper",
 			"style": dimensions
 		}));
@@ -2366,7 +2366,7 @@
 			path = "//img.youtube.com/vi/" + video.id + "/hqdefault.jpg";
 			create(path);
 		} else if (video.type === 'vimeo') {
-			$.ajax({
+			jQuery.ajax({
 				type: 'GET',
 				url: '//vimeo.com/api/v2/video/' + video.id + '.json',
 				jsonp: 'callback',
@@ -2377,7 +2377,7 @@
 				}
 			});
 		} else if (video.type === 'vzaar') {
-			$.ajax({
+			jQuery.ajax({
 				type: 'GET',
 				url: '//vzaar.com/api/videos/' + video.id + '.json',
 				jsonp: 'callback',
@@ -2409,7 +2409,7 @@
 	 * @param {Event} event - The event arguments.
 	 */
 	Video.prototype.play = function(event) {
-		var target = $(event.target),
+		var target = jQuery(event.target),
 			item = target.closest('.' + this._core.settings.itemClass),
 			video = this._videos[item.attr('data-video')],
 			width = video.width || '100%',
@@ -2428,7 +2428,7 @@
 
 		this._core.reset(item.index());
 
-		html = $( '<iframe frameborder="0" allowfullscreen mozallowfullscreen webkitAllowFullScreen ></iframe>' );
+		html = jQuery( '<iframe frameborder="0" allowfullscreen mozallowfullscreen webkitAllowFullScreen ></iframe>' );
 		html.attr( 'height', height );
 		html.attr( 'width', width );
 		if (video.type === 'youtube') {
@@ -2439,7 +2439,7 @@
 			html.attr( 'src', '//view.vzaar.com/' + video.id + '/player?autoplay=true' );
 		}
 
-		iframe = $(html).wrap( '<div class="owl-video-frame" />' ).insertAfter(item.find('.owl-video'));
+		iframe = jQuery(html).wrap( '<div class="owl-video-frame" />' ).insertAfter(item.find('.owl-video'));
 
 		this._playing = item.addClass('owl-video-playing');
 	};
@@ -2454,7 +2454,7 @@
 		var element = document.fullscreenElement || document.mozFullScreenElement ||
 				document.webkitFullscreenElement;
 
-		return element && $(element).parent().hasClass('owl-video-frame');
+		return element && jQuery(element).parent().hasClass('owl-video-frame');
 	};
 
 	/**
@@ -2473,7 +2473,7 @@
 		}
 	};
 
-	$.fn.owlCarousel.Constructor.Plugins.Video = Video;
+	jQuery.fn.owlCarousel.Constructor.Plugins.Video = Video;
 
 })(window.Zepto || window.jQuery, window, document);
 
@@ -2493,24 +2493,24 @@
 	 */
 	var Animate = function(scope) {
 		this.core = scope;
-		this.core.options = $.extend({}, Animate.Defaults, this.core.options);
+		this.core.options = jQuery.extend({}, Animate.Defaults, this.core.options);
 		this.swapping = true;
 		this.previous = undefined;
 		this.next = undefined;
 
 		this.handlers = {
-			'change.owl.carousel': $.proxy(function(e) {
+			'change.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && e.property.name == 'position') {
 					this.previous = this.core.current();
 					this.next = e.property.value;
 				}
 			}, this),
-			'drag.owl.carousel dragged.owl.carousel translated.owl.carousel': $.proxy(function(e) {
+			'drag.owl.carousel dragged.owl.carousel translated.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace) {
 					this.swapping = e.type == 'translated';
 				}
 			}, this),
-			'translate.owl.carousel': $.proxy(function(e) {
+			'translate.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && this.swapping && (this.core.options.animateOut || this.core.options.animateIn)) {
 					this.swap();
 				}
@@ -2540,14 +2540,14 @@
 			return;
 		}
 
-		if (!$.support.animation || !$.support.transition) {
+		if (!jQuery.support.animation || !jQuery.support.transition) {
 			return;
 		}
 
 		this.core.speed(0);
 
 		var left,
-			clear = $.proxy(this.clear, this),
+			clear = jQuery.proxy(this.clear, this),
 			previous = this.core.$stage.children().eq(this.previous),
 			next = this.core.$stage.children().eq(this.next),
 			incoming = this.core.settings.animateIn,
@@ -2559,21 +2559,21 @@
 
 		if (outgoing) {
 			left = this.core.coordinates(this.previous) - this.core.coordinates(this.next);
-			previous.one($.support.animation.end, clear)
+			previous.one(jQuery.support.animation.end, clear)
 				.css( { 'left': left + 'px' } )
 				.addClass('animated owl-animated-out')
 				.addClass(outgoing);
 		}
 
 		if (incoming) {
-			next.one($.support.animation.end, clear)
+			next.one(jQuery.support.animation.end, clear)
 				.addClass('animated owl-animated-in')
 				.addClass(incoming);
 		}
 	};
 
 	Animate.prototype.clear = function(e) {
-		$(e.target).css( { 'left': '' } )
+		jQuery(e.target).css( { 'left': '' } )
 			.removeClass('animated owl-animated-out owl-animated-in')
 			.removeClass(this.core.settings.animateIn)
 			.removeClass(this.core.settings.animateOut);
@@ -2595,7 +2595,7 @@
 		}
 	};
 
-	$.fn.owlCarousel.Constructor.Plugins.Animate = Animate;
+	jQuery.fn.owlCarousel.Constructor.Plugins.Animate = Animate;
 
 })(window.Zepto || window.jQuery, window, document);
 
@@ -2656,7 +2656,7 @@
 		 * @type {Object}
 		 */
 		this._handlers = {
-			'changed.owl.carousel': $.proxy(function(e) {
+			'changed.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && e.property.name === 'settings') {
 					if (this._core.settings.autoplay) {
 						this.play();
@@ -2669,37 +2669,37 @@
 					this._time = 0;
 				}
 			}, this),
-			'initialized.owl.carousel': $.proxy(function(e) {
+			'initialized.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && this._core.settings.autoplay) {
 					this.play();
 				}
 			}, this),
-			'play.owl.autoplay': $.proxy(function(e, t, s) {
+			'play.owl.autoplay': jQuery.proxy(function(e, t, s) {
 				if (e.namespace) {
 					this.play(t, s);
 				}
 			}, this),
-			'stop.owl.autoplay': $.proxy(function(e) {
+			'stop.owl.autoplay': jQuery.proxy(function(e) {
 				if (e.namespace) {
 					this.stop();
 				}
 			}, this),
-			'mouseover.owl.autoplay': $.proxy(function() {
+			'mouseover.owl.autoplay': jQuery.proxy(function() {
 				if (this._core.settings.autoplayHoverPause && this._core.is('rotating')) {
 					this.pause();
 				}
 			}, this),
-			'mouseleave.owl.autoplay': $.proxy(function() {
+			'mouseleave.owl.autoplay': jQuery.proxy(function() {
 				if (this._core.settings.autoplayHoverPause && this._core.is('rotating')) {
 					this.play();
 				}
 			}, this),
-			'touchstart.owl.core': $.proxy(function() {
+			'touchstart.owl.core': jQuery.proxy(function() {
 				if (this._core.settings.autoplayHoverPause && this._core.is('rotating')) {
 					this.pause();
 				}
 			}, this),
-			'touchend.owl.core': $.proxy(function() {
+			'touchend.owl.core': jQuery.proxy(function() {
 				if (this._core.settings.autoplayHoverPause) {
 					this.play();
 				}
@@ -2710,7 +2710,7 @@
 		this._core.$element.on(this._handlers);
 
 		// set default options
-		this._core.options = $.extend({}, Autoplay.Defaults, this._core.options);
+		this._core.options = jQuery.extend({}, Autoplay.Defaults, this._core.options);
 	};
 
 	/**
@@ -2731,7 +2731,7 @@
 	 */
 	Autoplay.prototype._next = function(speed) {
 		this._call = window.setTimeout(
-			$.proxy(this._next, this, speed),
+			jQuery.proxy(this._next, this, speed),
 			this._timeout * (Math.round(this.read() / this._timeout) + 1) - this.read()
 		);
 
@@ -2781,7 +2781,7 @@
 		this._time += this.read() % timeout - elapsed;
 
 		this._timeout = timeout;
-		this._call = window.setTimeout($.proxy(this._next, this, speed), timeout - elapsed);
+		this._call = window.setTimeout(jQuery.proxy(this._next, this, speed), timeout - elapsed);
 	};
 
 	/**
@@ -2829,7 +2829,7 @@
 		}
 	};
 
-	$.fn.owlCarousel.Constructor.Plugins.autoplay = Autoplay;
+	jQuery.fn.owlCarousel.Constructor.Plugins.autoplay = Autoplay;
 
 })(window.Zepto || window.jQuery, window, document);
 
@@ -2907,28 +2907,28 @@
 		 * @type {Object}
 		 */
 		this._handlers = {
-			'prepared.owl.carousel': $.proxy(function(e) {
+			'prepared.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && this._core.settings.dotsData) {
 					this._templates.push('<div class="' + this._core.settings.dotClass + '">' +
-						$(e.content).find('[data-dot]').addBack('[data-dot]').attr('data-dot') + '</div>');
+						jQuery(e.content).find('[data-dot]').addBack('[data-dot]').attr('data-dot') + '</div>');
 				}
 			}, this),
-			'added.owl.carousel': $.proxy(function(e) {
+			'added.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && this._core.settings.dotsData) {
 					this._templates.splice(e.position, 0, this._templates.pop());
 				}
 			}, this),
-			'remove.owl.carousel': $.proxy(function(e) {
+			'remove.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && this._core.settings.dotsData) {
 					this._templates.splice(e.position, 1);
 				}
 			}, this),
-			'changed.owl.carousel': $.proxy(function(e) {
+			'changed.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && e.property.name == 'position') {
 					this.draw();
 				}
 			}, this),
-			'initialized.owl.carousel': $.proxy(function(e) {
+			'initialized.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && !this._initialized) {
 					this._core.trigger('initialize', null, 'navigation');
 					this.initialize();
@@ -2938,7 +2938,7 @@
 					this._core.trigger('initialized', null, 'navigation');
 				}
 			}, this),
-			'refreshed.owl.carousel': $.proxy(function(e) {
+			'refreshed.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && this._initialized) {
 					this._core.trigger('refresh', null, 'navigation');
 					this.update();
@@ -2949,7 +2949,7 @@
 		};
 
 		// set default options
-		this._core.options = $.extend({}, Navigation.Defaults, this._core.options);
+		this._core.options = jQuery.extend({}, Navigation.Defaults, this._core.options);
 
 		// register event handlers
 		this.$element.on(this._handlers);
@@ -2993,38 +2993,38 @@
 			settings = this._core.settings;
 
 		// create DOM structure for relative navigation
-		this._controls.$relative = (settings.navContainer ? $(settings.navContainer)
-			: $('<div>').addClass(settings.navContainerClass).appendTo(this.$element)).addClass('disabled');
+		this._controls.$relative = (settings.navContainer ? jQuery(settings.navContainer)
+			: jQuery('<div>').addClass(settings.navContainerClass).appendTo(this.$element)).addClass('disabled');
 
-		this._controls.$previous = $('<' + settings.navElement + '>')
+		this._controls.$previous = jQuery('<' + settings.navElement + '>')
 			.addClass(settings.navClass[0])
 			.html(settings.navText[0])
 			.prependTo(this._controls.$relative)
-			.on('click', $.proxy(function(e) {
+			.on('click', jQuery.proxy(function(e) {
 				this.prev(settings.navSpeed);
 			}, this));
-		this._controls.$next = $('<' + settings.navElement + '>')
+		this._controls.$next = jQuery('<' + settings.navElement + '>')
 			.addClass(settings.navClass[1])
 			.html(settings.navText[1])
 			.appendTo(this._controls.$relative)
-			.on('click', $.proxy(function(e) {
+			.on('click', jQuery.proxy(function(e) {
 				this.next(settings.navSpeed);
 			}, this));
 
 		// create DOM structure for absolute navigation
 		if (!settings.dotsData) {
-			this._templates = [ $('<button role="button">')
+			this._templates = [ jQuery('<button role="button">')
 				.addClass(settings.dotClass)
-				.append($('<span>'))
+				.append(jQuery('<span>'))
 				.prop('outerHTML') ];
 		}
 
-		this._controls.$absolute = (settings.dotsContainer ? $(settings.dotsContainer)
-			: $('<div>').addClass(settings.dotsClass).appendTo(this.$element)).addClass('disabled');
+		this._controls.$absolute = (settings.dotsContainer ? jQuery(settings.dotsContainer)
+			: jQuery('<div>').addClass(settings.dotsClass).appendTo(this.$element)).addClass('disabled');
 
-		this._controls.$absolute.on('click', 'button', $.proxy(function(e) {
-			var index = $(e.target).parent().is(this._controls.$absolute)
-				? $(e.target).index() : $(e.target).parent().index();
+		this._controls.$absolute.on('click', 'button', jQuery.proxy(function(e) {
+			var index = jQuery(e.target).parent().is(this._controls.$absolute)
+				? jQuery(e.target).index() : jQuery(e.target).parent().index();
 
 			e.preventDefault();
 
@@ -3032,9 +3032,9 @@
 		}, this));
 
 		/*$el.on('focusin', function() {
-			$(document).off(".carousel");
+			jQuery(document).off(".carousel");
 
-			$(document).on('keydown.carousel', function(e) {
+			jQuery(document).on('keydown.carousel', function(e) {
 				if(e.keyCode == 37) {
 					$el.trigger('prev.owl')
 				}
@@ -3046,7 +3046,7 @@
 
 		// override public methods of the carousel
 		for (override in this._overrides) {
-			this._core[override] = $.proxy(this[override], this);
+			this._core[override] = jQuery.proxy(this[override], this);
 		}
 	};
 
@@ -3145,7 +3145,7 @@
 			}
 
 			this._controls.$absolute.find('.active').removeClass('active');
-			this._controls.$absolute.children().eq($.inArray(this.current(), this._pages)).addClass('active');
+			this._controls.$absolute.children().eq(jQuery.inArray(this.current(), this._pages)).addClass('active');
 		}
 	};
 
@@ -3158,7 +3158,7 @@
 		var settings = this._core.settings;
 
 		event.page = {
-			index: $.inArray(this.current(), this._pages),
+			index: jQuery.inArray(this.current(), this._pages),
 			count: this._pages.length,
 			size: settings && (settings.center || settings.autoWidth || settings.dotsData
 				? 1 : settings.dotsEach || settings.items)
@@ -3172,7 +3172,7 @@
 	 */
 	Navigation.prototype.current = function() {
 		var current = this._core.relative(this._core.current());
-		return $.grep(this._pages, $.proxy(function(page, index) {
+		return jQuery.grep(this._pages, jQuery.proxy(function(page, index) {
 			return page.start <= current && page.end >= current;
 		}, this)).pop();
 	};
@@ -3187,7 +3187,7 @@
 			settings = this._core.settings;
 
 		if (settings.slideBy == 'page') {
-			position = $.inArray(this.current(), this._pages);
+			position = jQuery.inArray(this.current(), this._pages);
 			length = this._pages.length;
 			successor ? ++position : --position;
 			position = this._pages[((position % length) + length) % length].start;
@@ -3206,7 +3206,7 @@
 	 * @param {Number} [speed=false] - The time in milliseconds for the transition.
 	 */
 	Navigation.prototype.next = function(speed) {
-		$.proxy(this._overrides.to, this._core)(this.getPosition(true), speed);
+		jQuery.proxy(this._overrides.to, this._core)(this.getPosition(true), speed);
 	};
 
 	/**
@@ -3215,7 +3215,7 @@
 	 * @param {Number} [speed=false] - The time in milliseconds for the transition.
 	 */
 	Navigation.prototype.prev = function(speed) {
-		$.proxy(this._overrides.to, this._core)(this.getPosition(false), speed);
+		jQuery.proxy(this._overrides.to, this._core)(this.getPosition(false), speed);
 	};
 
 	/**
@@ -3230,13 +3230,13 @@
 
 		if (!standard && this._pages.length) {
 			length = this._pages.length;
-			$.proxy(this._overrides.to, this._core)(this._pages[((position % length) + length) % length].start, speed);
+			jQuery.proxy(this._overrides.to, this._core)(this._pages[((position % length) + length) % length].start, speed);
 		} else {
-			$.proxy(this._overrides.to, this._core)(position, speed);
+			jQuery.proxy(this._overrides.to, this._core)(position, speed);
 		}
 	};
 
-	$.fn.owlCarousel.Constructor.Plugins.Navigation = Navigation;
+	jQuery.fn.owlCarousel.Constructor.Plugins.Navigation = Navigation;
 
 })(window.Zepto || window.jQuery, window, document);
 
@@ -3282,14 +3282,14 @@
 		 * @type {Object}
 		 */
 		this._handlers = {
-			'initialized.owl.carousel': $.proxy(function(e) {
+			'initialized.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && this._core.settings.startPosition === 'URLHash') {
-					$(window).trigger('hashchange.owl.navigation');
+					jQuery(window).trigger('hashchange.owl.navigation');
 				}
 			}, this),
-			'prepared.owl.carousel': $.proxy(function(e) {
+			'prepared.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace) {
-					var hash = $(e.content).find('[data-hash]').addBack('[data-hash]').attr('data-hash');
+					var hash = jQuery(e.content).find('[data-hash]').addBack('[data-hash]').attr('data-hash');
 
 					if (!hash) {
 						return;
@@ -3298,10 +3298,10 @@
 					this._hashes[hash] = e.content;
 				}
 			}, this),
-			'changed.owl.carousel': $.proxy(function(e) {
+			'changed.owl.carousel': jQuery.proxy(function(e) {
 				if (e.namespace && e.property.name === 'position') {
 					var current = this._core.items(this._core.relative(this._core.current())),
-						hash = $.map(this._hashes, function(item, hash) {
+						hash = jQuery.map(this._hashes, function(item, hash) {
 							return item === current ? hash : null;
 						}).join();
 
@@ -3315,13 +3315,13 @@
 		};
 
 		// set default options
-		this._core.options = $.extend({}, Hash.Defaults, this._core.options);
+		this._core.options = jQuery.extend({}, Hash.Defaults, this._core.options);
 
 		// register the event handlers
 		this.$element.on(this._handlers);
 
 		// register event listener for hash navigation
-		$(window).on('hashchange.owl.navigation', $.proxy(function(e) {
+		jQuery(window).on('hashchange.owl.navigation', jQuery.proxy(function(e) {
 			var hash = window.location.hash.substring(1),
 				items = this._core.$stage.children(),
 				position = this._hashes[hash] && items.index(this._hashes[hash]);
@@ -3349,7 +3349,7 @@
 	Hash.prototype.destroy = function() {
 		var handler, property;
 
-		$(window).off('hashchange.owl.navigation');
+		jQuery(window).off('hashchange.owl.navigation');
 
 		for (handler in this._handlers) {
 			this._core.$element.off(handler, this._handlers[handler]);
@@ -3359,7 +3359,7 @@
 		}
 	};
 
-	$.fn.owlCarousel.Constructor.Plugins.Hash = Hash;
+	jQuery.fn.owlCarousel.Constructor.Plugins.Hash = Hash;
 
 })(window.Zepto || window.jQuery, window, document);
 
@@ -3374,7 +3374,7 @@
  */
 ;(function($, window, document, undefined) {
 
-	var style = $('<support>').get(0).style,
+	var style = jQuery('<support>').get(0).style,
 		prefixes = 'Webkit Moz O ms'.split(' '),
 		events = {
 			transition: {
@@ -3413,7 +3413,7 @@
 		var result = false,
 			upper = property.charAt(0).toUpperCase() + property.slice(1);
 
-		$.each((property + ' ' + prefixes.join(upper + ' ') + upper).split(' '), function(i, property) {
+		jQuery.each((property + ' ' + prefixes.join(upper + ' ') + upper).split(' '), function(i, property) {
 			if (style[property] !== undefined) {
 				result = prefixed ? property : true;
 				return false;
@@ -3429,20 +3429,20 @@
 
 	if (tests.csstransitions()) {
 		/* jshint -W053 */
-		$.support.transition = new String(prefixed('transition'))
-		$.support.transition.end = events.transition.end[ $.support.transition ];
+		jQuery.support.transition = new String(prefixed('transition'))
+		jQuery.support.transition.end = events.transition.end[ jQuery.support.transition ];
 	}
 
 	if (tests.cssanimations()) {
 		/* jshint -W053 */
-		$.support.animation = new String(prefixed('animation'))
-		$.support.animation.end = events.animation.end[ $.support.animation ];
+		jQuery.support.animation = new String(prefixed('animation'))
+		jQuery.support.animation.end = events.animation.end[ jQuery.support.animation ];
 	}
 
 	if (tests.csstransforms()) {
 		/* jshint -W053 */
-		$.support.transform = new String(prefixed('transform'));
-		$.support.transform3d = tests.csstransforms3d();
+		jQuery.support.transform = new String(prefixed('transform'));
+		jQuery.support.transform3d = tests.csstransforms3d();
 	}
 
 })(window.Zepto || window.jQuery, window, document);
