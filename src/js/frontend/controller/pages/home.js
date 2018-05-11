@@ -74,6 +74,10 @@ class Home {
 			'id':'edx-homepage-editor',
 			'theme':'ace/theme/monokai',
 			'mode':'ace/mode/html',
+			'language':{
+				'name':'html',
+				'ext':'html'
+			},
 			'code':code,
 			'wrap':true,
 			'margin':false,
@@ -108,10 +112,10 @@ class Home {
 			            dataType: 'json',
 			            url: 'https://s3-us-west-2.amazonaws.com/educoded/data/courses/list.json',
 			            complete: function(jsondata) {
-			            	coursesObj = jsondata.responseText;
+			            	coursesObj = JSON.parse(jsondata.responseText);
 							localforage.setItem('edx-cache-recent-courses-obj', coursesObj, function() {
 					            localforage.getItem('edx-cache-recent-courses-obj').then(function(readValue) {
-					                home.coursesData = JSON.parse(readValue);
+					                home.coursesData = readValue;
 									home.courses();
 					            });
 					        });

@@ -5,37 +5,38 @@ class User {
 	}
 
 	checkUser() {
-
+		let user = new User(), api = new API();
 		// check to see if user has been either loaded or cached
-		let userObj, user = new User();
-		userObj = localStorage.getItem('edx-cache-user-obj');
-
-		if(userObj != null) {
-			// logged in
-			// Sets the user data as a global value
-			this.userData = userObj;
-			this.userOnline();
-			console.log('logged in');
-		}
-		else {
-			// not logged in
-			let user = new User(), api = new API();
-			jQuery.ajax({
-	            type: 'GET',
-	            crossDomain: true,
-	            dataType: 'json',
-	            url: api.config('users'),
-	            complete: function(jsondata) {
-	                user.userOffline(jsondata.responseText);
-	            }
-	        });
-		}
-
+		localforage.ready(function() {
+			let key;
+	        key = 'edx-cache-user-obj';
+	        localforage.getItem(key).then(function(value) {
+			    if(value != null) {
+			    	// logged in
+					// Sets the user data as a global value
+					user.userData = value;
+					user.userOnline();
+					console.log('logged in');
+			    }
+			    else {
+			    	// not cached
+					jQuery.ajax({
+			            type: 'GET',
+			            crossDomain: true,
+			            dataType: 'json',
+			            url: api.config('users'),
+			            complete: function(jsondata) {
+			                user.userOffline(jsondata.responseText);
+			            }
+			        });
+			    }
+			});
+	    });
 	}
 
 	userOnline() {
 		let container, content, data, user = new User();
-		data = JSON.parse(this.userData);
+		data = this.userData;
 		container = jQuery('.edx-sidebar-profile-content');
 		content = 	`<div class="edx-sidebar-profile-online">
 						<div>Hello, `+data.first_name+`!</div>
@@ -95,7 +96,9 @@ class User {
 	}
 
 	userLogout() {		
-		localStorage.removeItem('edx-cache-user-obj');
+		localforage.ready(function() {
+			localforage.removeItem('edx-cache-user-obj');
+		});
 		this.checkUser();
 	}
 
@@ -128,7 +131,11 @@ class User {
 	                password = CryptoJS.AES.decrypt(uData.password,api.config('salt')).toString(CryptoJS.enc.Utf8);
 					if(uData) {
 						if(data.email == uData.email && data.password == password ) {
-							u.saveUser(uData);
+							localforage.ready(function() {
+								localforage.setItem('edx-cache-user-obj', uData, function() {
+									u.checkUser();
+								});
+							});
 						}
 						else {
 							return 'Email or password is incorrect.';
@@ -140,11 +147,6 @@ class User {
 	            }
 	        });
 		}
-	}
-
-	saveUser(data) {
-		localStorage.setItem('edx-cache-user-obj',JSON.stringify(data));
-		this.checkUser();
 	}
 
 }

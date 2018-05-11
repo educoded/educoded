@@ -6,31 +6,35 @@ class Course {
 	}
 
 	checkCourse() {
-		let courseObj, url, id;
+		let url, id, course = new Course(), api = new API();;
 		url = window.location.search;
 		if(url.includes('?id=')) {
 			id = url.replace('?id=','');
-			this.id = id;
-
+			course.id = id;
 			// check to see if course has been either loaded or cached
-			courseObj = localStorage.getItem('edx-cache-course-obj-'+id);
-
-			if(courseObj != null) {
-				// cached
-				// Sets the course data as a global value
-				this.courseData = JSON.parse(courseObj);
-				console.log('cached');
-				this.template();
-			}
-			else {
-				// not cached
-				this.s3Data();
-			}
-
+			localforage.ready(function() {
+				let key;
+		        key = 'edx-cache-course-obj-'+id;
+		        localforage.getItem(key).then(function(value) {
+				    if(value != null) {
+				    	// cached
+						// Sets the course data as a global value
+						course.courseData = value;
+						course.template();
+						console.log('cached');
+				    }
+				    else {
+				    	// not cached
+				  		course.s3Data();
+				  		console.log('not loaded');
+				    }
+				});
+		    });
 		}
 		else {
 			this.courseError(0);
 		}
+
 	}
 
 	loadCourse() {
@@ -100,11 +104,12 @@ class Course {
 	}
 
 	grid() {
-		let container, content, data, player, editor = new Editor(), app = new App();
+		let container, content, data, player, editor = new Editor(), app = new App(), api = new API();
 		data = this.courseData;
+		console.log(data);
 		container = jQuery('.edx-page-grid-content');
 		content = 	`<div class="edx-xs-100 edx-sm-100 edx-md-100 edx-lg-100">
-						<div class="edx-course-section edx-course-section-overview active">
+						<div class="edx-course-section edx-course-section-video active">
 							<div class="edx-container">
 								<div class="edx-page-video-container">
 									<div class="edx-course-video">
@@ -115,12 +120,6 @@ class Course {
 										</div>
 										<div class="edx-page-video edx-15" id="edx-course-video"></div>
 									</div>
-								</div>
-								<div class="edx-page-content">
-									<div class="edx-page-text">`+data.info.content+`</div>
-									<div class="edx-page-text">`+data.info.content+`</div>
-									<div class="edx-page-text">`+data.info.content+`</div>
-									<div class="edx-page-text">`+data.info.content+`</div>
 								</div>
 							</div>
 						</div>
@@ -140,6 +139,16 @@ class Course {
 								</div>
 							</div>
 						</div>
+						<div class="edx-course-section edx-course-section-content active">
+							<div class="edx-container">
+								<div class="edx-page-content">
+									<div class="edx-page-text">`+data.info.content+`</div>
+									<div class="edx-page-text">`+data.info.content+`</div>
+									<div class="edx-page-text">`+data.info.content+`</div>
+									<div class="edx-page-text">`+data.info.content+`</div>
+								</div>
+							</div>
+						</div>
 					</div>`;
 		container.html(content);
 
@@ -148,6 +157,10 @@ class Course {
 			'id':'edx-course-editor',
 			'theme':'ace/theme/monokai',
 			'mode':'ace/mode/'+data.info.language,
+			'language':{
+				'name':data.info.language,
+				'ext':api.languageInfo(data.info.language,'ext')
+			},
 			'code':'',
 			'wrap':true,
 			'margin':false,
@@ -173,6 +186,7 @@ class Course {
         });
 
         window.onYouTubePlayerAPIReady = function () {
+        	let editor = ace.edit('edx-course-editor');
 		    player = new YT.Player('edx-course-video', {
 	            width: 1280,
 	            height: 720,
@@ -185,6 +199,7 @@ class Course {
 	            videoId: 'GRe3GUaw1iU',
 	            events: {
 	                onReady: function(event){
+	                	player.mute();
 			        	player.seekTo(0.001);
 			        	player.playVideo();
 			            let timer, state, elapsed, duration, points, lastPoint, btn, message, overlay, sections, section;
@@ -194,15 +209,10 @@ class Course {
 			            overlay = jQuery('.edx-page-video-overlay');
 			            duration = player.getDuration();
 			            sections = data.info.video.steps;
-			            for (var i = sections.length - 1; i >= 0; i--) {
-			            	points.push(sections[i].time);
-			            }
+			            for (var i = sections.length - 1; i >= 0; i--) { points.push(sections[i].time); }
 
-			            console.log(duration/60);
-
-			            function videoLoop() {
+			            function videoLoop(editor) {
 			            	timer = setInterval(function(){ 
-
 				                state = player.getPlayerState();
 				                elapsed = player.getCurrentTime();
 				                lastPoint = points.length - 1;
@@ -216,36 +226,38 @@ class Course {
 				            		jQuery('.edx-course-sidebar-section:nth-child('+(section+1)+') .edx-course-sidebar-section-info').slideDown();
 				            		btn.fadeIn();
 				            		setTimeout(function() {
-				            			jQuery('.edx-course-section').fadeOut();
-				            			jQuery('.edx-course-section-editor').fadeIn();
+				            			jQuery('html, body').animate({ scrollTop: jQuery('.edx-page-grid').offset().top - 98 }, 500);
+				            			jQuery('.edx-course-section-video').slideUp();
+				            			jQuery('.edx-course-section-editor').slideDown();
+				            			editor.focus();
 				            		}, 2000);
 				            	}
 				            	else {
-				            		console.log(state + ' : ' + elapsed);
+				            		// console.log(state + ' : ' + elapsed);
 				            	}
 				            }, 250);
 			            }
 
-			            videoLoop();
+			            videoLoop(editor);
 
 			            btn.on('click', function() {
-			            	let editor, code;
-			            	editor = ace.edit('edx-course-editor');
+			            	let code;
 			            	code = editor.getValue();
 			            	if(code.replace(/\s/g,'') == sections[section]['code'].replace(/\s/g,'')) {
 			            		btn.fadeOut();
 			            		overlay.removeClass('active');
 			            		message.fadeOut();
-			            		jQuery('.edx-course-section').fadeOut();
-				            	jQuery('.edx-course-section-overview').fadeIn();
+			            		jQuery('.edx-course-section-video').slideDown();
+			            		jQuery('.edx-course-section-editor').slideUp();
 				            	jQuery('.edx-course-sidebar-section:nth-child('+(section+1)+') .edx-course-sidebar-section-status-box').addClass('correct').removeClass('incorrect');
 				    			points.pop();
 				    			if(points.length < 1) {
 				    				console.log('all done');
 				    			}
 				    			else {
-				    				videoLoop();
+				    				videoLoop(editor);
 				    			}
+				    			app.videoResize();
 				    			player.playVideo();
 				            	editor.setValue(''); // reset editor value
 			            	}
@@ -275,8 +287,10 @@ class Course {
             complete: function(jsondata) {
             	courseData = JSON.parse(jsondata.responseText)[0];
 				if(courseData) {
-					localStorage.setItem('edx-cache-course-obj-'+id,JSON.stringify(courseData));
-					course.checkCourse();
+					localforage.ready(function() {
+						localforage.setItem('edx-cache-course-obj-'+id,courseData);
+						course.checkCourse();
+					});
 				}
 				else {
 					course.courseError(1);

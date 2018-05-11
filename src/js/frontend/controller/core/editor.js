@@ -87,7 +87,7 @@ class Editor {
 								<svg class="edx-editor-tab-holder" width="110" height="24">
 								    <polygon class="edx-editor-tab-svg" points="0 24,110 24,95 0,15 0"></polygon>
 								</svg>
-								<div class="edx-tab-title">tab.html</div>
+								<div class="edx-tab-title">tab.`+data.language.ext+`</div>
 								<div class="edx-editor-tab-close edx-25">x</div>
 							</div>
 						</div>

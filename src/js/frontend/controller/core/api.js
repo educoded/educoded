@@ -86,6 +86,19 @@ class API {
         return data;
     }
 
+    languageInfo(lang, item) {
+        let data, info;
+        data = {
+            'html':{'ext':'html','snippet':''},
+            'css':{'ext':'css','snippet':''},
+            'javascript':{'ext':'js','snippet':''},
+            'php':{'ext':'php','snippet':''}
+        };
+        if(!item) { info = data[lang]; }
+        else { info = data[lang][item]; }
+        return info;
+    }
+
     // getConfig(key, data) {
     //     for (var i = 0; i < data.length; i++) {
     //         if (data[i].email === key) {
