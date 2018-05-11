@@ -18,10 +18,12 @@ class Course {
 		        localforage.getItem(key).then(function(value) {
 				    if(value != null) {
 				    	// cached
-						// Sets the course data as a global value
-						course.courseData = value;
-						course.template();
-						console.log('cached');
+						localforage.getItem('edx-cache-course-stats-'+id).then(function(stats) {
+							course.courseData = value; // Sets the course data as a global value
+							course.courseStats = stats; // Sets the course stats as a global value
+							course.template();
+							console.log('cached');
+						});
 				    }
 				    else {
 				    	// not cached
@@ -104,9 +106,10 @@ class Course {
 	}
 
 	grid() {
-		let container, content, data, player, editor = new Editor(), app = new App(), api = new API();
+		let container, content, data, stats, id, player, editor = new Editor(), app = new App(), api = new API();
 		data = this.courseData;
-		console.log(data);
+		stats = this.courseStats
+		id = data.info.id;
 		container = jQuery('.edx-page-grid-content');
 		content = 	`<div class="edx-xs-100 edx-sm-100 edx-md-100 edx-lg-100">
 						<div class="edx-course-section edx-course-section-video active">
@@ -199,17 +202,28 @@ class Course {
 	            videoId: 'GRe3GUaw1iU',
 	            events: {
 	                onReady: function(event){
-	                	player.mute();
-			        	player.seekTo(0.001);
-			        	player.playVideo();
-			            let timer, state, elapsed, duration, points, lastPoint, btn, message, overlay, sections, section;
+	                	let timer, state, elapsed, duration, points, completed, lastPoint, btn, message, overlay, sections, section;
 			            points = [];
+			            completed = [];
 			            btn = jQuery('.edx-course-video-btn');
 			            message = jQuery('.edx-course-video-message');
 			            overlay = jQuery('.edx-page-video-overlay');
 			            duration = player.getDuration();
 			            sections = data.info.video.steps;
-			            for (var i = sections.length - 1; i >= 0; i--) { points.push(sections[i].time); }
+			            for (var i = stats.length - 1; i >= 0; i--) {
+			            	if(stats[i].status < 1) {
+			            		points.push(stats[i].time);
+			            	}
+			            	else {
+			            		jQuery('.edx-course-sidebar-section:nth-child('+(i+1)+') .edx-course-sidebar-section-status-box').addClass('correct').removeClass('incorrect');
+			            		completed.push(stats[i].time);
+			            	}
+
+			            }
+			            player.mute();
+			            if(completed.length > 0) { player.seekTo(completed[0]); }
+			            else { player.seekTo(0.001); }
+			        	player.playVideo();
 
 			            function videoLoop(editor) {
 			            	timer = setInterval(function(){ 
@@ -241,7 +255,7 @@ class Course {
 			            videoLoop(editor);
 
 			            btn.on('click', function() {
-			            	let code;
+			            	let code, stats;
 			            	code = editor.getValue();
 			            	if(code.replace(/\s/g,'') == sections[section]['code'].replace(/\s/g,'')) {
 			            		btn.fadeOut();
@@ -250,6 +264,14 @@ class Course {
 			            		jQuery('.edx-course-section-video').slideDown();
 			            		jQuery('.edx-course-section-editor').slideUp();
 				            	jQuery('.edx-course-sidebar-section:nth-child('+(section+1)+') .edx-course-sidebar-section-status-box').addClass('correct').removeClass('incorrect');
+
+				            	localforage.ready(function() {
+							        localforage.getItem('edx-cache-course-stats-'+id).then(function(value) {
+							        	value[section].status = 1;
+							        	localforage.setItem('edx-cache-course-stats-'+id,value);
+							        });
+							    });
+
 				    			points.pop();
 				    			if(points.length < 1) {
 				    				console.log('all done');
@@ -277,7 +299,7 @@ class Course {
 	}
 
 	s3Data() {
-		let id, courseData, course = new Course(), api = new API();
+		let id, courseData, courseStats, course = new Course(), api = new API();
 		id = this.id;
 		jQuery.ajax({
             type: 'GET',
@@ -286,9 +308,11 @@ class Course {
             url: api.config('courses')+id+'/course.json',
             complete: function(jsondata) {
             	courseData = JSON.parse(jsondata.responseText)[0];
+            	courseStats = courseData.info.video.steps;
 				if(courseData) {
 					localforage.ready(function() {
 						localforage.setItem('edx-cache-course-obj-'+id,courseData);
+						localforage.setItem('edx-cache-course-stats-'+id,courseStats);
 						course.checkCourse();
 					});
 				}

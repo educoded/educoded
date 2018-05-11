@@ -101,7 +101,7 @@ class Home {
 			    if(value != null) {
 			    	// cached
 					// Sets the course data as a global value
-			    	home.coursesData = JSON.parse(value);
+			    	home.coursesData = value;
 					home.courses();
 			    }
 			    else {
