@@ -66,24 +66,6 @@ class Course {
 	}
 
 	toolbar() {
-		let container, content, data;
-		data = this.courseData;
-		container = jQuery('.edx-page-toolbar');
-		content = 	`<div class="edx-page-toolbar-menu">
-						<div class="edx-wrapper">
-							<div class="edx-page-toolbar-menu-item active" data-name="overview">overview</div>
-							<div class="edx-page-toolbar-menu-item" data-name="editor">editor</div>
-						</div>
-					</div>`;
-		container.append(content);
-
-		jQuery('.edx-page-toolbar-menu-item').on('click', function() {
-			let item, name;
-			item = jQuery(this);
-			name = item.data('name');
-			jQuery('.edx-course-section').removeClass('active');
-			jQuery('.edx-course-section-'+name).addClass('active');
-		});
 
 	}
 
@@ -92,9 +74,11 @@ class Course {
 		data = this.courseData;
 		steps = data.info.video.steps;
 		container = jQuery('.edx-page-sidebar-container');
-		content = 	`<div class="edx-course-sidebar-content">
-						<div>Sections</div>
-						<div class="edx-course-sidebar-sections"></div>
+		content = 	`<div class="edx-page-sidebar-section">
+						<div class="edx-course-sidebar-title edx-wrapper">sections</div>
+						<div class="edx-course-sidebar-content">
+							<div class="edx-course-sidebar-sections"></div>
+						</div>
 					</div>`;
 		container.html(content);
 		sections = jQuery('.edx-course-sidebar-sections');
@@ -201,7 +185,6 @@ class Course {
 	            videoId: 'GRe3GUaw1iU',
 	            events: {
 	                onReady: function(event){
-	                	player.mute();
 			        	player.seekTo(0.001);
 			        	player.playVideo();
 			            let timer, state, elapsed, duration, points, lastPoint, btn, message, overlay, sections, section;
@@ -259,15 +242,12 @@ class Course {
 				    			points.pop();
 				    			if(points.length < 1) {
 				    				console.log('all done');
-				    				player.pauseVideo();
 				    			}
 				    			else {
 				    				videoLoop();
-				    				player.playVideo();
 				    			}
-				    			setTimeout(function() {
-				            		editor.setValue(''); // reset editor value
-				            	}, 500);
+				    			player.playVideo();
+				            	editor.setValue(''); // reset editor value
 			            	}
 			            	else {
 			            		jQuery('.edx-course-sidebar-section:nth-child('+(section+1)+') .edx-course-sidebar-section-status-box').addClass('incorrect');
