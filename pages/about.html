@@ -13,7 +13,7 @@
 		
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
-				requirejs(['localforage','moment','jQuery','db','storage','api','app','user','page','about'],
+				requirejs(['localforage','moment','jQuery','AES','MD5','db','storage','api','app','user','page','about'],
 				function (localforage,moment) {
 					let api = new API(), app = new App(), user = new User(), page = new Page(), about = new About();
 					window.localforage = localforage;

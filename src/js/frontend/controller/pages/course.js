@@ -103,9 +103,11 @@ class Course {
 			step = steps[i];
 			section = 	`<div class="edx-course-sidebar-section">
 							<div class="edx-course-sidebar-section-title">`+step.title+`</div>
+							<div class="edx-course-sidebar-section-status">
+								<div class="edx-course-sidebar-section-status-box edx-25"></div>
+							</div>
 							<div class="edx-course-sidebar-section-info">
 								<div class="edx-course-sidebar-section-question">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
-								<div class="edx-course-sidebar-section-status"></div>
 							</div>
 						</div>`;
 			sections.append(section);
@@ -122,9 +124,9 @@ class Course {
 							<div class="edx-container">
 								<div class="edx-page-video-container">
 									<div class="edx-course-video">
-										<div class="edx-page-video-overlay edx-wrapper">
-											<div class="edx-course-video-info">
-												<div class="edx-course-video-btn">continue</div>
+										<div class="edx-page-video-overlay edx-wrapper edx-25">
+											<div class="edx-course-video-message">
+												Please complete this section before moving forward
 											</div>
 										</div>
 										<div class="edx-page-video edx-15" id="edx-course-video"></div>
@@ -146,6 +148,9 @@ class Course {
 											<div class="edx-editor-holder active">
 												<pre class="edx-editor" id="edx-course-editor"></pre>
 											</div>
+										</div>
+										<div align="right">
+											<div class="edx-course-video-btn">submit</div>
 										</div>
 									</div>
 								</div>
@@ -199,9 +204,11 @@ class Course {
 	                	player.mute();
 			        	player.seekTo(0.001);
 			        	player.playVideo();
-			            let timer, state, elapsed, duration, points, lastPoint, btn, sections, section;
+			            let timer, state, elapsed, duration, points, lastPoint, btn, message, overlay, sections, section;
 			            points = [];
 			            btn = jQuery('.edx-course-video-btn');
+			            message = jQuery('.edx-course-video-message');
+			            overlay = jQuery('.edx-page-video-overlay');
 			            duration = player.getDuration();
 			            sections = data.info.video.steps;
 			            for (var i = sections.length - 1; i >= 0; i--) {
@@ -220,11 +227,15 @@ class Course {
 				            	if((elapsed + 0.25) > points[lastPoint] && (elapsed - 0.25) < points[lastPoint]) {
 				            		player.pauseVideo();
 				            		clearInterval(timer);
-				            		btn.fadeIn();
+				            		overlay.addClass('active');
+				            		message.fadeIn();
 				            		jQuery('.edx-course-sidebar-section-info').slideUp();
 				            		jQuery('.edx-course-sidebar-section:nth-child('+(section+1)+') .edx-course-sidebar-section-info').slideDown();
-				            		jQuery('.edx-course-section').removeClass('active');
-				            		jQuery('.edx-course-section-editor').addClass('active');
+				            		btn.fadeIn();
+				            		setTimeout(function() {
+				            			jQuery('.edx-course-section').fadeOut();
+				            			jQuery('.edx-course-section-editor').fadeIn();
+				            		}, 2000);
 				            	}
 				            	else {
 				            		console.log(state + ' : ' + elapsed);
@@ -240,17 +251,26 @@ class Course {
 			            	code = editor.getValue();
 			            	if(code.replace(/\s/g,'') == sections[section]['code'].replace(/\s/g,'')) {
 			            		btn.fadeOut();
+			            		overlay.removeClass('active');
+			            		message.fadeOut();
+			            		jQuery('.edx-course-section').fadeOut();
+				            	jQuery('.edx-course-section-overview').fadeIn();
+				            	jQuery('.edx-course-sidebar-section:nth-child('+(section+1)+') .edx-course-sidebar-section-status-box').addClass('correct').removeClass('incorrect');
 				    			points.pop();
 				    			if(points.length < 1) {
 				    				console.log('all done');
+				    				player.pauseVideo();
 				    			}
 				    			else {
 				    				videoLoop();
+				    				player.playVideo();
 				    			}
-				    			player.playVideo();
+				    			setTimeout(function() {
+				            		editor.setValue(''); // reset editor value
+				            	}, 500);
 			            	}
 			            	else {
-			            		console.log('invalid answer');
+			            		jQuery('.edx-course-sidebar-section:nth-child('+(section+1)+') .edx-course-sidebar-section-status-box').addClass('incorrect');
 			            	}
 			            });
 

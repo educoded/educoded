@@ -34,13 +34,20 @@ class User {
 	}
 
 	userOnline() {
-		let container, content, data;
+		let container, content, data, user = new User();
 		data = JSON.parse(this.userData);
 		container = jQuery('.edx-sidebar-profile-content');
 		content = 	`<div class="edx-sidebar-profile-online">
 						<div>Hello, `+data.first_name+`!</div>
+						<div class="edx-user-logout">logout</div>
+						<div class="edx-user-admin">admin</div>
 					</div>`;
 		container.html(content);
+
+		// logout
+		jQuery('.edx-user-logout').on('click', function() {
+			user.userLogout();
+		});
 	}
 
 	userOffline(data) {
@@ -85,6 +92,11 @@ class User {
 			});
 			userData = user.getUser(data, JSON.parse(userObj));
 		});
+	}
+
+	userLogout() {		
+		localStorage.removeItem('edx-cache-user-obj');
+		this.checkUser();
 	}
 
 	findUser(key, data) {

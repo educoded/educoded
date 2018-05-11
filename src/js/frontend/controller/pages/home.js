@@ -132,7 +132,7 @@ class Home {
 		content = 	`<div class="edx-angled-section-wrapper edx-container">
 						<div class="edx-wrapper">
 							<div class="edx-xs-100 edx-sm-100 edx-md-100 edx-lg-100">
-								<div class="edx-section-title">Most recent courses</div>
+								<div class="edx-section-title">/ recent courses</div>
 								<div class="edx-course-carousel owl-carousel owl-theme"></div>
 							</div>
 						</div>

@@ -27,10 +27,10 @@
 		
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
-				requirejs(['moment','jQuery','db','storage','api','app','user','page','post'],
-				function (moment) {
-					let api = new API(), app = new App(), user = new User(), page = new Page(), post = new Post();
-					window.moment = moment;
+				requirejs(['localforage','jQuery','AES','MD5','api','app','user','page','post'],
+				function (localforage) {
+					var api = new API(), app = new App(), user = new User(), page = new Page(), post = new Post();
+					window.localforage = localforage;
 					app.init();
 					user.init();
 					page.init({'name':'post','side':'','layout':['cover','full']});

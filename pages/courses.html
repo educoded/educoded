@@ -13,7 +13,7 @@
 
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
-				requirejs(['jQuery','app','user','page','courses'],
+				requirejs(['jQuery','AES','MD5','app','user','page','courses'],
 				function () {
 					var app = new App(), user = new User(), page = new Page(), courses = new Courses();
 					app.init();
