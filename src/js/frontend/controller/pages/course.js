@@ -67,8 +67,21 @@ class Course {
 							<div class="edx-page-cover-title">`+data.info.language+`</div>
 							<div class="edx-page-cover-subtitle">`+data.info.title+`</div>
 						</div>
+					</div>
+					<div class="edx-page-cover-pattern-container">
+						<div class="edx-page-cover-pattern edx-wrapper"></div>
 					</div>`;
 		container.html(content);
+		// this.coverPattern();
+	}
+
+	coverPattern() {
+		let container, content;
+		container = jQuery('.edx-page-cover-pattern');
+		for (var i = 1200 - 1; i >= 0; i--) {
+			content = '<div class="edx-page-cover-pixel"></div>';
+			container.append(content);
+		}
 	}
 
 	toolbar() {
@@ -127,17 +140,15 @@ class Course {
 							</div>
 						</div>
 						<div class="edx-course-section edx-course-section-editor">
-							<div class="edx-editor-container">
-								<div class="edx-wrapper edx-editor-wrapper">
-									<div class="edx-xs-100 edx-sm-100 edx-md-90 edx-lg-90">
-										<div class="edx-editor-app">
-											<div class="edx-editor-holder active">
-												<pre class="edx-editor" id="edx-course-editor"></pre>
-											</div>
+							<div class="edx-container">
+								<div class="edx-editor-container">
+									<div class="edx-editor-app">
+										<div class="edx-editor-holder active">
+											<pre class="edx-editor" id="edx-course-editor"></pre>
 										</div>
-										<div align="right">
-											<div class="edx-course-video-btn">submit</div>
-										</div>
+									</div>
+									<div align="right">
+										<div class="edx-course-video-btn">submit</div>
 									</div>
 								</div>
 							</div>
@@ -188,7 +199,7 @@ class Course {
         	app.videoResize();
         });
 
-        window.onYouTubePlayerAPIReady = function () {
+        window.youtubeReady = function () {
         	let editor = ace.edit('edx-course-editor');
 		    player = new YT.Player('edx-course-video', {
 	            width: 1280,
@@ -293,7 +304,7 @@ class Course {
 	        });
 		};
 		if (window.YT) {
-		    onYouTubePlayerAPIReady();
+		    youtubeReady();
 		}
 
 	}
