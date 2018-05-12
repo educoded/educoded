@@ -16,7 +16,6 @@ class User {
 					// Sets the user data as a global value
 					user.userData = value;
 					user.userOnline();
-					console.log('logged in');
 			    }
 			    else {
 			    	// not cached
@@ -116,36 +115,38 @@ class User {
 	getUser(data, obj) {
 		let user, path, uData, password, u = new User(), api = new API();
 		if(!data.email || !data.password) {
-			return 'Missing data';
+			console.log('Missing data');
 		}
 		else {
 			user = this.findUser(data.email, obj);
-			path = CryptoJS.AES.decrypt(user.path,api.config('salt')).toString(CryptoJS.enc.Utf8);
-			jQuery.ajax({
-	            type: 'GET',
-	            crossDomain: true,
-	            dataType: 'json',
-	            url: api.config('user')+path+'.json',
-	            complete: function(jsondata) {
-	                uData = JSON.parse(jsondata.responseText)[0];
-	                password = CryptoJS.AES.decrypt(uData.password,api.config('salt')).toString(CryptoJS.enc.Utf8);
-					if(uData) {
-						if(data.email == uData.email && data.password == password ) {
-							localforage.ready(function() {
-								localforage.setItem('edx-cache-user-obj', uData, function() {
-									u.checkUser();
+			if(!user) {
+				console.log('Email does not exist.');
+			}
+			else {
+				path = CryptoJS.AES.decrypt(user.path,api.config('salt')).toString(CryptoJS.enc.Utf8);
+				jQuery.ajax({
+		            type: 'GET',
+		            crossDomain: true,
+		            dataType: 'json',
+		            url: api.config('user')+path+'.json',
+		            complete: function(jsondata) {
+		                uData = JSON.parse(jsondata.responseText)[0];
+		                password = CryptoJS.AES.decrypt(uData.password,api.config('salt')).toString(CryptoJS.enc.Utf8);
+						if(uData) {
+							if(data.email == uData.email && data.password == password ) {
+								localforage.ready(function() {
+									localforage.setItem('edx-cache-user-obj', uData, function() {
+										u.checkUser();
+									});
 								});
-							});
+							}
+							else {
+								console.log('Email or password is incorrect.');
+							}
 						}
-						else {
-							return 'Email or password is incorrect.';
-						}
-					}
-					else {
-						return 'Email does not exist.';
-					}
-	            }
-	        });
+		            }
+		        });
+			}
 		}
 	}
 

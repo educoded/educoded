@@ -107,7 +107,10 @@ class Course {
 			section = 	`<div class="edx-course-sidebar-section">
 							<div class="edx-course-sidebar-section-title">`+step.title+`</div>
 							<div class="edx-course-sidebar-section-status">
-								<div class="edx-course-sidebar-section-status-box edx-25"></div>
+								<div class="edx-course-sidebar-section-status-boxes">
+									<div class="edx-course-sidebar-section-status-box edx-25"></div>
+									<div class="edx-course-sidebar-section-status-box edx-25"></div>
+								</div>
 							</div>
 							<div class="edx-course-sidebar-section-info">
 								<div class="edx-course-sidebar-section-question">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
@@ -221,13 +224,14 @@ class Course {
 			            overlay = jQuery('.edx-page-video-overlay');
 			            duration = player.getDuration();
 			            sections = data.info.video.steps;
+			            console.log(stats);
 			            for (var i = stats.length - 1; i >= 0; i--) {
 			            	if(stats[i].status < 1) {
-			            		points.push(stats[i].time);
+			            		points.push(sections[i].time);
 			            	}
 			            	else {
 			            		jQuery('.edx-course-sidebar-section:nth-child('+(i+1)+') .edx-course-sidebar-section-status-box').addClass('correct').removeClass('incorrect');
-			            		completed.push(stats[i].time);
+			            		completed.push(sections[i].time);
 			            	}
 
 			            }
@@ -310,7 +314,7 @@ class Course {
 	}
 
 	s3Data() {
-		let id, courseData, courseStats, course = new Course(), api = new API();
+		let id, courseData, courseStats, stats, course = new Course(), api = new API();
 		id = this.id;
 		jQuery.ajax({
             type: 'GET',
@@ -322,8 +326,10 @@ class Course {
             	courseStats = courseData.info.video.steps;
 				if(courseData) {
 					localforage.ready(function() {
+						stats = [];
+						for (var i = 0; i < courseStats.length; i++) { stats[i] = {'status':0}; }
 						localforage.setItem('edx-cache-course-obj-'+id,courseData);
-						localforage.setItem('edx-cache-course-stats-'+id,courseStats);
+						localforage.setItem('edx-cache-course-stats-'+id,stats);
 						course.checkCourse();
 					});
 				}

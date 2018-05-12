@@ -53,7 +53,6 @@ class Page {
 					    <div class="edx-wrapper">
 					        <div class="edx-page-toolbar-line edx-25"></div>
 					        <div class="edx-page-toolbar-line edx-25"></div>
-					        <div class="edx-page-toolbar-line edx-25"></div>
 					    </div>
 					</div>`;
 		container.append(content);

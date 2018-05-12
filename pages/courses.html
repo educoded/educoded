@@ -13,9 +13,10 @@
 
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
-				requirejs(['jQuery','AES','MD5','app','user','page','courses'],
-				function () {
-					var app = new App(), user = new User(), page = new Page(), courses = new Courses();
+				requirejs(['localforage','jQuery','AES','MD5','api','app','user','page','courses'],
+				function (localforage) {
+					var api = new API(), app = new App(), user = new User(), page = new Page(), courses = new Courses();
+					window.localforage = localforage;
 					app.init();
 					user.init();
 					page.init({'name':'course','side':'left','layout':['cover','sidebar','toolbar','grid']});
