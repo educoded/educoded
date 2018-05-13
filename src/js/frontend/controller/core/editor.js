@@ -11,6 +11,9 @@ class Editor {
 				case 'multiple-read-only':
 					this.multipleReadEditor();
 				break;
+				case 'snippet':
+					this.snippetEditor();
+				break;
 				default: 
 					// add default stuff
 				break;
@@ -44,10 +47,10 @@ class Editor {
 
 		theme = data.theme.length > 0 ? data.theme : defaults.theme; // set theme
 		mode = data.mode.length > 0 ? data.mode : defaults.mode; // set mode
-		wrap = data.wrap.length > 0 ? data.wrap : defaults.wrap; // set wrap
-		margin = data.margin.length > 0 ? data.margin : defaults.margin; // set margin
+		wrap = data.wrap ? data.wrap : defaults.wrap; // set wrap
+		margin = data.margin ? data.margin : defaults.margin; // set margin
 		code = data.code.length > 0 ? data.code : defaults.code; // set code
-		readonly = data.readonly.length > 0 ? data.readonly : defaults.readonly; // set readonly
+		readonly = data.readonly ? data.readonly : defaults.readonly; // set readonly
 		template = data.template.length > 0 ? data.template : defaults.template; // set template
 
 		editor = ace.edit(data.id);
@@ -75,6 +78,10 @@ class Editor {
 		this.addToolbar();
 		this.buildMultiRead();
 		this.switchEditor();
+	}
+
+	snippetEditor() {
+
 	}
 
 	addToolbar() {

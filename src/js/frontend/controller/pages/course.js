@@ -2,7 +2,6 @@ class Course {
 
 	init() {
 		this.checkCourse();
-		this.loadCourse();
 	}
 
 	checkCourse() {
@@ -27,7 +26,7 @@ class Course {
 				    }
 				    else {
 				    	// not cached
-				  		course.s3Data();
+				  		course.loadCourse();
 				  		console.log('not loaded');
 				    }
 				});
@@ -37,10 +36,6 @@ class Course {
 			this.courseError(0);
 		}
 
-	}
-
-	loadCourse() {
-		console.log('load course');
 	}
 
 	courseError(id) {
@@ -53,7 +48,6 @@ class Course {
 
 	template() {
 		this.cover();
-		this.toolbar();
 		this.sidebar();
 		this.grid();
 	}
@@ -72,20 +66,24 @@ class Course {
 						<div class="edx-page-cover-pattern edx-wrapper"></div>
 					</div>`;
 		container.html(content);
-		// this.coverPattern();
+		this.coverPattern(data.info.language);
 	}
 
-	coverPattern() {
-		let container, content;
-		container = jQuery('.edx-page-cover-pattern');
-		for (var i = 1200 - 1; i >= 0; i--) {
-			content = '<div class="edx-page-cover-pixel"></div>';
-			container.append(content);
-		}
-	}
-
-	toolbar() {
-
+	coverPattern(lang) {
+		setTimeout(function() {
+			let shapes, shape, size, rotate, pX, pY, cover;
+			shapes = ['square','circle'];
+			cover = jQuery('.edx-page-cover');
+			function getRandom(min, max) { return Math.floor(Math.random() * (max - min) + min); }
+			for (var i = 30 - 1; i >= 0; i--) {
+				shape = getRandom(0,2);
+				size = getRandom(20,200);
+				rotate = getRandom(0,90);
+				pX = getRandom(0,cover.width());
+				pY = getRandom(90,cover.height());
+				jQuery('.edx-page-cover-pattern').append('<div class="edx-page-cover-shape edx-shape-'+lang+' edx-shape-'+shapes[shape]+'" style="width:'+size+'px; height:'+size+'px; top:'+pY+'px; left:'+pX+'px; transform: rotate('+rotate+'deg)"></div>');
+			}
+		}, 50);
 	}
 
 	sidebar() {
@@ -97,6 +95,9 @@ class Course {
 						<div class="edx-course-sidebar-title edx-wrapper">sections</div>
 						<div class="edx-course-sidebar-content">
 							<div class="edx-course-sidebar-sections"></div>
+						</div>
+						<div class="edx-course-btn-container">
+							<div class="edx-course-btn edx-wrapper">submit</div>
 						</div>
 					</div>`;
 		container.html(content);
@@ -122,73 +123,40 @@ class Course {
 	}
 
 	grid() {
+		let container, content;
+		container = jQuery('.edx-page-grid-content');
+		content = 	`<div class="edx-xs-100 edx-sm-100 edx-md-100 edx-lg-100">
+						<div class="edx-course-section edx-course-section-video active"></div>
+						<div class="edx-course-section edx-course-section-editor"></div>
+						<div class="edx-course-section-content"></div>
+					</div>`;
+		container.html(content);
+
+		this.courseEditor();
+		this.courseVideo();
+		this.courseContent();
+
+	}
+
+	courseVideo() {
 		let container, content, data, stats, id, player, editor = new Editor(), app = new App(), api = new API();
 		data = this.courseData;
 		stats = this.courseStats
 		id = data.info.id;
-		container = jQuery('.edx-page-grid-content');
-		content = 	`<div class="edx-xs-100 edx-sm-100 edx-md-100 edx-lg-100">
-						<div class="edx-course-section edx-course-section-video active">
-							<div class="edx-container">
-								<div class="edx-page-video-container">
-									<div class="edx-course-video">
-										<div class="edx-page-video-overlay edx-wrapper edx-25">
-											<div class="edx-course-video-message">
-												Please complete this section before moving forward
-											</div>
-										</div>
-										<div class="edx-page-video edx-15" id="edx-course-video"></div>
+		container = jQuery('.edx-course-section-video');
+		content =	`<div class="edx-container">
+						<div class="edx-page-video-container">
+							<div class="edx-course-video">
+								<div class="edx-page-video-overlay edx-wrapper edx-25">
+									<div class="edx-course-video-message">
+										Please complete this section before moving forward
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="edx-course-section edx-course-section-editor">
-							<div class="edx-container">
-								<div class="edx-editor-container">
-									<div class="edx-editor-app">
-										<div class="edx-editor-holder active">
-											<pre class="edx-editor" id="edx-course-editor"></pre>
-										</div>
-									</div>
-									<div align="right">
-										<div class="edx-course-video-btn">submit</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="edx-course-section edx-course-section-content active">
-							<div class="edx-container">
-								<div class="edx-page-content">
-									<div class="edx-page-text">`+data.info.content+`</div>
-									<div class="edx-page-text">`+data.info.content+`</div>
-									<div class="edx-page-text">`+data.info.content+`</div>
-									<div class="edx-page-text">`+data.info.content+`</div>
-								</div>
+								<div class="edx-page-video edx-15" id="edx-course-video"></div>
 							</div>
 						</div>
 					</div>`;
 		container.html(content);
-
-		// initiate editor
-		editor.init({
-			'id':'edx-course-editor',
-			'theme':'ace/theme/monokai',
-			'mode':'ace/mode/'+data.info.language,
-			'language':{
-				'name':data.info.language,
-				'ext':api.languageInfo(data.info.language,'ext')
-			},
-			'code':'',
-			'wrap':true,
-			'margin':false,
-			'focus':true,
-			'readonly':false,
-			'template':'multiple-read-only',
-			'shadow':false,
-			'style':{
-				'font-size':'11px'
-			}
-		});
 
 		app.videoResize();
 
@@ -219,12 +187,11 @@ class Course {
 	                	let timer, state, elapsed, duration, points, completed, lastPoint, btn, message, overlay, sections, section;
 			            points = [];
 			            completed = [];
-			            btn = jQuery('.edx-course-video-btn');
+			            btn = jQuery('.edx-course-btn-container');
 			            message = jQuery('.edx-course-video-message');
 			            overlay = jQuery('.edx-page-video-overlay');
 			            duration = player.getDuration();
 			            sections = data.info.video.steps;
-			            console.log(stats);
 			            for (var i = stats.length - 1; i >= 0; i--) {
 			            	if(stats[i].status < 1) {
 			            		points.push(sections[i].time);
@@ -255,7 +222,7 @@ class Course {
 				            		jQuery('.edx-course-sidebar-section:nth-child('+(section+1)+') .edx-course-sidebar-section-info').slideDown();
 				            		btn.fadeIn();
 				            		setTimeout(function() {
-				            			jQuery('html, body').animate({ scrollTop: jQuery('.edx-page-grid').offset().top - 98 }, 500);
+				            			jQuery('html, body').animate({ scrollTop: jQuery('.edx-page-grid').offset().top - 50 }, 500);
 				            			jQuery('.edx-course-section-video').slideUp();
 				            			jQuery('.edx-course-section-editor').slideDown();
 				            			editor.focus();
@@ -310,10 +277,117 @@ class Course {
 		if (window.YT) {
 		    youtubeReady();
 		}
-
 	}
 
-	s3Data() {
+	courseEditor() {
+		let container, content, data, editor = new Editor(), api = new API();
+		container = jQuery('.edx-course-section-editor');
+		data = this.courseData;
+		content =	`<div class="edx-container">
+						<div class="edx-editor-container">
+							<div class="edx-editor-app">
+								<div class="edx-editor-holder active">
+									<pre class="edx-editor" id="edx-course-editor"></pre>
+								</div>
+							</div>
+						</div>
+					</div>`;
+		container.html(content);
+
+		// main editor
+		editor.init({
+			'id':'edx-course-editor',
+			'theme':'ace/theme/monokai',
+			'mode':'ace/mode/'+data.info.language,
+			'language':{
+				'name':data.info.language,
+				'ext':api.languageInfo(data.info.language,'ext')
+			},
+			'code':'',
+			'wrap':true,
+			'margin':false,
+			'focus':true,
+			'readonly':false,
+			'template':'multiple-read-only',
+			'shadow':false,
+			'style':{
+				'font-size':'11px'
+			}
+		});
+	}
+
+	courseContent() {
+		let container, content, data, editor = new Editor(), api = new API();
+		container = jQuery('.edx-course-section-content');
+		data = this.courseData;
+		content = 	`<div class="edx-container">
+						<div class="edx-page-content">
+							<div class="edx-wrapper edx-course-content-wrapper">
+								<div class="edx-xs-100 edx-sm-100 edx-md-25 edx-lg-25">
+									<div class="edx-course-content-section">
+										<div class="edx-course-author">`+data.author.name+`</div>
+										<div class="edx-course-created">`+data.date.created+`</div>
+										<div class="edx-course-updated">`+data.date.updated+`</div>
+										<div class="edx-course-difficulty">`+data.info.difficulty+`</div>
+										<div class="edx-course-category">`+data.info.language+`</div>
+										<div class="edx-course-tags">`+data.info.keywords+`</div>
+									</div>
+								</div>
+								<div class="edx-xs-100 edx-sm-100 edx-md-75 edx-lg-75">
+									<div class="edx-course-content-section">
+										<div class="edx-page-text">`+data.info.content+`</div>
+										<div class="edx-page-text">`+data.info.content+`</div>
+										<div class="edx-course-snippet-container">
+											<div class="edx-course-snippet" id="edx-course-snippet-1"></div>
+										</div>
+										<div class="edx-page-text">`+data.info.content+`</div>
+										<div class="edx-page-text">`+data.info.content+`</div>
+										<div class="edx-course-snippet-container">
+											<div class="edx-course-snippet" id="edx-course-snippet-2"></div>
+										</div>
+										<div class="edx-page-text">`+data.info.content+`</div>
+										<div class="edx-page-text">`+data.info.content+`</div>
+										<div class="edx-course-snippet-container">
+											<div class="edx-course-snippet" id="edx-course-snippet-3"></div>
+										</div>
+										<div class="edx-page-text">`+data.info.content+`</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>`;
+		container.html(content);
+
+
+		let snippetCode = 
+`.edx-section {
+	background: red;
+}`;
+		
+		for (var i = 0; i < 3; i++) {
+			editor.init({
+				'id':'edx-course-snippet-'+(i+1),
+				'theme':'ace/theme/monokai',
+				'mode':'ace/mode/'+data.info.language,
+				'language':{
+					'name':data.info.language,
+					'ext':api.languageInfo(data.info.language,'ext')
+				},
+				'code':snippetCode,
+				'wrap':true,
+				'margin':false,
+				'focus':true,
+				'readonly':true,
+				'template':'snippet',
+				'shadow':false,
+				'style':{
+					'font-size':'11px'
+				}
+			});	
+		}
+	}
+
+	loadCourse() {
 		let id, courseData, courseStats, stats, course = new Course(), api = new API();
 		id = this.id;
 		jQuery.ajax({

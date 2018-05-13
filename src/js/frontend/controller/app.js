@@ -238,7 +238,78 @@ class App {
 		container = this.app;
 		content = 	`<!-- Start ~ Footer -->
 					<div class="edx-footer">
-						<div class="edx-footer-main"></div>
+						<div class="edx-footer-main">
+							<div class="edx-footer-content">
+								<div class="edx-container">
+									<div class="edx-footer-menu edx-wrapper">
+										<div class="edx-xs-100 edx-sm-50 edx-md-25 edx-lg-25">
+											<div class="edx-footer-menu-block-wrapper edx-wrapper">
+												<div class="edx-footer-menu-block">
+													<div class="edx-footer-menu-title">About</div>
+													<div class="edx-footer-menu-item">About Us</div>
+													<div class="edx-footer-menu-item">Team</div>
+													<div class="edx-footer-menu-item">Blog</div>
+												</div>
+											</div>
+										</div>
+										<div class="edx-xs-100 edx-sm-50 edx-md-25 edx-lg-25">
+											<div class="edx-footer-menu-block-wrapper edx-wrapper">
+												<div class="edx-footer-menu-block">
+													<div class="edx-footer-menu-title">Browse</div>
+													<div class="edx-footer-menu-item">Courses</div>
+													<div class="edx-footer-menu-item">Tracks</div>
+												</div>
+											</div>
+										</div>
+										<div class="edx-xs-100 edx-sm-50 edx-md-25 edx-lg-25">
+											<div class="edx-footer-menu-block-wrapper edx-wrapper">
+												<div class="edx-footer-menu-block">
+													<div class="edx-footer-menu-title">Languages</div>
+													<div class="edx-footer-menu-item">C and C++</div>
+													<div class="edx-footer-menu-item">C#</div>
+													<div class="edx-footer-menu-item">CSS</div>
+													<div class="edx-footer-menu-item">HTML</div>
+													<div class="edx-footer-menu-item">Java</div>
+													<div class="edx-footer-menu-item">Javascript</div>
+													<div class="edx-footer-menu-item">Python</div>
+													<div class="edx-footer-menu-item">PHP</div>
+													<div class="edx-footer-menu-item">Ruby</div>
+												</div>
+											</div>
+										</div>
+										<div class="edx-xs-100 edx-sm-50 edx-md-25 edx-lg-25">
+											<div class="edx-footer-menu-block-wrapper edx-wrapper">
+												<div class="edx-footer-menu-block">
+													<div class="edx-footer-menu-title">Other</div>
+													<div class="edx-footer-menu-item">Account</div>
+													<div class="edx-footer-menu-item">Register</div>
+													<div class="edx-footer-menu-item">Contact</div>
+													<div class="edx-footer-menu-item">Affiliate Program</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="edx-footer-newsletter"></div>
+									<div class="edx-footer-social edx-wrapper">
+										<div class="edx-footer-social-item edx-wrapper">
+											<span class="fa fa-facebook"></span>
+										</div>
+										<div class="edx-footer-social-item edx-wrapper">
+											<span class="fa fa-instagram"></span>
+										</div>
+										<div class="edx-footer-social-item edx-wrapper">
+											<span class="fa fa-youtube"></span>
+										</div>
+										<div class="edx-footer-social-item edx-wrapper">
+											<span class="fa fa-twitter"></span>
+										</div>
+										<div class="edx-footer-social-item edx-wrapper">
+											<span class="fa fa-github"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="edx-footer-copyright">
 							<div class="edx-wrapper">educoded</div>
 						</div>

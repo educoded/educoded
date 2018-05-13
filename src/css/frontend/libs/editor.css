@@ -224,3 +224,19 @@
     font-size: 14px;
     font-weight: 600;
 }
+
+/* Snippet */
+.edx-course-snippet-container {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    padding: 8px 0px;
+    margin: 15px 0px;
+    background: #272922;
+    border-radius: 4px;
+}
+
+.edx-course-snippet {
+    width: 100%;
+    height: 100%;
+}
