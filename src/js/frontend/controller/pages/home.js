@@ -155,10 +155,10 @@ class Home {
 								</div>
 								<div class="edx-course-card-content">
 									<div class="edx-course-card-description">Lorem ipsum dolor sit amet, no sit sonet corpora indoctum, quo ad fierent insolens. Duo aeterno ancillae ei.</div>
-									<a href="course.html?id=`+data[i].id+`">
-										<div class="edx-course-card-link">view course</div>
-									</a>
 								</div>
+								<a href="course.html?id=`+data[i].id+`">
+									<div class="edx-course-card-link">view course</div>
+								</a>
 							</div>
 						</div>`;
 			courses.append(course);

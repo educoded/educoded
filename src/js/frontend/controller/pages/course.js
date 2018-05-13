@@ -323,17 +323,10 @@ class Course {
 		content = 	`<div class="edx-container">
 						<div class="edx-page-content">
 							<div class="edx-wrapper edx-course-content-wrapper">
-								<div class="edx-xs-100 edx-sm-100 edx-md-25 edx-lg-25">
-									<div class="edx-course-content-section">
-										<div class="edx-course-author">`+data.author.name+`</div>
-										<div class="edx-course-created">`+data.date.created+`</div>
-										<div class="edx-course-updated">`+data.date.updated+`</div>
-										<div class="edx-course-difficulty">`+data.info.difficulty+`</div>
-										<div class="edx-course-category">`+data.info.language+`</div>
-										<div class="edx-course-tags">`+data.info.keywords+`</div>
-									</div>
+								<div class="edx-xs-100 edx-sm-100 edx-md-30 edx-lg-30">
+									<div class="edx-course-content-section edx-course-info-section"></div>
 								</div>
-								<div class="edx-xs-100 edx-sm-100 edx-md-75 edx-lg-75">
+								<div class="edx-xs-100 edx-sm-100 edx-md-70 edx-lg-70">
 									<div class="edx-course-content-section">
 										<div class="edx-page-text">`+data.info.content+`</div>
 										<div class="edx-page-text">`+data.info.content+`</div>
@@ -358,6 +351,7 @@ class Course {
 					</div>`;
 		container.html(content);
 
+		this.courseInfo();
 
 		let snippetCode = 
 `.edx-section {
@@ -385,6 +379,14 @@ class Course {
 				}
 			});	
 		}
+	}
+
+	courseInfo() {
+		let container, content, info, data;
+		container = jQuery('.edx-course-info-section');
+		data = this.courseData;
+		info = [{'name':'author','item':data.author.name },{'name':'posted','item':data.date.created },{'name':'updated','item':data.date.updated },{'name':'difficulty','item':data.info.difficulty },{'name':'language','item':data.info.language }];
+		info.forEach(function(element) { container.append('<div class="edx-course-info">'+element.name+': <span>'+element.item+'</span></div>'); });
 	}
 
 	loadCourse() {

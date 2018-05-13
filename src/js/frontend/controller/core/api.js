@@ -89,10 +89,12 @@ class API {
     languageInfo(lang, item) {
         let data, info;
         data = {
-            'html':{'ext':'html','snippet':''},
             'css':{'ext':'css','snippet':''},
+            'html':{'ext':'html','snippet':''},
             'javascript':{'ext':'js','snippet':''},
-            'php':{'ext':'php','snippet':''}
+            'mysql':{'ext':'myd','snippet':''},
+            'php':{'ext':'php','snippet':''},
+            'python':{'ext':'py','snippet':''}
         };
         if(!item) { info = data[lang]; }
         else { info = data[lang][item]; }

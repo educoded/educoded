@@ -88,9 +88,11 @@
 /* Start ~ App Defaults */
 	
 	:root {
+		--edx-lightblue: #19b7ff;
 		--edx-blue: #06a1e5;
+		--edx-darkblue: #4b6cb7;
 		--edx-cyan: #25ccc3;
-		--edx-green: #62aa20;
+		--edx-green: #8BC34A;
 		--edx-purple: #8660d9;
 		--edx-yellow: #f7ce23;
 		--edx-orange: #f98d2b;
@@ -150,6 +152,14 @@
 
 	.edx-page {
 		padding-top: 90px;
+	}
+
+	.edx-page-data {
+		position: relative;
+	}
+
+	.edx-page-course-data {
+	    background: #f6f6f7;
 	}
 
 	.edx-angled-sections {
@@ -253,7 +263,7 @@
 	}
 
 	.edx-shape-javascript {
-		background: linear-gradient(45deg, rgb(247, 206, 35), rgb(253, 247, 96));
+		background: linear-gradient(to right, rgb(86, 171, 47), rgb(168, 224, 99));
 	}
 
 	.edx-shape-html {
@@ -263,6 +273,14 @@
 	.edx-shape-php {
 		/*background: linear-gradient(45deg, rgb(131, 77, 155), rgb(208, 78, 214));*/
 		background: linear-gradient(45deg, rgb(157, 80, 187), rgb(110, 72, 170));
+	}
+
+	.edx-shape-python {
+		background: linear-gradient(45deg, rgb(247, 206, 35), rgb(253, 247, 96));
+	}
+
+	.edx-shape-mysql {
+		background: linear-gradient(45deg, rgb(75, 108, 183), rgb(24, 40, 72));
 	}
 
 	.edx-page-cover-shape {
@@ -887,11 +905,11 @@
 		}
 
 		.edx-course-card-javascript .edx-course-card-cover {
-			background: var(--edx-yellow);
+			background: var(--edx-green);
 		}
 
-		.edx-course-card-node .edx-course-card-cover {
-			background: var(--edx-green);
+		.edx-course-card-python .edx-course-card-cover {
+			background: var(--edx-yellow);
 		}
 
 		.edx-course-card-php .edx-course-card-cover {
@@ -899,7 +917,7 @@
 		}
 
 		.edx-course-card-mysql .edx-course-card-cover {
-			background: var(--edx-cyan);
+			background: var(--edx-darkblue);
 		}
 
 		.edx-course-card-cover-title {
@@ -927,8 +945,7 @@
 
 		.edx-course-card-link {
 		    text-align: center;
-		    margin-top: 20px;
-		    padding: 15px 0px;
+		    padding: 20px 0px;
 		    color: #000;
 		    font-size: 12px;
 		    font-weight: 600;
@@ -1087,6 +1104,24 @@
 			align-items: flex-start;
 		}
 
+		.edx-course-content-section {
+			padding-right: 40px;
+		}
+
+		.edx-course-info {
+		    border-bottom: 1px solid rgba(20,20,20,0.05);
+		    padding: 12px 0px;
+		    font-size: 14px;
+		    font-weight: 600;
+		    text-transform: capitalize;
+		}
+
+		.edx-course-info span {
+			padding-left: 6px;
+		    font-weight: 300;
+		    text-transform: none;
+		}
+
 	/* End ~ Content - Course */
 
 /* End ~ Content */
@@ -1103,6 +1138,7 @@
 
 	.edx-footer-content {
 	    padding: 50px 0px;
+	    position: relative;
 	}
 
 	.edx-footer-menu {
@@ -1128,9 +1164,9 @@
 	}
 
 	.edx-footer-menu-item {
-		font-size: 12px;
-		color: #636363;
-		cursor: pointer;
+	    font-size: 12px;
+	    color: #b3b3b3;
+	    cursor: pointer;
 	    margin-bottom: 5px;
 	}
 

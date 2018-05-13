@@ -10,7 +10,14 @@ class Page {
 		data = this.data;
 		container = jQuery('.edx-page');
 		content = 	`<!-- Start ~ `+data.name+` page -->
-					<div class="edx-`+data.name+`"></div>
+					<div class="edx-`+data.name+`">
+						<!-- Start ~ `+data.name+` cover -->
+						<div class="edx-page-cover-container"></div>
+						<!-- End ~ `+data.name+` cover -->
+						<!-- Start ~ `+data.name+` data -->
+						<div class="edx-page-data edx-page-`+data.name+`-data"></div>
+						<!-- End ~ `+data.name+` data -->
+					</div>
 					<!-- End ~ `+data.name+` page -->`;
 		container.html(content);
 		this.buildLayout();
@@ -20,17 +27,16 @@ class Page {
 	buildLayout() {
 		let data, template;
 		data = this.data;
-		template = jQuery('.edx-'+data.name);
 		for (var i = 0; i < data.layout.length; i++) {
 			let layout, side = '';
 			if(data.side) { side = 'edx-page-'+data.layout[i]+'-'+data.side; }
+			if(data.layout[i] === 'cover') {template = jQuery('.edx-page-cover-container'); } else { template = jQuery('.edx-page-data'); }
 			layout = 	`<!-- Start ~ `+data.name+` page `+data.layout[i]+` -->
 						<div class="edx-page-`+data.layout[i]+` `+side+` edx-`+data.name+`-`+data.layout[i]+` edx-25"></div>
 						<!-- End ~ `+data.name+` page `+data.layout[i]+` -->`;
 			template.append(layout);
 			eval('this.build'+data.layout[i].charAt(0).toUpperCase()+data.layout[i].slice(1)+'();');
 		}
-
 	}
 
 	buildCover() {
