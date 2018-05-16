@@ -73,7 +73,9 @@ class User {
 							</div>
 							<div class="edx-sidebar-profile-login-btn edx-wrapper">login</div>
 							<div class="edx-sidebar-break"></div>
-							<div class="edx-sidebar-profile-register-btn edx-wrapper">register</div>
+							<a href="register.html">
+								<div class="edx-sidebar-profile-register-btn edx-wrapper">register</div>
+							</a>
 						</div>
 					</div>`;
 		container.html(content);

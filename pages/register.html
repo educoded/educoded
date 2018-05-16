@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<!-- Main CSS -->
+		<link rel="stylesheet" type="text/css" href="../src/css/frontend/main.css">
+
+		<!-- RequireJS -->
+		<script src="../src/js/frontend/require.js"></script>
+
+	</head>
+	<body class="edx-app edx-25">
+		
+		<script>
+			requirejs(['../src/js/frontend/config'],function(){
+				requirejs(['localforage','moment','jQuery','AES','MD5','db','storage','api','app','user','page','register'],
+				function (localforage,moment) {
+					let api = new API(), app = new App(), user = new User(), page = new Page(), register = new Register();
+					window.localforage = localforage;
+					window.moment = moment;
+					app.init();
+					user.init();
+					page.init({'name':'register','side':'','layout':['cover','full']});
+					register.init();
+				})
+			});
+		</script>
+
+	</body>
+</html>
