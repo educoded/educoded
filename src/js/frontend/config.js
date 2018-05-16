@@ -36,9 +36,6 @@ requirejs.config({
         courses: 'controller/pages/courses',
         home: 'controller/pages/home',
         post: 'controller/pages/post',
-        signup: 'controller/pages/signup',
-        // ajax
-        ajaxLogin: 'ajax/user/login',
-        ajaxRegister: 'ajax/user/register'
+        register: 'controller/pages/register',
     }
 });
