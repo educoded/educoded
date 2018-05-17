@@ -1,12 +1,12 @@
 class API {
 
-	init() {		
+    init() {        
         // unique
         function unique(arr, comparator) {
-            var uniqueArr = [];
-            for (var i in arr) {
-                var found = false;
-                for (var j in uniqueArr) {
+            let uniqueArr = [];
+            for (let i in arr) {
+                let found = false;
+                for (let j in uniqueArr) {
                     if (comparator instanceof Function) {
                         if (comparator.call(null, arr[i], uniqueArr[j])) {
                             found = true;
@@ -26,10 +26,10 @@ class API {
             }
             return uniqueArr;
         }
-	}
+    }
 
     gradient() {
-        var colors = new Array(
+        let colors = new Array(
             [201, 75, 75],
             [247, 183, 51],
             [247, 183, 51],
@@ -37,24 +37,24 @@ class API {
             [201, 75, 75],
             [247, 183, 51]
         );
-        var step = 0;
-        var colorIndices = [0,1,2,3];
-        var gradientSpeed = 0.002; //transition speed
+        let step = 0;
+        let colorIndices = [0,1,2,3];
+        let gradientSpeed = 0.002; //transition speed
         function updateGradient() {
             if ( $===undefined ) return;
-            var c0_0 = colors[colorIndices[0]];
-            var c0_1 = colors[colorIndices[1]];
-            var c1_0 = colors[colorIndices[2]];
-            var c1_1 = colors[colorIndices[3]];
-            var istep = 1 - step;
-            var r1 = Math.round(istep * c0_0[0] + step * c0_1[0]);
-            var g1 = Math.round(istep * c0_0[1] + step * c0_1[1]);
-            var b1 = Math.round(istep * c0_0[2] + step * c0_1[2]);
-            var color1 = "rgb("+r1+","+g1+","+b1+")";
-            var r2 = Math.round(istep * c1_0[0] + step * c1_1[0]);
-            var g2 = Math.round(istep * c1_0[1] + step * c1_1[1]);
-            var b2 = Math.round(istep * c1_0[2] + step * c1_1[2]);
-            var color2 = "rgb("+r2+","+g2+","+b2+")";
+            let c0_0 = colors[colorIndices[0]];
+            let c0_1 = colors[colorIndices[1]];
+            let c1_0 = colors[colorIndices[2]];
+            let c1_1 = colors[colorIndices[3]];
+            let istep = 1 - step;
+            let r1 = Math.round(istep * c0_0[0] + step * c0_1[0]);
+            let g1 = Math.round(istep * c0_0[1] + step * c0_1[1]);
+            let b1 = Math.round(istep * c0_0[2] + step * c0_1[2]);
+            let color1 = "rgb("+r1+","+g1+","+b1+")";
+            let r2 = Math.round(istep * c1_0[0] + step * c1_1[0]);
+            let g2 = Math.round(istep * c1_0[1] + step * c1_1[1]);
+            let b2 = Math.round(istep * c1_0[2] + step * c1_1[2]);
+            let color2 = "rgb("+r2+","+g2+","+b2+")";
             $('.edx-gradient').css({background: "-webkit-gradient(linear, left top, right bottom, from("+color1+"), to("+color2+"))"}).css({background: "-moz-linear-gradient(left, "+color1+" 0%, "+color2+" 100%)"});
             step += gradientSpeed;
             if ( step >= 1 ) {
@@ -102,7 +102,7 @@ class API {
     }
 
     // getConfig(key, data) {
-    //     for (var i = 0; i < data.length; i++) {
+    //     for (let i = 0; i < data.length; i++) {
     //         if (data[i].email === key) {
     //             return data[i];
     //         }
@@ -111,5 +111,70 @@ class API {
     //         }
     //     }
     // }
+
+    phoneApi(){
+        var edxApp = angular.module('edxApp', []);
+        edxApp.controller('edxCtrl', function($scope) {
+          $scope.currencyVal;
+        });
+        edxApp.directive('phoneInput', function($filter, $browser) {
+            return {
+                require: 'ngModel',
+                link: function($scope, $element, $attrs, ngModelCtrl) {
+                    var listener = function() {
+                        var value = $element.val().replace(/[^0-9]/g, '');
+                        $element.val($filter('tel')(value, false));
+                    };
+                    ngModelCtrl.$parsers.push(function(viewValue) {
+                        return viewValue.replace(/[^0-9]/g, '').slice(0,10);
+                    });
+                    ngModelCtrl.$render = function() {
+                        $element.val($filter('tel')(ngModelCtrl.$viewValue, false));
+                    };
+                    $element.bind('change', listener);
+                    $element.bind('keydown', function(event) {
+                        var key = event.keyCode;
+                        if (key == 91 || (15 < key && key < 19) || (37 <= key && key <= 40)){
+                            return;
+                        }
+                        $browser.defer(listener);
+                    });
+                    $element.bind('paste cut', function() {
+                        $browser.defer(listener);
+                    });
+                }
+            };
+        });
+        edxApp.filter('tel', function () {
+            return function (tel) {
+                if (!tel) { return ''; }
+                var value = tel.toString().trim().replace(/^\+/, '');
+                if (value.match(/[^0-9]/)) { return tel; }
+                var country, city, number;
+                switch (value.length) {
+                    case 1:
+                    case 2:
+                    case 3:
+                        city = value;
+                        break;
+                    default:
+                        city = value.slice(0, 3);
+                        number = value.slice(3);
+                }
+                if(number){
+                    if(number.length>3){
+                        number = number.slice(0, 3) + '-' + number.slice(3,7);
+                    }
+                    else{
+                        number = number;
+                    }
+                    return ("(" + city + ") " + number).trim();
+                }
+                else{
+                    return "(" + city;
+                }
+            };
+        });
+    }
 
 }

@@ -3,6 +3,7 @@ requirejs.config({
     paths: {
         // libraries
         jQuery: 'libs/jquery.min',
+        angular: 'libs/angular.min',
         ace: 'libs/ace/ace',
         charts: 'libs/charts.min',
         cropper: 'libs/cropper.min',
@@ -29,13 +30,14 @@ requirejs.config({
         // default
         main: 'main',
         // pages
-        page: 'controller/pages/page',
         about: 'controller/pages/about',
         blog: 'controller/pages/blog',
         course: 'controller/pages/course',
         courses: 'controller/pages/courses',
         home: 'controller/pages/home',
+        page: 'controller/pages/page',
         post: 'controller/pages/post',
         register: 'controller/pages/register',
+        team: 'controller/pages/team',
     }
 });
