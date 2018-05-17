@@ -246,9 +246,15 @@ class App {
 											<div class="edx-footer-menu-block-wrapper edx-wrapper">
 												<div class="edx-footer-menu-block">
 													<div class="edx-footer-menu-title">About</div>
-													<div class="edx-footer-menu-item">About Us</div>
-													<div class="edx-footer-menu-item">Team</div>
-													<div class="edx-footer-menu-item">Blog</div>
+													<a href="about.html">
+														<div class="edx-footer-menu-item">About Us</div>
+													</a>
+													<a href="team.html">
+														<div class="edx-footer-menu-item">Team</div>
+													</a>
+													<a href="blog.html">
+														<div class="edx-footer-menu-item">Blog</div>
+													</a>
 												</div>
 											</div>
 										</div>
@@ -256,8 +262,18 @@ class App {
 											<div class="edx-footer-menu-block-wrapper edx-wrapper">
 												<div class="edx-footer-menu-block">
 													<div class="edx-footer-menu-title">Browse</div>
-													<div class="edx-footer-menu-item">Courses</div>
-													<div class="edx-footer-menu-item">Tracks</div>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">Routes</div>
+													</a>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">Paths</div>
+													</a>
+													<a href="courses.html">
+														<div class="edx-footer-menu-item">Courses</div>
+													</a>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">Sandbox</div>
+													</a>
 												</div>
 											</div>
 										</div>
@@ -265,15 +281,33 @@ class App {
 											<div class="edx-footer-menu-block-wrapper edx-wrapper">
 												<div class="edx-footer-menu-block">
 													<div class="edx-footer-menu-title">Languages</div>
-													<div class="edx-footer-menu-item">C and C++</div>
-													<div class="edx-footer-menu-item">C#</div>
-													<div class="edx-footer-menu-item">CSS</div>
-													<div class="edx-footer-menu-item">HTML</div>
-													<div class="edx-footer-menu-item">Java</div>
-													<div class="edx-footer-menu-item">Javascript</div>
-													<div class="edx-footer-menu-item">Python</div>
-													<div class="edx-footer-menu-item">PHP</div>
-													<div class="edx-footer-menu-item">Ruby</div>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">C and C++</div>
+													</a>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">C#</div>
+													</a>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">CSS</div>
+													</a>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">HTML</div>
+													</a>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">Java</div>
+													</a>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">Javascript</div>
+													</a>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">Python</div>
+													</a>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">PHP</div>
+													</a>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">Ruby</div>
+													</a>
 												</div>
 											</div>
 										</div>
@@ -281,10 +315,18 @@ class App {
 											<div class="edx-footer-menu-block-wrapper edx-wrapper">
 												<div class="edx-footer-menu-block">
 													<div class="edx-footer-menu-title">Other</div>
-													<div class="edx-footer-menu-item">Account</div>
-													<div class="edx-footer-menu-item">Register</div>
-													<div class="edx-footer-menu-item">Contact</div>
-													<div class="edx-footer-menu-item">Affiliate Program</div>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">Account</div>
+													</a>
+													<a href="register.html">
+														<div class="edx-footer-menu-item">Register</div>
+													</a>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">Contact</div>
+													</a>
+													<a href="javascript:void(0)">
+														<div class="edx-footer-menu-item">Affiliate Program</div>
+													</a>
 												</div>
 											</div>
 										</div>

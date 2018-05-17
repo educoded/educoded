@@ -16,7 +16,7 @@ class Register {
 		content = 	`<div class="edx-wrapper">
 						<div class="edx-page-cover-titles">
 							<div class="edx-page-cover-title">register</div>
-							<div class="edx-page-cover-subtitle">learn something new</div>
+							<div class="edx-page-cover-subtitle">start learning today</div>
 						</div>
 					</div>`;
 		container.html(content);
@@ -87,7 +87,11 @@ class Register {
 	}
 
 	validateRegistration() {
-		let obj, error, register = new Register();
+		let obj, error, s3, register = new Register(), messenger = new Messenger(), api = new API();
+		s3 = new AWS.S3({
+        	accessKeyId: api.config('id'),
+        	secretAccessKey: api.config('secret')
+        });
 		jQuery('.edx-page-form-register').on('click', function() {
 			obj = {};
 			error = [];
@@ -102,17 +106,40 @@ class Register {
 				register.validateData(data,obj,error);
 			});			
 			if(error.length > 0) {
-				console.log(error);
+				register.errors(error);
 			}
 			else {
-				console.log('register new user');
+				s3.putObject({
+	            	Bucket: 'educoded',
+	            	Key: 'data/users/test/user.json',
+	            	Body: JSON.stringify(obj),
+	            	ContentType: "application/json"
+	            	}, function(err,data){
+	            		messenger.run({
+							'id':'success', // This value needs to be unique
+							'name':'new-user', // This value needs to be unique
+							'title':'Success!', // title
+							'message':'You have successfully registered a new account.', // content
+							'duration':4500, // duration of timer | if null, close box will apear
+							'redirect':'home.html',
+							'theme':'light', // only one theme currently...
+							'icon':'check', // font awesome value fa-{value}
+							'color':'#37bfb1', // used for progressbar color
+							'location':'bottom-right', // top-right | bottom-right | bottom-left | top-left
+							'button':{ // didn't get to this yet...
+								'title':'',
+								'link':''
+							}
+						});
+	            	}
+	            );
 			}
 		});
 	}
 
 	validateData(data,obj,error) {
 		let register = new Register();
-		obj[data.key] = {'value':data.value};
+		obj[data.key] = data.value;
 		switch(data.key) {
 			case 'first_name':
 			case 'last_name':
@@ -153,12 +180,39 @@ class Register {
 
 	validatePassword(data,obj,error) {
 		if(obj['password'] && obj['password_confirm']) {
-			if(obj['password'].value == obj['password_confirm'].value) {
+			if(obj['password'] == obj['password_confirm']) {
 				
 			}
 			else {
 				error.push({'key':'password','item':'password','error':'passwords do not match'});
 			}
+		}
+	}
+
+	errors(error) {
+		for (var i = 0; i < error.length; i++) {
+			let message, key, id, name, messenger = new Messenger(), api = new API();
+			message = error[i].error;
+			key = error[i].item;
+			id = api.randomString(8, 'abcdefghijklmnopqrstuvwxyz');
+			name = api.randomString(8, 'abcdefghijklmnopqrstuvwxyz');
+			setTimeout(function() {
+				messenger.run({
+					'id':id, // This value needs to be unique
+					'name':name, // This value needs to be unique
+					'title':'ERROR: '+key, // title
+					'message':message, // content
+					'duration':4500, // duration of timer | if null, close box will apear
+					'theme':'light', // only one theme currently...
+					'icon':'exclamation', // font awesome value fa-{value}
+					'color':'#d66a46', // used for progressbar color
+					'location':'bottom-right', // top-right | bottom-right | bottom-left | top-left
+					'button':{ // didn't get to this yet...
+						'title':'',
+						'link':''
+					}
+				});
+			}, (250*i));
 		}
 	}
 
