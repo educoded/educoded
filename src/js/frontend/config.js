@@ -40,6 +40,7 @@ requirejs.config({
         page: 'controller/pages/page',
         post: 'controller/pages/post',
         register: 'controller/pages/register',
+        sandbox: 'controller/pages/sandbox',
         team: 'controller/pages/team',
     }
 });

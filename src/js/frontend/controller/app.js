@@ -271,7 +271,7 @@ class App {
 													<a href="courses.html">
 														<div class="edx-footer-menu-item">Courses</div>
 													</a>
-													<a href="javascript:void(0)">
+													<a href="sandbox.html">
 														<div class="edx-footer-menu-item">Sandbox</div>
 													</a>
 												</div>

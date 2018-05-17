@@ -13,13 +13,14 @@
 
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
-				requirejs(['localforage','jQuery','db','storage','AES','MD5','ace','editor','api','app','user','owl','home'],
+				requirejs(['localforage','jQuery','db','storage','AES','MD5','ace','editor','api','app','user','page','sandbox'],
 				function (localforage) {
-					var api = new API(), app = new App(), user = new User(), home = new Home();
+					var api = new API(), app = new App(), user = new User(), page = new Page(), sandbox = new Sandbox();
 					window.localforage = localforage
 					app.init();
 					user.init();
-					home.init();
+					page.init({'name':'about','side':'','layout':['cover','full']});
+					sandbox.init();
 				});
 			});
 		</script>
