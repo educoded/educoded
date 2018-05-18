@@ -92,7 +92,7 @@ class Home {
 	}
 
 	recentCourses() {
-		let coursesObj, db = new DB(), home = new Home();
+		let coursesObj, db = new DB(), home = new Home(), config = new Config();
 		// check to see if recent courses have been either loaded or cached
 		localforage.ready(function() {
 			let key;
@@ -110,8 +110,9 @@ class Home {
 			            type: 'GET',
 			            crossDomain: true,
 			            dataType: 'json',
-			            url: 'https://s3-us-west-2.amazonaws.com/educoded/data/courses/list.json',
+			            url: config.route('courses')+'list.json',
 			            complete: function(jsondata) {
+			            	console.log(jsondata.responseText);
 			            	coursesObj = JSON.parse(jsondata.responseText);
 							localforage.setItem('edx-cache-recent-courses-obj', coursesObj, function() {
 					            localforage.getItem('edx-cache-recent-courses-obj').then(function(readValue) {

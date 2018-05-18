@@ -24,7 +24,7 @@ requirejs.config({
         app: 'controller/app',
         // core
         api: 'controller/core/api',
-        cart: 'controller/core/cart',
+        config: 'controller/core/config',
         db: 'controller/core/db',
         editor: 'controller/core/editor',
         storage: 'controller/core/storage',
@@ -36,6 +36,7 @@ requirejs.config({
         blog: 'controller/pages/blog',
         course: 'controller/pages/course',
         courses: 'controller/pages/courses',
+        dashboard: 'controller/pages/dashboard',
         home: 'controller/pages/home',
         page: 'controller/pages/page',
         post: 'controller/pages/post',

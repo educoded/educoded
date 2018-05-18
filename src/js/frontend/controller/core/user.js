@@ -5,7 +5,7 @@ class User {
 	}
 
 	checkUser() {
-		let user = new User(), api = new API();
+		let user = new User(), config = new Config();
 		// check to see if user has been either loaded or cached
 		localforage.ready(function() {
 			let key;
@@ -23,7 +23,7 @@ class User {
 			            type: 'GET',
 			            crossDomain: true,
 			            dataType: 'json',
-			            url: api.config('users'),
+			            url: config.route('users'),
 			            complete: function(jsondata) {
 			                user.userOffline(jsondata.responseText);
 			            }
@@ -115,7 +115,7 @@ class User {
 	}
 
 	getUser(data, obj) {
-		let user, path, uData, password, u = new User(), api = new API();
+		let user, path, uData, password, u = new User(), config = new Config();
 		if(!data.email || !data.password) {
 			console.log('Missing data');
 		}
@@ -125,15 +125,15 @@ class User {
 				console.log('Email does not exist.');
 			}
 			else {
-				path = CryptoJS.AES.decrypt(user.path,api.config('salt')).toString(CryptoJS.enc.Utf8);
+				path = CryptoJS.AES.decrypt(user.path,config.route('salt')).toString(CryptoJS.enc.Utf8);
 				jQuery.ajax({
 		            type: 'GET',
 		            crossDomain: true,
 		            dataType: 'json',
-		            url: api.config('user')+path+'.json',
+		            url: config.route('user')+path+'.json',
 		            complete: function(jsondata) {
 		                uData = JSON.parse(jsondata.responseText)[0];
-		                password = CryptoJS.AES.decrypt(uData.password,api.config('salt')).toString(CryptoJS.enc.Utf8);
+		                password = CryptoJS.AES.decrypt(uData.password,config.route('salt')).toString(CryptoJS.enc.Utf8);
 						if(uData) {
 							if(data.email == uData.email && data.password == password ) {
 								localforage.ready(function() {

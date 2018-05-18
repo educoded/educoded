@@ -108,9 +108,9 @@
 		
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
-				requirejs(['localforage','jQuery','AES','MD5','api','app','user','page','blog'],
+				requirejs(['localforage','jQuery','AES','MD5','config','api','app','user','page','blog'],
 				function (localforage) {
-					var api = new API(), app = new App(), user = new User(), page = new Page(), blog = new Blog();
+					var config = new Config(), api = new API(), app = new App(), user = new User(), page = new Page(), blog = new Blog();
 					window.localforage = localforage;
 					app.init();
 					user.init();

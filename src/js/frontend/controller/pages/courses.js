@@ -9,8 +9,8 @@ class Courses {
 
 	template() {
 		this.cover();
-		this.sidebar();
 		this.grid();
+		this.sidebar();
 	}
 
 	cover() {
@@ -51,6 +51,40 @@ class Courses {
 
 	sidebar() {
 		let container, content;
+		container = jQuery('.edx-page-sidebar-container');
+		content = 	`<div class="edx-page-sidebar-content-container">
+						<div class="edx-page-sidebar-filter">
+							<div class="edx-page-sidebar-key">filter</div>
+						</div>
+					</div>`;
+		container.append(content);
+	}
+
+	filterSidebar() {
+		let container, content, list, language = [], difficulty = [];
+		container = jQuery('.edx-page-sidebar-filter');
+		list = ['language','difficulty'];
+		for (var i = 0; i < list.length; i++) {
+			content = 	`<div class="edx-page-sidebar-section">
+							<div class="edx-page-sidebar-section-title">`+list[i]+`</div>
+							<div class="edx-page-sidebar-section-list">
+								<div class="edx-page-sidebar-section-list-item">item</div>
+								<div class="edx-page-sidebar-section-list-item">item</div>
+								<div class="edx-page-sidebar-section-list-item">item</div>
+								<div class="edx-page-sidebar-section-list-item">item</div>
+							</div>
+						</div>`;
+			container.append(content);
+		}
+		jQuery('.edx-course-card').each(function() {
+			let item, lang, diff;
+			item = jQuery(this);
+			lang = item.data('language');
+			diff = item.data('difficulty');
+			language.push(lang);
+			difficulty.push(diff);
+		});
+		console.log(language);
 	}
 
 	grid() {
@@ -62,8 +96,8 @@ class Courses {
 		container = jQuery('.edx-page-grid-content');
 		data = this.coursesData;
 		for (var i = 0; i < data.length; i++) {
-			content = 	`<div class="edx-xs-100 edx-sm-50 edx-md-33 edx-lg-25">
-							<div class="edx-course-card edx-course-card-`+data[i].language+`">
+			content = 	`<div class="edx-xs-100 edx-sm-50 edx-md-33 edx-lg-33">
+							<div class="edx-course-card edx-course-card-`+data[i].language+`" data-language="`+data[i].language+`" data-difficulty="`+data[i].difficulty+`">
 								<div class="edx-course-card-cover edx-wrapper">
 									<div class="edx-course-card-cover-titles">
 										<div class="edx-course-card-cover-title">`+data[i].language+`</div>
@@ -80,6 +114,7 @@ class Courses {
 						</div>`;
 			container.append(content);
 		}
+		this.filterSidebar();
 	}
 
 	loadCourses() {
@@ -93,8 +128,6 @@ class Courses {
 			    	// cached
 					// Sets the course data as a global value
 			    	courses.coursesData = value;
-					courses.courses();
-					courses.courses();
 					courses.courses();
 			    }
 			    else {

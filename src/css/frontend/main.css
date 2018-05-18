@@ -477,14 +477,14 @@
 	.edx-page-toolbar-left .edx-page-toolbar-line:nth-child(1) {
 	    transform: rotate(45deg);
 	    top: 29px;
-	    width: 15px;
+	    width: 14px;
 	    left: 18px;
 	}
 
 	.edx-page-toolbar-left .edx-page-toolbar-line:nth-child(2) {
 		transform: rotate(-45deg);
-		top: 19px;
-		width: 15px;
+		top: 20px;
+		width: 14px;
 		left: 18px;
 	}
 
@@ -928,7 +928,8 @@
 
 		.edx-course-card-cover {
 		    width: 100%;
-		    height: 250px;
+		    height: 30vh;
+		    min-height: 280px;
 		    color: #fff;
 			-moz-box-shadow: inset 0 0 250px rgba(20,20,20,0.15);
 			-webkit-box-shadow: inset 0 0 250px rgba(20,20,20,0.15);

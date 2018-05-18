@@ -87,10 +87,10 @@ class Register {
 	}
 
 	validateRegistration() {
-		let obj, error, s3, register = new Register(), messenger = new Messenger(), api = new API();
+		let obj, error, s3, register = new Register(), messenger = new Messenger(), config = new Config();
 		s3 = new AWS.S3({
-        	accessKeyId: api.config('id'),
-        	secretAccessKey: api.config('secret')
+        	accessKeyId: config.route('id'),
+        	secretAccessKey: config.route('secret')
         });
 		jQuery('.edx-page-form-register').on('click', function() {
 			obj = {};

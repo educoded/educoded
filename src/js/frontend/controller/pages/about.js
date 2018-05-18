@@ -1,22 +1,8 @@
 class About {
 
 	init() {
-		// let getUserObj, db = new DB();
-		// console.log(moment().format());
-		// getUserObj = sessionStorage.getItem('edx-query-get-user');
-		// if(getUserObj != null) {
-		// 	console.log('cached from DB');
-		// 	console.log(JSON.parse(getUserObj));
-		// }
-		// else {
-			// db.get({'columns':[],'table':'users/list','column':'first_name','operator':'equals','value':'Mathew','function':'let about = new About(); about.test();','storage':{'type':'','name':''}});
-		// }
 		this.template();
 	}
-
-	// template() {
-	// 	edx-page-full-content
-	// }
 
 	template() {
 		this.cover();
@@ -51,15 +37,8 @@ class About {
 								With all the jobs in tech and almost everything being connected to some form of technology, why would you not want to be a programmer!?! With that being said, what are you waiting for? <b>Learn something new.</b>
 							</div>
 						</div>
-					</div>
-					<div class="edx-xs-100 edx-sm-100 edx-md-100 edx-lg-100">
-						team
 					</div>`;
 		container.append(content);
-	}
-
-	test() {
-		console.log('this is coming from DB');
 	}
 
 }

@@ -13,15 +13,15 @@
 		
 		<script>
 			requirejs(['../src/js/frontend/config'],function(){
-				requirejs(['localforage','moment','jQuery','AES','MD5','db','storage','config','api','app','user','page','about'],
+				requirejs(['localforage','moment','jQuery','AES','MD5','db','storage','config','api','app','user','page','dashboard'],
 				function (localforage,moment) {
-					let config = new Config(), api = new API(), app = new App(), user = new User(), page = new Page(), about = new About();
+					let config = new Config(), api = new API(), app = new App(), user = new User(), page = new Page(), dashboard = new Dashboard();
 					window.localforage = localforage;
 					window.moment = moment;
 					app.init();
 					user.init();
-					page.init({'name':'about','side':'','layout':['cover','full']});
-					about.init();
+					page.init({'name':'dashboard','side':'','layout':['cover','full']});
+					dashboard.init();
 				})
 			});
 		</script>

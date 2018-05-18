@@ -390,13 +390,13 @@ class Course {
 	}
 
 	loadCourse() {
-		let id, courseData, courseStats, stats, course = new Course(), api = new API();
+		let id, courseData, courseStats, stats, course = new Course(), config = new Config();
 		id = this.id;
 		jQuery.ajax({
             type: 'GET',
             crossDomain: true,
             dataType: 'json',
-            url: api.config('courses')+id+'/course.json',
+            url: config.route('courses')+id+'/course.json',
             complete: function(jsondata) {
             	courseData = JSON.parse(jsondata.responseText)[0];
             	courseStats = courseData.info.video.steps;

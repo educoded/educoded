@@ -75,20 +75,6 @@ class Team {
 									<div class="edx-team-member">
 										<div class="edx-team-member-image"></div>
 										<div class="edx-team-member-info">
-											<div class="edx-team-member-name edx-wrapper">ty</div>
-											<div class="edx-team-member-position edx-wrapper">Office Pup</div>
-											<div class="edx-team-member-socials edx-wrapper">
-												<div class="edx-team-member-social edx-wrapper">
-													<span class="fa fa-instagram"></span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="edx-xs-100 edx-sm-50 edx-md-33 edx-lg-25">
-									<div class="edx-team-member">
-										<div class="edx-team-member-image"></div>
-										<div class="edx-team-member-info">
 											<div class="edx-team-member-name edx-wrapper">anonymous</div>
 											<div class="edx-team-member-position edx-wrapper">1337 h4x0r</div>
 											<div class="edx-team-member-socials edx-wrapper">
@@ -100,6 +86,20 @@ class Team {
 												</div>
 												<div class="edx-team-member-social edx-wrapper">
 													<span class="fa fa-github"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="edx-xs-100 edx-sm-50 edx-md-33 edx-lg-25">
+									<div class="edx-team-member">
+										<div class="edx-team-member-image"></div>
+										<div class="edx-team-member-info">
+											<div class="edx-team-member-name edx-wrapper">ty</div>
+											<div class="edx-team-member-position edx-wrapper">Office Pup</div>
+											<div class="edx-team-member-socials edx-wrapper">
+												<div class="edx-team-member-social edx-wrapper">
+													<span class="fa fa-instagram"></span>
 												</div>
 											</div>
 										</div>
