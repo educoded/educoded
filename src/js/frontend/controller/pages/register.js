@@ -75,8 +75,8 @@ class Register {
 									</div>
 								</div>
 								<!-- register button -->
-								<div class="edx-page-form-item">
-									<div class="edx-page-form-btn edx-page-form-register">register</div>
+								<div class="edx-page-form-item" align="right">
+									<div class="edx-page-form-btn edx-page-form-register edx-wrapper">register</div>
 								</div>
 							</div>
 						</div>
@@ -205,7 +205,7 @@ class Register {
 					'duration':4500, // duration of timer | if null, close box will apear
 					'theme':'light', // only one theme currently...
 					'icon':'exclamation', // font awesome value fa-{value}
-					'color':'#d66a46', // used for progressbar color
+					'color':'#f92b30', // used for progressbar color
 					'location':'bottom-right', // top-right | bottom-right | bottom-left | top-left
 					'button':{ // didn't get to this yet...
 						'title':'',

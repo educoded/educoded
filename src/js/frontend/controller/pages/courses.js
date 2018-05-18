@@ -1,16 +1,12 @@
 class Courses {
 
 	init() {
-
-		console.log('courses');
 		this.template();
-
 	}
 
 	template() {
 		this.cover();
 		this.grid();
-		this.sidebar();
 	}
 
 	cover() {
@@ -50,33 +46,10 @@ class Courses {
 	}
 
 	sidebar() {
-		let container, content;
+		let container, content, list, filter = {}, language = [], difficulty = [], api = new API();
 		container = jQuery('.edx-page-sidebar-container');
-		content = 	`<div class="edx-page-sidebar-content-container">
-						<div class="edx-page-sidebar-filter">
-							<div class="edx-page-sidebar-key">filter</div>
-						</div>
-					</div>`;
-		container.append(content);
-	}
-
-	filterSidebar() {
-		let container, content, list, language = [], difficulty = [];
-		container = jQuery('.edx-page-sidebar-filter');
 		list = ['language','difficulty'];
-		for (var i = 0; i < list.length; i++) {
-			content = 	`<div class="edx-page-sidebar-section">
-							<div class="edx-page-sidebar-section-title">`+list[i]+`</div>
-							<div class="edx-page-sidebar-section-list">
-								<div class="edx-page-sidebar-section-list-item">item</div>
-								<div class="edx-page-sidebar-section-list-item">item</div>
-								<div class="edx-page-sidebar-section-list-item">item</div>
-								<div class="edx-page-sidebar-section-list-item">item</div>
-							</div>
-						</div>`;
-			container.append(content);
-		}
-		jQuery('.edx-course-card').each(function() {
+		jQuery('.edx-course').each(function() {
 			let item, lang, diff;
 			item = jQuery(this);
 			lang = item.data('language');
@@ -84,7 +57,79 @@ class Courses {
 			language.push(lang);
 			difficulty.push(diff);
 		});
-		console.log(language);
+		filter.language = api.unique(language.sort());
+		filter.difficulty = api.unique(difficulty.sort());
+		for (var i = 0; i < list.length; i++) {
+			content = 	`<div class="edx-page-sidebar-item edx-page-sidebar-`+list[i]+`">
+							<div class="edx-page-sidebar-title">
+								`+list[i]+`
+							</div>
+							<div class="edx-page-sidebar-content">
+								<div class="edx-page-sidebar-content-container">
+									<div class="edx-page-sidebar-clear-content" data-parent="`+list[i]+`">clear `+list[i]+`</div>
+								</div>
+							</div>
+						</div>`;
+			container.append(content);
+			for (var ii = 0; ii < filter[list[i]].length; ii++) {
+				let menu = `<div class="edx-page-sidebar-content-item edx-wrapper" data-parent="`+list[i]+`" data-name="`+filter[list[i]][ii]+`">`+filter[list[i]][ii]+`</div>`;
+				jQuery('.edx-page-sidebar-'+list[i]+' .edx-page-sidebar-content-container').append(menu);
+			}
+		}
+		this.sidebarFilter(list);
+	}
+
+	sidebarFilter(list) {
+		// Select filter option
+		jQuery('.edx-page-sidebar-content-item').on('click', function() {
+
+			let item, parent, name, courses = new Courses();
+			item = jQuery(this);
+			parent = item.data('parent');
+			name = item.data('name');
+
+			if(jQuery('.edx-page-sidebar-'+parent+' .edx-page-sidebar-content-item').hasClass('active')) {
+				jQuery('.edx-page-sidebar-'+parent+' .edx-page-sidebar-content-item').removeClass('active');
+				item.addClass('active');
+				for (var i = 0; i < list.length; i++) {
+					if(list[i] === parent) {
+						courses.courseFilterSelect(list[i], name, parent);
+					}
+				}
+			}
+			else {
+				item.addClass('active');
+				for (var i = 0; i < list.length; i++) {
+					if(list[i] === parent) {
+						courses.courseFilterSelect(list[i], name, parent);
+					}
+				}
+			}
+
+		});
+
+		// Clear filter option
+		jQuery('.edx-page-sidebar-clear-content').on('click', function() {
+			let item, parent;
+			item = jQuery(this);
+			parent = item.data('parent');
+			jQuery('.edx-page-sidebar-'+parent+' .edx-page-sidebar-content-item').removeClass('active');
+			jQuery('.edx-course').removeClass('has-option-'+parent+' no-option-'+parent);
+		});
+	}
+
+	courseFilterSelect(list, select, parent) {
+		jQuery('.edx-course').each(function() {
+			let item, filter;
+			item = jQuery(this);
+			filter = item.data(list);
+			if(filter === select) {
+				item.addClass('has-option-'+parent).removeClass('no-option-'+parent);
+			}
+			else {
+				item.removeClass('has-option-'+parent).addClass('no-option-'+parent);
+			}
+		});
 	}
 
 	grid() {
@@ -96,8 +141,8 @@ class Courses {
 		container = jQuery('.edx-page-grid-content');
 		data = this.coursesData;
 		for (var i = 0; i < data.length; i++) {
-			content = 	`<div class="edx-xs-100 edx-sm-50 edx-md-33 edx-lg-33">
-							<div class="edx-course-card edx-course-card-`+data[i].language+`" data-language="`+data[i].language+`" data-difficulty="`+data[i].difficulty+`">
+			content = 	`<div class="edx-course edx-course-`+(i+1)+` edx-xs-100 edx-sm-50 edx-md-33 edx-lg-33" data-language="`+data[i].language+`" data-difficulty="`+data[i].difficulty+`">
+							<div class="edx-course-card edx-course-card-`+data[i].language+`">
 								<div class="edx-course-card-cover edx-wrapper">
 									<div class="edx-course-card-cover-titles">
 										<div class="edx-course-card-cover-title">`+data[i].language+`</div>
@@ -114,7 +159,7 @@ class Courses {
 						</div>`;
 			container.append(content);
 		}
-		this.filterSidebar();
+		this.sidebar();
 	}
 
 	loadCourses() {
