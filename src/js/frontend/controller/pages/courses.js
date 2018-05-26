@@ -29,18 +29,16 @@ class Courses {
 	coverPattern() {
 		setTimeout(function() {
 			let languages, language, shapes, shape, size, rotate, pX, pY, cover;
-			languages = ['html','css','javascript','php','mysql','python'];
 			shapes = ['square','circle'];
 			cover = jQuery('.edx-page-cover');
 			function getRandom(min, max) { return Math.floor(Math.random() * (max - min) + min); }
 			for (var i = 30 - 1; i >= 0; i--) {
-				language = getRandom(0,6);
 				shape = getRandom(0,2);
 				size = getRandom(20,200);
 				rotate = getRandom(0,90);
 				pX = getRandom(0,cover.width());
 				pY = getRandom(90,cover.height());
-				jQuery('.edx-page-cover-pattern').append('<div class="edx-page-cover-shape edx-shape-'+languages[language]+' edx-shape-'+shapes[shape]+'" style="width:'+size+'px; height:'+size+'px; top:'+pY+'px; left:'+pX+'px; transform: rotate('+rotate+'deg)"></div>');
+				jQuery('.edx-page-cover-pattern').append('<div class="edx-page-cover-shape edx-shape-gray edx-shape-'+shapes[shape]+'" style="width:'+size+'px; height:'+size+'px; top:'+pY+'px; left:'+pX+'px; transform: rotate('+rotate+'deg)"></div>');
 			}
 		}, 50);
 	}
